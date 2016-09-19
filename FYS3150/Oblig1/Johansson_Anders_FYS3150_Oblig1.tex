@@ -55,7 +55,7 @@
 \rhead{Anders Johansson}
 \rfoot{Side \thepage{} av \pageref{LastPage}}
 \lhead{FYS3150}
-
+%
 \usepackage[backend=biber,citestyle=numeric-comp,bibstyle=numeric,sorting=none]{biblatex}
 \DefineBibliographyStrings{norsk}{%
   bibliography = {Referanser},
@@ -70,7 +70,7 @@
 \section{Sammendrag}
 I denne rapporten løses en andreordens differensiallikning på formen \(-u''(x)=f(x)\) numerisk via trepunktsmetoden. Feilleddet utledes som \(O(h^2)\), og denne \(h^2\)-avhengigheten bekreftes eksperimentelt. Algoritmer utvikles for både generelle, tridiagonale matriser og den spesielle matrisen som resulterer fra bruken av trepunktstilnærmingen. Disse algoritmene har tidsbruk proporsjonal med \(n\), i motsetning til den mye brukte teknikken LU-dekomposisjon, hvis tidsbruk er proporsjonal med \(n^3\). Begge de utviklede algoritmene implementeres i C++, og de resulterende funksjonene benyttes for å løse differensiallikningen. Tidsbruken sammenlignes med LU-dekomposisjon, og avhengigheten av \(h\) bekreftes.
 
-Alle filene til dette prosjektet finnes på GitHub\footnote{\url{https://github.uio.no/anjohan/Offentlig}}.
+Alle filene til dette prosjektet finnes på GitHub\footnote{\url{https://github.com/anjohan/Offentlig/tree/master/FYS3150/Oblig1}}.
 
 
 \section{Introduksjon}
