@@ -1,0 +1,645 @@
+\documentclass[12pt,norsk,a4paper]{report}
+\pdfobjcompresslevel=0
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[includeheadfoot,margin=0.8 in,top=0.6 in]{geometry}
+\usepackage{siunitx,physics,cancel,upgreek,varioref,minted,booktabs,tocloft, pdfpages}
+\usepackage{mathtools}
+\usepackage{babel}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{fouriernc}
+\usepackage{fancyhdr}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{textcomp}
+\usepackage{lastpage}
+\usepackage{microtype}
+\usepackage[linktoc=all, bookmarks=true, pdfauthor={Anders Johansson}]{hyperref}
+\renewcommand{\CancelColor}{\color{red}}
+\renewcommand{\exp}[1]{\mathrm{e}^{#1}}
+\newcommand{\tittel}[1]{\title{#1 \vspace{-7ex}}\author{}\date{}\maketitle\thispagestyle{fancy}\pagestyle{fancy}\setcounter{page}{1}}
+
+\newcommand{\deloppg}[2][]{\subsection*{#2) #1}\addcontentsline{toc}{subsection}{#2)}\refstepcounter{subsection}\label{#2}}
+\newcommand{\oppg}[1]{\section*{Oppgave #1}\addcontentsline{toc}{section}{Oppgave #1}\refstepcounter{section}\label{oppg#1}}
+
+\labelformat{section}{seksjon~#1}
+\labelformat{subsection}{avsnitt~#1}
+\labelformat{subsubsection}{avsnitt~#1}
+\labelformat{equation}{likning~(#1)}
+\labelformat{figure}{figur~#1}
+\labelformat{table}{tabell~#1}
+
+\renewcommand{\footrulewidth}{\headrulewidth}
+\tocloftpagestyle{fancy}
+
+\setcounter{secnumdepth}{4}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1em}
+
+\newcommand{\eqtag}[1]{\refstepcounter{equation}\tag{\theequation}\label{#1}}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=black}
+
+\sisetup{detect-all}
+\sisetup{exponent-product = \cdot, output-product = \cdot,per-mode=symbol}
+\sisetup{output-decimal-marker={,}}
+\sisetup{round-mode = off, round-precision=3}
+\sisetup{number-unit-product = \ }
+
+\allowdisplaybreaks[4]
+\fancyhf{}
+
+\rhead{Anders Johansson}
+\rfoot{Side \thepage{} av \pageref{LastPage}}
+\lhead{FYS3150}
+
+\usepackage[backend=biber,citestyle=numeric-comp,bibstyle=numeric,sorting=none]{biblatex}
+\DefineBibliographyStrings{norsk}{%
+  bibliography = {Referanser},
+}
+\addbibresource{kilder.bib}
+
+\begin{document}
+\includepdf{forside.pdf}
+\pagestyle{fancy}
+\tableofcontents
+
+\section{Sammendrag}
+I denne rapporten løses en andreordens differensiallikning på formen \(-u''(x)=f(x)\) numerisk via trepunktsmetoden. Feilleddet utledes som \(O(h^2)\), og denne \(h^2\)-avhengigheten bekreftes eksperimentelt. Algoritmer utvikles for både generelle, tridiagonale matriser og den spesielle matrisen som resulterer fra bruken av trepunktstilnærmingen. Disse algoritmene har tidsbruk proporsjonal med \(n\), i motsetning til den mye brukte teknikken LU-dekomposisjon, hvis tidsbruk er proporsjonal med \(n^3\). Begge de utviklede algoritmene implementeres i C++, og de resulterende funksjonene benyttes for å løse differensiallikningen. Tidsbruken sammenlignes med LU-dekomposisjon, og avhengigheten av \(h\) bekreftes.
+
+Alle filene til dette prosjektet finnes på GitHub\footnote{\url{https://github.uio.no/anjohan/Offentlig}}.
+
+
+\section{Introduksjon}
+Differensiallikninger er en sentral del av fysikken, ettersom mange av de mest sentrale lovene og likningene (f.eks. Newtons lover og Schrödingerlikningen) er differensiallikninger. Majoriteten av disse likningene er vanskelige eller umulige å løse analytisk, så numeriske løsningsmetoder for differensiallikninger er et viktig verktøy for fysikere.
+
+Differensiallikninger på formen \(-u''(x)=f(x)\) dukker ofte opp. Eksempelvis vil Newtons andre lov føre til en slik likning dersom kreftene kun er posisjonsavhengige. Ettersom \(f\) kan være alle mulige, kontinuerlige funksjoner, må hvert tilfelle løses separat hvis man ønsker å finne en analytisk løsning - hvis det i det hele tatt er mulig å løse likningen analytisk. En numerisk algoritme bryr seg derimot ikke om hva \(f\) er, så en slik algoritme kan brukes på alle mulige problemer som resulterer i en differensiallikning på denne formen.
+
+Det finnes mange numeriske metoder for å løse differensiallikninger. I dette prosjektet benyttes trepunktstilnærmingen til den andrederiverte, som fører til at differensiallikningen kan skrives som et lineært likningssystem. Slike løses generelt med LU-dekomposisjon. Trepunktstilnærmingen fører til en spesiell, tridiagonal matrise, som gjør det gunstig å utvikle en mer spesialisert algoritme som utnytter egenskapene til likningssettet man får.
+
+I dette prosjektet har jeg utviklet to slike algoritmer - én som fungerer for alle, tridiagonale matriser, og én som radreduserer den spesifikke matrisen man får fra trepunktstilnærmingen. Begge disse algoritmene krever et antall regneoperasjoner som øker lineært med antall punkter, i motsetning til LU-dekomposisjonen, som øker kubisk med antall punkter.
+
+Rapporten består hovedsakelig av to deler. Den første delen er teoretisk. Her utledes først trepunktstilnærmingen med feilledd, og et estimat gjøres for hvor stor steglengden bør være for å få minst relativ feil. Estimatet stemmer dessverre ikke med de faktiske resultatene. Deretter utvikles de to løsningsalgoritmene, og antall regneoperasjoner beregnes for hver av dem. I tillegg implementeres de i C++.
+
+    Den andre delen består av resultater av anvendelse av de utviklede algoritmene, samt LU-dekomposisjon fra \texttt{armadillo}\autocite{armadillo} for sammenlikning, på differensiallikningen. Presisjonens avhengighet av steglengden bekreftes, og den estimerte optimale steglengden avkreftes. I tillegg sammenlignes kjøretid både mellom generell og spesiell løsningsalgoritme for tridiagonale matriser, og den spesielle og LU-dekomposisjon. De estimerte steglengdeavhengighetene viser seg å stemme svært godt.
+
+
+\clearpage
+\section{Teori og metoder}
+
+Differensiallikning:
+\[
+-u''(x)= f(x) = 100\exp{-10x},\quad x\in\qty[0,1]
+\]
+Initialbetingelser:
+\[
+u(0)=u(1)=0
+\]
+
+\(u(x)=1-\qty(1-\exp{-10})x-\exp{-10x}\) er en eksakt løsning av denne differensiallikningen, men likningen skal i dette prosjektet løses numerisk.
+
+\(x\)- og funksjonsverdiene kan diskretiseres ved
+\[
+u_i=u(x_i)=u(i\cdot h)\, \forall\, i\in \qty{0,1,\ldots,n+1}
+\]
+hvor \(n+2\) er antall valgte \(x\)-verdier og \(h=1/\qty(n+1)\) er avstanden mellom disse verdiene. Definerer også \(f_i=f(x_i)\).
+
+
+\subsection{Utledning av trepunktstilnærming til den andrederiverte}
+Fra Taylors formel:
+\begin{alignat*}{2}
+u(x+h) &= u(x) + hu'(x) + \tfrac{1}{2}h^2u''(x) + \tfrac{1}{6}h^3u'''(x) + \tfrac{1}{24}h^4u''''(c_1),\ c_1\in\qty(x,x+h)\\
+u(x-h) &= u(x) - hu'(x) + \tfrac{1}{2}h^2u''(x) - \tfrac{1}{6}h^3u'''(x) + \tfrac{1}{24}h^4u''''(c_2),\ c_2\in\qty(x-h,x)
+\intertext{For liten \(h\) og «pen» \(u\) kan vi tilnærme \(u(c_1)\approx u(c_2)\approx u(x)\). Ved å legge sammen de to likhetene får vi}
+u(x+h) + u(x-h) &= 2u(x) + h^2u''(x) + \tfrac{1}{12}h^4u''''(x)\\
+u''(x) &= \frac{u(x+h)+u(x-h)-2u(x)}{h^2} - \tfrac{1}{12}h^2u''''(x) \eqtag{feilledd}
+\end{alignat*}
+
+\subsection{Anvendelse av trepunktstilnærmingen}
+Med de diskretiserte \(x\)-verdiene og medfølgende notasjon, resulterer problemet i likningssettet
+\[
+-\frac{v_{i+1}+v_{i-1}-2v_i}{h^2}=f_i\,\forall\, i\in\qty{1,2,\ldots,n} \eqtag{3pkt}
+\]
+hvor \(v_i\) er en tilnærming til \(u_i\). Tilfellene \(i=0\) og \(i=n+1\) gir liknende likninger, men disse har verdier gitt av initialbetingelsene og behøver derfor ikke å løses. For \(i=1\) og \(i=n\) er henholdsvis \(v_{i-1}\) og \(v_{i+1}\) lik \(0\) fra initialbetingelsene.
+
+Ved å multiplisere med \(h^2\) på begge sider, kan \vref{3pkt} skrives ut som
+\begin{equation*}
+\begin{array}{ccccccc}
+&& 2v_1 &-& v_2 &=& h^2f_1\\
+-v_1 &+& 2v_3 &-& v_1 &=& h^2f_2\\
+-v_2 &+& 2v_4 &-& v_2 &=& h^2f_3\\
+\vdots && \vdots && \vdots &\quad& \vdots\\
+-v_{n-2} &+& 2v_{n-1} &-& v_{n} &=& h^2f_{n-1}\\
+-v_{n-1} &+& 2v_n && &=& h^2f_n
+\end{array}
+\end{equation*}
+Dette kan skrives på matriseform:
+\[
+\begin{bmatrix}
+2 & -1 & 0 & 0 & 0 & \cdots & 0 & 0\\
+-1 & 2 & -1 & 0 & 0 & \cdots & 0 & 0\\
+0 & -1 & 2 & -1 & 0 & \cdots & 0 & 0\\
+\vdots & & & \ddots & & & & \vdots\\
+0 & 0 & \cdots & 0 & -1 & 2 & -1 & 0\\
+0 & 0 & \cdots & 0 & 0 & -1 & 2 & -1\\
+0 & 0 & \cdots & 0 & 0 & 0 & -1 & 2\\
+\end{bmatrix}
+\begin{bmatrix}
+v_1\\
+v_2\\
+v_3\\
+\vdots\\
+v_{n-2}\\
+v_{n-1}\\
+v_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+h^2f_1\\
+h^2f_2\\
+h^2f_3\\
+\vdots\\
+h^2f_{n-2}\\
+h^2f_{n-1}\\
+h^2f_n
+\end{bmatrix}
+\]
+
+\subsection{Utregning av presisjonsmessig beste \(n\)}\label{nregning}
+\subsubsection{Matematisk feil}
+Feilleddet i trepunktstilnærmingen er i \vref{feilledd} gitt ved
+\[
+\varepsilon_\mathrm{M} \coloneqq \abs{-\tfrac{1}{12}h^2u''''(x)} = \tfrac{1}{12}h^2\abs{u''''(x)}
+\]
+Med den kjente, eksakte løsningen \(u(x)=1-\qty(1-\exp{-10})x-\exp{-10x}\) er \(u''''(x)=-10^4\exp{-10x}\). Siden \(x\in\qty[0,1]\), er
+\[
+\varepsilon_\mathrm{M} \leq \tfrac{1}{12}h^2\cdot 10^4 = \frac{10^4}{12\qty(n+1)^2}
+\]
+
+\subsubsection{Numerisk feil}
+I uttrykket
+\[
+\frac{v_{i+1}+v_{i-1}-2v_i}{h^2} = \qty(\qty(v_{i+1}-v_i)-\qty(v_i-v_{i-1}))\qty(n+1)^2
+\]
+kan hvert av leddene i den første faktoren gi en feil lik den maksimale, numeriske presisjonen, som er omtrent \(\varepsilon_\mathrm{N}\approx10^{-16}\) for \texttt{double} i C++.
+
+\subsubsection{Total feil}
+Den totale feilen blir dermed
+\[
+\varepsilon(n) = \frac{10^4}{12\qty(n+1)^2} + 2\varepsilon_\mathrm{N}\qty(n+1)^2 \overset{n\gg1}{\approx} \frac{10^4}{12n^2} + 2\varepsilon_\mathrm{N}n^2
+\]
+For å finne minimumet, må denne funksjonen deriveres med hensyn på \(n\):
+\begin{alignat*}{2}
+0 &= \pdv{\varepsilon}{n}\\
+0 &= -\frac{10^4}{6n^3} + 4\varepsilon_\mathrm{N}n\\
+4\varepsilon_\mathrm{N}n &= \frac{10^4}{6n^3}\\
+n^4 &= \frac{10^4}{24\varepsilon_\mathrm{N}}\\
+n &= \frac{10}{\sqrt[4]{24\varepsilon_\mathrm{N}}}\\
+n &\approx \num{4.5e4}
+\end{alignat*}
+
+
+
+
+\subsection{Algoritmer for å løse differensiallikningen}
+Trepunktsmetoden fører til en matriselikning \(A\vec{v}=\vec{d}\) hvor \(A\) er en helt spesiell, tridiagonal matrise. Matriselikninger løses vanligvis med LU-dekomposisjon, hvor antall regneoperasjoner går som \(n^3\)\autocite{compphys}. Ettersom matrisen for differensiallikningen er på en spesiell form, er det mulig å utvikle algoritmer hvor antallet regneoperasjoner øker lineært med \(n\). Ved å utnytte at \(A\) alltid består av samme elementer når man bruker trepunktsformelen (\(-1\), \(2\) og \(-1\) rundt diagonalen), kan man ytterligere spare regneoperasjoner.
+
+I tillegg krever LU-dekomposisjonen at hele matrisen lagres, dvs. \(n^2\) elementer som hver tar \(8\) bytes. De spesialiserte algoritmene krever derimot kun at elementene rundt diagonalen lagres, hvilket krever mye mindre minne.
+
+\subsubsection{En algoritme for generelle, tridiagonale matriser}
+Et lineært likningssett med tridiagonal matrise kan skrives på den generelle formen
+\begin{alignat*}{2}
+\begin{bmatrix}
+b_1 & c_1 & 0 & 0 & 0 & \cdots & 0 & 0\\
+a_1 & b_2 & c_2 & 0 & 0 & \cdots & 0 & 0\\
+0 & a_2 & b_3 & c_3 & 0 & \cdots & 0 & 0\\
+\vdots & & & \ddots & & & & \vdots\\
+0 & 0 & \cdots & 0 & a_{n-3} & b_{n-2} & c_{n-2} & 0\\
+0 & 0 & \cdots & 0 & 0 & a_{n-2} & b_{n-1} & c_{n-1}\\
+0 & 0 & \cdots & 0 & 0 & 0 & a_{n-1} & b_n\\
+\end{bmatrix}
+\begin{bmatrix}
+v_1\\
+v_2\\
+v_3\\
+\vdots\\
+v_{n-2}\\
+v_{n-1}\\
+v_n
+\end{bmatrix}
+&=
+\begin{bmatrix}
+d_1\\
+d_2\\
+d_3\\
+\vdots\\
+d_{n-2}\\
+d_{n-1}\\
+d_n
+\end{bmatrix}
+\intertext{For å finne \(\qty(v_1,v_2,\dots,v_n)\) må dette radreduseres. Hvis \(a_1=0\) kan rad 2 få stå i fred, ellers skal produktet av rad 1 og \(a_1/b_1\) trekkes fra. Dette gir}
+\begin{bmatrix}
+b_1 & c_1 & 0 & 0 & 0 & \cdots & 0 & 0\\
+0 & b_2' & c_2 & 0 & 0 & \cdots & 0 & 0\\
+0 & a_2 & b_3 & c_3 & 0 & \cdots & 0 & 0\\
+\vdots & & & \ddots & & & & \vdots\\
+0 & 0 & \cdots & 0 & a_{n-3} & b_{n-2} & c_{n-2} & 0\\
+0 & 0 & \cdots & 0 & 0 & a_{n-2} & b_{n-1} & c_{n-1}\\
+0 & 0 & \cdots & 0 & 0 & 0 & a_{n-1} & b_n\\
+\end{bmatrix}
+\begin{bmatrix}
+v_1\\
+v_2\\
+v_3\\
+\vdots\\
+v_{n-2}\\
+v_{n-1}\\
+v_n
+\end{bmatrix}
+&=
+\begin{bmatrix}
+d_1\\
+d_2'\\
+d_3\\
+\vdots\\
+d_{n-2}\\
+d_{n-1}\\
+d_n
+\end{bmatrix}
+\intertext{hvor \(b_2'=b_2-c_1a_1/b_1\) og \(d_2'=d_2-d_1a_1/b_1\). Hvis \(a_2\neq0\), må så produktet av rad 2 og \(b_2'/a_2\) trekkes fra rad 3.}
+\begin{bmatrix}
+b_1 & c_1 & 0 & 0 & 0 & \cdots & 0 & 0\\
+0 & b_2' & c_2 & 0 & 0 & \cdots & 0 & 0\\
+0 & 0 & b_3' & c_3 & 0 & \cdots & 0 & 0\\
+\vdots & & & \ddots & & & & \vdots\\
+0 & 0 & \cdots & 0 & a_{n-3} & b_{n-2} & c_{n-2} & 0\\
+0 & 0 & \cdots & 0 & 0 & a_{n-2} & b_{n-1} & c_{n-1}\\
+0 & 0 & \cdots & 0 & 0 & 0 & a_{n-1} & b_n\\
+\end{bmatrix}
+\begin{bmatrix}
+v_1\\
+v_2\\
+v_3\\
+\vdots\\
+v_{n-2}\\
+v_{n-1}\\
+v_n
+\end{bmatrix}
+&=
+\begin{bmatrix}
+d_1\\
+d_2'\\
+d_3'\\
+\vdots\\
+d_{n-2}\\
+d_{n-1}\\
+d_n
+\end{bmatrix}
+\intertext{hvor \(b_3'=b_3-c_2a_2/b_2'\) og \(d_3'=d_3-d_2'a_2/b_2'\). Denne prosessen kan gjentas for alle rader, hvilket resulterer i}
+\begin{bmatrix}
+b_1 & c_1 & 0 & 0 & 0 & \cdots & 0 & 0\\
+0 & b_2' & c_2 & 0 & 0 & \cdots & 0 & 0\\
+0 & 0 & b_3' & c_3 & 0 & \cdots & 0 & 0\\
+\vdots & & & \ddots & & & & \vdots\\
+0 & 0 & \cdots & 0 & 0 & b_{n-2}' & c_{n-2} & 0\\
+0 & 0 & \cdots & 0 & 0 & 0 & b_{n-1}' & c_{n-1}\\
+0 & 0 & \cdots & 0 & 0 & 0 & 0 & b_n'\\
+\end{bmatrix}
+\begin{bmatrix}
+v_1\\
+v_2\\
+v_3\\
+\vdots\\
+v_{n-2}\\
+v_{n-1}\\
+v_n
+\end{bmatrix}
+&=
+\begin{bmatrix}
+d_1\\
+d_2'\\
+d_3'\\
+\vdots\\
+d_{n-2}'\\
+d_{n-1}'\\
+d_n'
+\end{bmatrix}
+\end{alignat*}
+hvor
+\[
+b_i'=\left\{
+\begin{array}{ll}
+b_i-c_{i-1}\dfrac{a_{i-1}}{b_{i-1}'}, & a_{i-1}\neq0,\, i\neq1\\
+b_i, & \text{ellers}
+\end{array}
+\right.
+\quad
+\text{og}
+\quad
+d_i'=\left\{
+\begin{array}{ll}
+d_i-d_{i-1}'\dfrac{a_{i-1}}{b_{i-1}'}, & a_{i-1}\neq0,\, i\neq1\\
+d_i, & \text{ellers}
+\end{array}
+\right.
+\]
+Nå kan \(v_i\) finnes ved substitusjon:
+\begin{alignat*}{4}
+b_n'v_n&=d_n' &\implies&& v_n&=\frac{d_n'}{b_n'}\\
+b_{n-1}'v_{n-1} + c_{n-1}v_n &= d_{n-1}' &\implies&& v_{n-1} &= \frac{d_{n-1}' - c_{n-1}v_n}{b_{n-1}'}\\
+b_{n-2}'v_{n-2} + c_{n-2}v_{n-1} &= d_{n_1}' &\implies&& v_{n-2} &= \frac{d_{n-2}' - c_{n-2}v_{n-1}}{b_{n-2}'}
+\end{alignat*}
+Generelt:
+\[
+v_i=\frac{d_i'-c_iv_{i+1}}{b_i'},\,i\in\qty{1,2,\dots,n-1}
+\]
+
+
+\paragraph{Antall regneoperasjoner (med \(a_i\neq0\forall i\))}
+For hver av de \(n-1\) siste radene må man:
+\begin{itemize}
+\item Regne ut \(r\coloneqq a_{i-1}/b_{i-1}'\)
+\item Multiplisere \(r\) med \(c_{i-1}\)
+\item Trekke resultatet fra \(b_i\)
+\item Multiplisere \(r\) med \(d_{i-1}'\)
+\item Trekke resultatet fra \(d_i\)
+\end{itemize}
+Dette gir \(5\) regneoperasjoner per rad, totalt \(5\qty(n-1)\). For å finne \(v_i\), må man for hver av de \(n-1\) første radene
+\begin{itemize}
+\item Multiplisere \(v_{i+1}\) med \(c_i\).
+\item Trekke resultatet fra \(d_i'\).
+\item Dividere med \(b_i'\).
+\end{itemize}
+I tillegg må \(d_n'\) divideres med \(b_n'\), som gir \(3\qty(n-1)+1\) regneoperasjoner.
+
+Hele radreduksjonen krever derfor \(5\qty(n-1)+3\qty(n-1)+1=8\qty(n-1)+1=8n-7\) regneoperasjoner.
+
+\paragraph{Implementasjon i C++}
+\inputminted{cpp}{generell.cpp}
+
+
+
+\subsubsection{Algoritme for spesialtilfellet med \(a_i=c_i=-1,\, b_i=2\)}
+Trepunktstilnærmingen til den andrederiverte resulterer i en helt spesiell, tridiagonal matrise, slik at likningssettet blir seende slik ut:
+\begin{alignat*}{2}
+\begin{bmatrix}
+2 & -1 & 0 & 0 & 0 & \cdots & 0 & 0\\
+-1 & 2 & -1 & 0 & 0 & \cdots & 0 & 0\\
+0 & -1 & 2 & -1 & 0 & \cdots & 0 & 0\\
+\vdots & & & \ddots & & & & \vdots\\
+0 & 0 & \cdots & 0 & -1 & 2 & -1 & 0\\
+0 & 0 & \cdots & 0 & 0 & -1 & 2 & -1\\
+0 & 0 & \cdots & 0 & 0 & 0 & -1 & 2\\
+\end{bmatrix}
+\begin{bmatrix}
+v_1\\
+v_2\\
+v_3\\
+\vdots\\
+v_{n-2}\\
+v_{n-1}\\
+v_n
+\end{bmatrix}
+&=
+\begin{bmatrix}
+d_1\\
+d_2\\
+d_3\\
+\vdots\\
+d_{n-2}\\
+d_{n-1}\\
+d_n
+\end{bmatrix}
+\intertext{Radreduksjon}
+\begin{bmatrix}
+2 & -1 & 0 & 0 & 0 & \cdots & 0 & 0\\
+0 & \frac{3}{2} & -1 & 0 & 0 & \cdots & 0 & 0\\
+0 & -1 & 2 & -1 & 0 & \cdots & 0 & 0\\
+\vdots & & & \ddots & & & & \vdots\\
+0 & 0 & \cdots & 0 & -1 & 2 & -1 & 0\\
+0 & 0 & \cdots & 0 & 0 & -1 & 2 & -1\\
+0 & 0 & \cdots & 0 & 0 & 0 & -1 & 2\\
+\end{bmatrix}
+\begin{bmatrix}
+v_1\\
+v_2\\
+v_3\\
+\vdots\\
+v_{n-2}\\
+v_{n-1}\\
+v_n
+\end{bmatrix}
+&=
+\begin{bmatrix}
+d_1\\
+d_2'=d_2+\tfrac{1}{2}d_1\\
+d_3\\
+\vdots\\
+d_{n-2}\\
+d_{n-1}\\
+d_n
+\end{bmatrix}\\
+\begin{bmatrix}
+2 & -1 & 0 & 0 & 0 & \cdots & 0 & 0\\
+0 & \frac{3}{2} & -1 & 0 & 0 & \cdots & 0 & 0\\
+0 & 0 & \frac{4}{3} & -1 & 0 & \cdots & 0 & 0\\
+\vdots & & & \ddots & & & & \vdots\\
+0 & 0 & \cdots & 0 & -1 & 2 & -1 & 0\\
+0 & 0 & \cdots & 0 & 0 & -1 & 2 & -1\\
+0 & 0 & \cdots & 0 & 0 & 0 & -1 & 2\\
+\end{bmatrix}
+\begin{bmatrix}
+v_1\\
+v_2\\
+v_3\\
+\vdots\\
+v_{n-2}\\
+v_{n-1}\\
+v_n
+\end{bmatrix}
+&=
+\begin{bmatrix}
+d_1\\
+d_2'\\
+d_3'=d_3+\tfrac{2}{3}d_2'\\
+\vdots\\
+d_{n-2}\\
+d_{n-1}\\
+d_n
+\end{bmatrix}
+\intertext{Ved å fortsette slik, ender likningssettet opp som}
+\begin{bmatrix}
+2 & -1 & 0 & 0 & 0 & \cdots & 0 & 0\\
+0 & \frac{3}{2} & -1 & 0 & 0 & \cdots & 0 & 0\\
+0 & 0 & \frac{4}{3} & -1 & 0 & \cdots & 0 & 0\\
+\vdots & & & \ddots & & & & \vdots\\
+0 & 0 & \cdots & 0 & 0 & \frac{n-1}{n-2} & -1 & 0\\
+0 & 0 & \cdots & 0 & 0 & 0 & \frac{n}{n-1} & -1\\
+0 & 0 & \cdots & 0 & 0 & 0 & 0 & \frac{n+1}{n}\\
+\end{bmatrix}
+\begin{bmatrix}
+v_1\\
+v_2\\
+v_3\\
+\vdots\\
+v_{n-2}\\
+v_{n-1}\\
+v_n
+\end{bmatrix}
+&=
+\begin{bmatrix}
+d_1\\
+d_2'\\
+d_3'\\
+\vdots\\
+d_{n-2'}\\
+d_{n-1}'\\
+d_n'
+\end{bmatrix}
+\end{alignat*}
+Diagonalelementene, igjen kalt \(b_i'\), kan altså regnes ut ved \(b_i'=\frac{i+1}{i}\). Høyresideverdiene kan dermed skrives som \(d_i' = d_i + \frac{i-1}{i}d_{i-1}'=d_i+\frac{d_{i-1}'}{b_{i-1}'}\).
+
+Substitusjon finner \(v_i\):
+\begin{alignat*}{6}
+b_n'v_n&=d_n' &\implies&& v_n&=\frac{d_n'}{b_n'}\\
+b_{n-1}'v_{n-1}-v_n&=d_{n-1}' &\implies&& v_{n-1} &= \frac{d_{n-1}'+v_n}{b_{n-1}'}\\
+b_{n-2}'v_{n-2}-v_{n-1}&=d_{n-2}' &\implies&& v_{n-2} &= \frac{d_{n-2}'+v_{n-1}}{b_{n-2}'}
+\end{alignat*}
+Generelt\footnote{\(d_i'/b_i'\) inngår også i utregningen av \(b_i'\), men antallet regneoperasjoner reduseres ikke ved å lagre dette forholdet og bruke det i \(v_i=(d_i'/b_i')+(v_{i+1}/b_i')\)}:
+\[
+b_{i}'v_{i}-v_{i+1}=d_{i}' \implies v_{i} = \frac{d_{i}'+v_{i+1}}{b_{i}'}
+\]
+
+\paragraph{Antall regneoperasjoner}
+For å finne \(b_i'\) og \(d_i'\) må man for hver av de \(n-1\) siste radene
+\begin{itemize}
+\item Addere \(i\) og \(1\).
+\item Dele resultatet på \(i\).
+\item Dele \(d_{i-1}'\) på resultatet.
+\item Legge \(d_i\) til resultatet.
+\end{itemize}
+Dette gir \(4\) regneoperasjoner per rad, totalt \(4\qty(n-1)\) regneoperasjoner. For å finne \(v_i\), må man for hver av de \(n-1\) første radene
+\begin{itemize}
+\item Legge \(d_i'\) sammen med \(v_{i+1}\).
+\item Dele resultatet på \(b_i'\).
+\end{itemize}
+Dette gir \(2\) regneoperasjoner per rad, totalt \(2\qty(n-1)\). I tillegg må man dele \(d_n'\) på \(b_n'\).
+
+Algoritmen krever derfor \(4\qty(n-1)+2\qty(n-1)+1=6\qty(n-1)+1=6n-5\) regneoperasjoner. Dette er \(2\qty(n-1)\) færre enn den generelle algoritmen.
+
+\paragraph{Implementasjon i C++}
+\inputminted{cpp}{spesiell.cpp}
+
+
+
+
+\section{Resultater og diskusjon}
+
+\subsection{Sammenligning av eksakt løsning med resultater fra løsningsalgoritmen for generelle, tridiagonale matriser}
+
+\begin{figure}[H]
+\centering
+\input{b.tex}
+\caption{Sammenligning av det eksakte uttrykket med løsninger funnet med algoritmen for generelle, tridiagonale matriser for \(n=10,\,100,\,1000\). Se \vref{b} for programkode.}
+\label{geneksakt}
+\end{figure}
+Figuren viser at den tilnærmede løsningen raskt blir umulig å skille fra den eksakte, hvilket viser at trepunktsformelen er en god tilnærming til den andrederiverte. Se \vref{presisjon} for en kvantisering av presisjonen.
+
+\subsection{Sammenligning av kjøretid for generell og spesiell løsningsalgoritme}
+
+\begin{table}[H]
+\centering
+\caption{Sammenlikning av tidsforbruk for generell og spesiell løsningsalgoritme med forskjellige verdier av \(n\). Se \vref{c} for programkode.}
+\label{cpugenspes}
+\input{c.dat}
+\end{table}
+
+Ut fra antallet regneoperasjoner for hver av algoritmene - \(8n-7\) for den generelle og \(6n-5\) for den spesielle - bør tidsbruken øke lineært som funksjon av \(n\), hvilket stemmer godt overens med resultatene for \(n\geq100\). I tillegg bør forholdet i tidsbruk nærme seg \(8/6=4/3\approx\num{1.33}\) når \(n\) øker. Dette samsvarer også forholdsvis godt med resultatene. For større \(n\) (f.eks. \(10^8\)) bruker programmet mer minne enn tilgjengelig, hvilket endrer tidsbruken kraftig.
+
+\subsection{Den spesielle løsningsalgoritmens presisjon for forskjellige \(n\)}
+Et mål for presisjonen er logaritmen til den relative feilen, dvs.
+\[
+\epsilon_i = \log_{10}\qty(\abs{\frac{v_i-u_i}{u_i}})
+\]
+
+\begin{table}[H]
+\centering
+\caption{Logaritmen av den maksimale, relative feilen for den spesielle løsningsalgoritmen med forskjellige verdier av \(n\). Se \vref{c} for programkode.}
+\label{presisjon}
+\input{d.dat}
+\end{table}
+
+Trepunktstilnærmingen til den andrederiverte har et feilledd \(O(h^2)\). Dette betyr at når \(h\) deles på \(10\), dvs. når \(n\) multipliseres med \(10\), bør \(\epsilon\propto\log_{10}\qty(h^2)=2\log_{10}\qty(h)\) avta med \(2\), siden \(\log_{10}\qty(h)\) avtar med \(1\). Dette stemmer godt for \(n\leq10^5\).
+
+For større \(n\), dvs. mindre \(h\), begynner differansene mellom verdiene i \(x_i\) og \(x_{i+1}\) å bli så små at den numeriske presisjonen ikke lenger er tilstrekkelig god, slik at den numeriske feilen tar over for den matematiske feilen som dominerende feilkilde. Feilen er derfor økende for \(n\geq10^6\).
+
+Estimatet av \(\num{45000}\) som beste \(n\)-verdi i \vref{nregning} ser ikke ut til å stemme så godt. Dette kan for eksempel skyldes at den numeriske feilen blir mindre enn antatt, noe som vil føre til større optimal \(n\). I tillegg oppgir tabellen relativ feil, mens estimatet gjelder absolutt feil.
+
+
+\subsection{Sammenligning av kjøretid for LU-dekomposisjon og spesiell løsningsalgoritme}
+
+\begin{table}[H]
+\centering
+\caption{Sammenlikning av tidsforbruk for LU-dekomposisjon fra \texttt{armadillo} og spesiell løsningsalgoritme med forskjellige verdier av \(n\). Se \vref{e}  for programkode.}
+\label{cpuluspes}
+\input{e.dat}
+\end{table}
+Antallet regneoperasjoner skal gå som \(n^3\) for LU-dekomposisjon, og \(n\) for den spesielle løsningsalgoritmen. Dette betyr at forholdet i tidsbruk bør gå som \(n^2\), hvilket stemmer ganske godt fra \(n=100\) til \(n=1000\) og veldig godt fra \(n=1000\) til \(n=\num{10000}\).
+
+LU-dekomposisjonen krever at hele matrisen lagres i minnet, hvilket med \texttt{double} krever \(8n^2\) bytes. For \(n=\num{10000}=10^4\) gir dette \(\SI{800}{\mega B}\), hvilket går greit på de fleste datamaskiner, mens \(n=10^5\) ville kreve \(\SI{80}{\giga B}\), noe ingen ikke-supre datamaskiner har tilgjengelig.
+
+
+
+\section{Konklusjon}
+Fra \vref{cpugenspes} og \vref{cpuluspes} er det veldig tydelig at det er store fordeler ved å utvikle algoritmer for spesialtilfeller slik som tridiagonale matriser, i stedet for å alltid bruke generelle algoritmer som for eksempel LU-dekomposisjon.
+
+
+
+\section{Appendiks}
+
+\subsection{Spesifikasjoner for datamaskinen benyttet under kjøringer}
+\begin{itemize}
+\item Type: HP NoteBook 15
+\item Minne: \(\SI{6}{\giga B}\), samt \(\SI{6}{\giga B}\) «swap».
+\item Prosessor: Intel i3-5005U, \(\SI{2.00}{\giga\hertz}\).
+\end{itemize}
+
+\subsection{Sammenligning av eksakt løsning med resultater fra løsningsalgoritmen for den spesielle, tridiagonale matrisen}
+
+\begin{figure}[H]
+\centering
+\input{b_spesiell.tex}
+\caption{Sammenligning av det eksakte uttrykket med løsninger funnet med algoritmen for spesielle, tridiagonale matriser for \(n=10,\,100,\,1000\). Se \vref{b} for programkode.}
+\label{speseksakt}
+\end{figure}
+
+Resultatene er de samme som i \vref{geneksakt}, ettersom trepunktstilnærmingen til den deriverte benyttes i begge tilfeller.
+
+\clearpage
+\subsection{Programmer}
+\subsubsection{Nyttige funksjoner}\label{felles}
+\inputminted[fontsize=\footnotesize]{cpp}{felles.cpp}\clearpage
+
+\subsubsection{Program som genererer \vref{geneksakt} og \vref{speseksakt}}\label{b}
+\inputminted[fontsize=\footnotesize]{cpp}{b.cpp}\clearpage
+
+\subsubsection{Program som genererer \vref{cpugenspes} og \vref{presisjon}}\label{c}
+\inputminted[fontsize=\footnotesize,breaklines=true]{cpp}{c.cpp}
+
+\subsubsection{Program som genererer \vref{cpuluspes}}\label{e}
+\inputminted[fontsize=\footnotesize,breaklines=true]{cpp}{e.cpp}
+
+\subsubsection{Gnuplotprogram som lager \vref{geneksakt} og \vref{speseksakt}}
+\inputminted[fontsize=\footnotesize,breaklines=true]{gnuplot}{b.gpi}
+
+
+
+\clearpage
+\addcontentsline{toc}{section}{Referanser}
+\printbibliography
+
+
+\end{document}
