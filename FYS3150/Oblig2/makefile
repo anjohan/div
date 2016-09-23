@@ -13,5 +13,6 @@ read: ${NAVN}.pdf
 edit:
 	gvim -p ${NAVN}.tex makefile *.cpp
 clean:
-	rm b.tex b_spesiell.tex *.log *.out *.aux *.o *.dat *.eps *-converted-to.pdf *.x *.toc *.bcf *.bbl *.blg *.run.xml
+	rm *.log *.out *.aux *.o*.x *.toc *.bcf *.bbl *.blg *.run.xml
 	rm -rf _minted-${NAVN}
+	rm *.dat *.eps *-converted-to.pdf
