@@ -1,0 +1,84 @@
+\documentclass[12pt,norsk,a4paper]{report}
+\pdfobjcompresslevel=0
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[includeheadfoot,margin=0.8 in,top=0.6 in]{geometry}
+\usepackage{siunitx,physics,cancel,upgreek,varioref,minted,booktabs,tocloft, pdfpages}
+\usepackage{mathtools}
+\usepackage{babel}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{fouriernc}
+\usepackage{fancyhdr}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{textcomp}
+\usepackage{lastpage}
+\usepackage{microtype}
+\usepackage[linktoc=all, bookmarks=true, pdfauthor={Anders Johansson}]{hyperref}
+\renewcommand{\CancelColor}{\color{red}}
+\renewcommand{\exp}[1]{\mathrm{e}^{#1}}
+\newcommand{\tittel}[1]{\title{#1 \vspace{-7ex}}\author{}\date{}\maketitle\thispagestyle{fancy}\pagestyle{fancy}\setcounter{page}{1}}
+
+\newcommand{\deloppg}[2][]{\subsection*{#2) #1}\addcontentsline{toc}{subsection}{#2)}\refstepcounter{subsection}\label{#2}}
+\newcommand{\oppg}[1]{\section*{Oppgave #1}\addcontentsline{toc}{section}{Oppgave #1}\refstepcounter{section}\label{oppg#1}}
+
+\labelformat{section}{seksjon~#1}
+\labelformat{subsection}{avsnitt~#1}
+\labelformat{subsubsection}{avsnitt~#1}
+\labelformat{equation}{likning~(#1)}
+\labelformat{figure}{figur~#1}
+\labelformat{table}{tabell~#1}
+
+\renewcommand{\footrulewidth}{\headrulewidth}
+\tocloftpagestyle{fancy}
+
+\setcounter{secnumdepth}{4}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1em}
+
+\newcommand{\eqtag}[1]{\refstepcounter{equation}\tag{\theequation}\label{#1}}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=black}
+
+\sisetup{detect-all}
+\sisetup{exponent-product = \cdot, output-product = \cdot,per-mode=symbol}
+\sisetup{output-decimal-marker={,}}
+\sisetup{round-mode = off, round-precision=3}
+\sisetup{number-unit-product = \ }
+
+\allowdisplaybreaks[4]
+\fancyhf{}
+
+\rhead{Anders Johansson}
+\rfoot{Side \thepage{} av \pageref{LastPage}}
+\lhead{FYS3150}
+%
+\usepackage[backend=biber,citestyle=numeric-comp,bibstyle=numeric,sorting=none]{biblatex}
+\DefineBibliographyStrings{norsk}{%
+  bibliography = {Referanser},
+}
+\addbibresource{kilder.bib}
+
+\begin{document}
+%\includepdf{forside.pdf}
+\pagestyle{fancy}
+\tableofcontents
+
+\section{Sammendrag}
+
+Alle filene til dette prosjektet finnes på GitHub\footnote{\url{https://github.com/anjohan/Offentlig/tree/master/FYS3150/Oblig2}}.
+
+
+\section{Introduksjon}
+Differensiallikninger er en sentral del av fysikken, ettersom mange av de mest sentrale lovene og likningene (f.eks. Newtons lover og Schrödingerlikningen) er differensiallikninger. Majoriteten av disse likningene er vanskelige eller umulige å løse analytisk, så numeriske løsningsmetoder for differensiallikninger er et viktig verktøy for fysikere.
+
+
+\clearpage
+\addcontentsline{toc}{section}{Referanser}
+\printbibliography
+
+
+\end{document}
