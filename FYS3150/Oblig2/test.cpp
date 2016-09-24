@@ -35,4 +35,16 @@ int main(){
     printf("\n%.4f",finn_storste_utenfor_diagonal_symmetrisk(R,n,kl));
     delete [] A;
     delete [] R;
+
+    /*
+    double verdier[] = {-14,1,2,-15,-17,23,47};
+    int *res = new int[3];
+
+    finn_de_tre_minste(verdier,7,res);
+    int i;
+    for(i=0; i<3; i++){
+        printf("%d\n",res[i]);
+    }
+    delete [] res;
+    */
 }

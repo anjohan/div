@@ -1,0 +1,12 @@
+set terminal epslatex size 5,3 color colortext
+set style line 1 lt 1 linecolor rgb "blue" linewidth 3
+
+set output "plot.tex"
+set grid
+set decimalsign "${,}$"
+set key top right
+
+set key autotitle columnhead
+set datafile separator ';'
+
+plot for [col=2:4] "test.dat" using 1:col with lines lw 3

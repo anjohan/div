@@ -1,20 +1,22 @@
 #include "funksjoner.h"
 #include <cmath>
+#include <cstdio>
 
-int jacobi(double** A, double** R, int n, double toleranse = 1E-8){
+int jacobi(double** A, double** R, int n, double toleranse = 1E-15){
     double tau, tangens, cosinus, sinus, maks;
     int i, k, l, *kl, iterasjoner, maks_iterasjoner;
     double a_kk, a_ll, a_kl, a_ik, a_il, r_ik, r_il;
     kl = new int[2];
-    maks_iterasjoner = 1000;
+    maks_iterasjoner = 1081000;
     iterasjoner = 0;
     lagidentitet(R,n);
+    //skrivmatrise(R,n);
     maks = finn_storste_utenfor_diagonal_symmetrisk(A,n,kl);
     while(iterasjoner <= maks_iterasjoner && maks > toleranse){
         k = kl[0]; l = kl[1];
         a_kk = A[k][k]; a_ll = A[l][l]; a_kl = A[k][l];
         tau = (a_ll-a_kk)/(2*a_kl);
-        tangens = -tau + sqrt(1 + tau*tau);
+        tangens = 1/(tau - (tau>0 ? 1 : -1)*sqrt(1 + tau*tau));
         cosinus = 1/sqrt(1 + tangens*tangens);
         sinus = tangens*cosinus;
 
@@ -37,6 +39,7 @@ int jacobi(double** A, double** R, int n, double toleranse = 1E-8){
         }
 
         iterasjoner++;
+        printf("%d\r",iterasjoner);
         maks = finn_storste_utenfor_diagonal_symmetrisk(A,n,kl);
     }
     return iterasjoner;
