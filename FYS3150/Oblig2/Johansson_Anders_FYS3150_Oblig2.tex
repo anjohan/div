@@ -95,9 +95,13 @@ Orthogonal transformations hence conserve the inner product, and therefore also 
 \]
 \caption{The three lowest eigenvalues found by the algorithm for the different number of mesh points \(n\). The analytical values are \(\lambda_0=3\), \(\lambda_1=7\) and \(\lambda_2=11\).}
 \end{table}
-It seems that the number of iterations is quadrupled when the number of mesh points is doubled, indicating that the numbers of iterations runs as \(n^2\). This means that the number of iterations is proportional to the number of elements in the matrix. Note that the matrices handled in this project are tridiagonal, and the trends may be different for dense matrices.
+The number of iterations is approximately quadrupled when the number of mesh points is doubled, indicating that the numbers of iterations runs as \(n^2\). This means that the number of iterations is proportional to the number of elements in the matrix. Note that the matrices handled in this project are tridiagonal, and the trends may be different for dense matrices.
 
 
+\begin{figure}[H]
+\centering
+\input{plot2.tex}
+\end{figure}
 
 
 

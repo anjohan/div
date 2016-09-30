@@ -3,7 +3,7 @@
 
 class Potensial{
     public:
-        double operator()(double rho){return rho*rho;}
+        double eval(double rho){return rho*rho;}
 };
 
 
