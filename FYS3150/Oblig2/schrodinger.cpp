@@ -3,9 +3,9 @@
 #include <cstdio>
 
 
-void schrodinger(int n, double rho_min, double rho_max, double* egenverdier, double** egenvektorer, double (*V)(double),char* filnavn){
-    int i, j;
-    double **A, h, h2invers;
+int schrodinger(int n, double rho_min, double rho_max, double* egenverdier, double** egenvektorer, double (*V)(double),char* filnavn){
+    int i, j, antall_iterasjoner;
+    double **A, h, h2invers, x_ij;
     A = new double*[n];
     h = (rho_max - rho_min)/(n+1);
     h2invers = 1/(h*h);
@@ -25,8 +25,8 @@ void schrodinger(int n, double rho_min, double rho_max, double* egenverdier, dou
         A[i][i] = 2*h2invers + (*V)(rho_min + (i+1)*h);
     }
 
-    jacobi(A,egenvektorer,n);
-    skrivmatrise(A,n); printf("----------\n"); skrivmatrise(egenvektorer,n);
+    antall_iterasjoner = jacobi(A,egenvektorer,n);
+    //skrivmatrise(A,n); printf("----------\n"); skrivmatrise(egenvektorer,n);
 
     for(i=0; i<n; i++){
         egenverdier[i] = A[i][i];
@@ -48,7 +48,8 @@ void schrodinger(int n, double rho_min, double rho_max, double* egenverdier, dou
     for(i=0; i<n; i++){
         fprintf(fil,"%.6f;",(i+1)*h);
         for(j=0; j<3; j++){
-            fprintf(fil,"%.6f;",egenvektorer[i][minsteegenverdier[j]]);
+            x_ij = egenvektorer[i][minsteegenverdier[j]];
+            fprintf(fil,"%.6f;",x_ij*x_ij);
         }
         fprintf(fil,"\n");
     }
@@ -61,4 +62,5 @@ void schrodinger(int n, double rho_min, double rho_max, double* egenverdier, dou
     }
     delete [] A;
     delete [] minsteegenverdier;
+    return antall_iterasjoner;
 }

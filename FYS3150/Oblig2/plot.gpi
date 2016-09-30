@@ -1,12 +1,14 @@
 set terminal epslatex size 5,3 color colortext
-set style line 1 lt 1 linecolor rgb "blue" linewidth 3
 
-set output "plot.tex"
+set output "plot1.tex"
 set grid
-set decimalsign "${,}$"
+#set decimalsign "${,}$"
 set key top right
 
 set key autotitle columnhead
 set datafile separator ';'
 
-plot for [col=2:4] "test.dat" using 1:col with lines lw 3
+set xlabel "$\\rho$"
+set ylabel "$u(\\rho)^2$"
+
+plot for [col=2:4] "nlik250.dat" using 1:col with lines lw 3

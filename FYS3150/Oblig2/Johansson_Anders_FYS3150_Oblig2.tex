@@ -1,4 +1,4 @@
-\documentclass[12pt,norsk,a4paper]{report}
+\documentclass[12pt,english,a4paper]{report}
 \pdfobjcompresslevel=0
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage[includeheadfoot,margin=0.8 in,top=0.6 in]{geometry}
@@ -23,12 +23,12 @@
 \newcommand{\deloppg}[2][]{\subsection*{#2) #1}\addcontentsline{toc}{subsection}{#2)}\refstepcounter{subsection}\label{#2}}
 \newcommand{\oppg}[1]{\section*{Oppgave #1}\addcontentsline{toc}{section}{Oppgave #1}\refstepcounter{section}\label{oppg#1}}
 
-\labelformat{section}{seksjon~#1}
-\labelformat{subsection}{avsnitt~#1}
-\labelformat{subsubsection}{avsnitt~#1}
-\labelformat{equation}{likning~(#1)}
-\labelformat{figure}{figur~#1}
-\labelformat{table}{tabell~#1}
+% \labelformat{section}{seksjon~#1}
+% \labelformat{subsection}{avsnitt~#1}
+% \labelformat{subsubsection}{avsnitt~#1}
+% \labelformat{equation}{likning~(#1)}
+% \labelformat{figure}{figur~#1}
+% \labelformat{table}{tabell~#1}
 
 \renewcommand{\footrulewidth}{\headrulewidth}
 \tocloftpagestyle{fancy}
@@ -45,7 +45,7 @@
 
 \sisetup{detect-all}
 \sisetup{exponent-product = \cdot, output-product = \cdot,per-mode=symbol}
-\sisetup{output-decimal-marker={,}}
+\sisetup{output-decimal-marker={.}}
 \sisetup{round-mode = off, round-precision=3}
 \sisetup{number-unit-product = \ }
 
@@ -53,7 +53,7 @@
 \fancyhf{}
 
 \rhead{Anders Johansson}
-\rfoot{Side \thepage{} av \pageref{LastPage}}
+\rfoot{Page \thepage{} of \pageref{LastPage}}
 \lhead{FYS3150}
 %
 \usepackage[backend=biber,citestyle=numeric-comp,bibstyle=numeric,sorting=none]{biblatex}
@@ -67,28 +67,35 @@
 \pagestyle{fancy}
 \tableofcontents
 
-\section{Sammendrag}
+\section{Abstract}
 
-Alle filene til dette prosjektet finnes på GitHub\footnote{\url{https://github.com/anjohan/Offentlig/tree/master/FYS3150/Oblig2}}.
+All files for this project are available at GitHub\footnote{\url{https://github.com/anjohan/Offentlig/tree/master/FYS3150/Oblig2}}.
 
 
-\section{Introduksjon}
-Differensiallikninger er en sentral del av fysikken, ettersom mange av de mest sentrale lovene og likningene (f.eks. Newtons lover og Schrödingerlikningen) er differensiallikninger. Majoriteten av disse likningene er vanskelige eller umulige å løse analytisk, så numeriske løsningsmetoder for differensiallikninger er et viktig verktøy for fysikere.
+\section{Introduction}
 
 \section{Obligbesvarelse}
 \deloppg{a}
-Hvis \(U\) er ortogonal, er \(U^TU=I\). Dette gir:
+If \(U\) is orthogonal, \(U^TU=I\). This implies:
 \[
 \vec{w}_i^T\vec{w}_j = \qty(U\vec{v}_i)^T\qty(U\vec{v}_j) = \vec{v}_i^T\overbrace{U^TU}^I\vec{v}_j = \vec{v}_i^T\vec{v}_j=\vec{v}_i\cdot \vec{v}_j
 \]
-Ortogonale transformasjoner bevarer altså prikkproduktet, og dermed også ortogonaliteten.
+Orthogonal transformations hence conserve the inner product, and therefore also the orthogonality.
 
 
 \begin{figure}[H]
 \centering
-\input{plot.tex}
+\input{plot1.tex}
+\caption{Simulation of the case without repulsion for \(n=250\) with \(\rho_{\max}=8\).}
 \end{figure}
 
+\begin{table}[H]
+\[
+\input{egenverdier.dat}
+\]
+\caption{The three lowest eigenvalues found by the algorithm for the different number of mesh points \(n\). The analytical values are \(\lambda_0=3\), \(\lambda_1=7\) and \(\lambda_2=11\).}
+\end{table}
+It seems that the number of iterations is quadrupled when the number of mesh points is doubled, indicating that the numbers of iterations runs as \(n^2\). This means that the number of iterations is proportional to the number of elements in the matrix. Note that the matrices handled in this project are tridiagonal, and the trends may be different for dense matrices.
 
 
 

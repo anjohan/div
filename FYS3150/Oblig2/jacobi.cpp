@@ -2,12 +2,12 @@
 #include <cmath>
 #include <cstdio>
 
-int jacobi(double** A, double** R, int n, double toleranse = 1E-15){
+int jacobi(double** A, double** R, int n, double toleranse = 1E-8){
     double tau, tangens, cosinus, sinus, maks;
     int i, k, l, *kl, iterasjoner, maks_iterasjoner;
     double a_kk, a_ll, a_kl, a_ik, a_il, r_ik, r_il;
     kl = new int[2];
-    maks_iterasjoner = 1081000;
+    maks_iterasjoner = 1000000;
     iterasjoner = 0;
     lagidentitet(R,n);
     //skrivmatrise(R,n);
@@ -39,8 +39,12 @@ int jacobi(double** A, double** R, int n, double toleranse = 1E-15){
         }
 
         iterasjoner++;
-        printf("%d\r",iterasjoner);
+        if(iterasjoner % 1000 == 0){
+            printf("\r%d",iterasjoner);
+            fflush(stdout);
+        }
         maks = finn_storste_utenfor_diagonal_symmetrisk(A,n,kl);
     }
+    printf("\n");
     return iterasjoner;
 }

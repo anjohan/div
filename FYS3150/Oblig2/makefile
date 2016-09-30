@@ -2,7 +2,7 @@ NAVN = Johansson_Anders_FYS3150_Oblig2
 FLAGG = -O3 -Wall -std=c++11
 all: pdf uteninteraksjon.x
 pdf: ${NAVN}.pdf
-${NAVN}.pdf: ${NAVN}.tex ${NAVN}.bcf
+${NAVN}.pdf: ${NAVN}.tex ${NAVN}.bcf plot1.tex
 	pdflatex -shell-escape ${NAVN}.tex
 	pdflatex -shell-escape ${NAVN}.tex
 ${NAVN}.bcf: kilder.bib ${NAVN}.tex
@@ -22,6 +22,10 @@ test.x: test.o funksjoner.o jacobi.o
 	g++ -o test.x test.o funksjoner.o jacobi.o
 test.o: test.cpp
 	g++ -c ${FLAGG} test.cpp
+plot1.tex: plot.gpi nlik250.dat
+	gnuplot plot.gpi
+nlik250.dat: uteninteraksjon.x
+	time ./uteninteraksjon.x
 read: ${NAVN}.pdf
 	evince ${NAVN}.pdf &
 edit:
