@@ -3,7 +3,8 @@
 
 class Potensial{
     public:
-        double eval(double rho){return rho*rho;}
+        virtual double eval(double rho){return rho*rho;}
+        virtual ~Potensial(){;}
 };
 
 

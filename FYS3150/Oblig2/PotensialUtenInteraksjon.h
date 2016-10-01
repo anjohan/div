@@ -9,8 +9,7 @@ class PotensialUtenInteraksjon : public Potensial{
         PotensialUtenInteraksjon(double om){
             omega = om;
         }
-        double eval(double rho){
-            printf("hei\n");
+        virtual double eval(double rho){
             return omega*omega*rho*rho;
         }
     protected:

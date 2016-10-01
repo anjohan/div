@@ -3,9 +3,7 @@ FLAGG = -O3 -Wall -std=c++11
 all: pdf enpartikkel.x
 pdf: ${NAVN}.pdf
 ${NAVN}.pdf: ${NAVN}.tex plot1.tex plot2.tex
-	pdflatex -shell-escape ${NAVN}.tex
-	biber ${NAVN}
-	pdflatex -shell-escape ${NAVN}.tex
+	latexmk -silent -shell-escape -pdf ${NAVN}.tex
 enpartikkel.x: enpartikkel.o funksjoner.o schrodinger.o jacobi.o Potensial.o
 	g++ -o enpartikkel.x enpartikkel.o funksjoner.o schrodinger.o jacobi.o Potensial.o
 enpartikkel.o: enpartikkel.cpp
@@ -43,6 +41,7 @@ read: ${NAVN}.pdf
 edit:
 	gvim -p ${NAVN}.tex makefile *.cpp
 clean:
-	rm *.log *.out *.aux *.o *.x *.toc *.bcf *.bbl *.blg *.run.xml
+	latexmk -c
+	rm *.bbl *.o *.x
 	rm -rf _minted-${NAVN}
-	rm *.dat *.eps *-converted-to.pdf
+	rm *.dat *.eps *-converted-to.pdf *.h.gch plot*.tex

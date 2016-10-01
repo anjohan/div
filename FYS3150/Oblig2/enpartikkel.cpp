@@ -11,7 +11,7 @@ int main(){
     double *egenverdier, **egenvektorer;
     int* minsteegenverdier = new int[3];
     FILE *fil = fopen("egenverdier.dat","w");
-    Potensial V;
+    Potensial *V = new Potensial;
     fprintf(fil,R"(\begin{array}{ccccc}\toprule)"); fprintf(fil,"\n");
     fprintf(fil,R"(n & \lambda_0 & \lambda_1 & \lambda_2 & \text{Number of iterations}\\)");
     for(n=50; n < 251; n+=50){
@@ -41,6 +41,7 @@ int main(){
         delete [] filnavn;
     }
     delete [] minsteegenverdier;
+    delete V;
     fprintf(fil,R"(\bottomrule \end{array})");
     fclose(fil);
 }

@@ -13,12 +13,14 @@ int main(){
     char* filnavn1, *filnavn2;
     egenvektorer = new double*[n-1];
     egenverdier = new double[n-1];
+    PotensialUtenInteraksjon *Vuten;
+    PotensialMedInteraksjon *Vmed;
     for(i=0; i<n-1; i++){
         egenvektorer[i] = new double[n-1];
     }
-    for(omega=0.2; omega < 6; omega*=5){
-        PotensialUtenInteraksjon Vuten(omega);
-        PotensialMedInteraksjon Vmed(omega);
+    for(omega=0.04; omega < 6; omega*=5){
+        Vuten = new PotensialUtenInteraksjon(omega);
+        Vmed = new PotensialMedInteraksjon(omega);
         filnavn1 = new char[20];
         filnavn2 = new char[20];
         sprintf(filnavn1,"omegauten%.2f.dat",omega);
@@ -28,6 +30,8 @@ int main(){
 
         delete [] filnavn1;
         delete [] filnavn2;
+        delete Vuten;
+        delete Vmed;
     }
     for(i=0; i<n-1; i++){
         delete [] egenvektorer[i];
