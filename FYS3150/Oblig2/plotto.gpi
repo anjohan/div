@@ -1,4 +1,4 @@
-set terminal epslatex size 5,3 color colortext
+set terminal epslatex size 6,3 color colortext
 
 set output "plot2.tex"
 set grid
@@ -9,8 +9,10 @@ set datafile separator ';'
 
 set xlabel "$\\rho$"
 set ylabel "$u(\\rho)^2$"
+set xrange[0:6.5]
 
-plot "omegauten5.00.dat" using 1:2 every ::1 title "Uten interaksjon, $\\omega=\\num{5.0}$" with lines lw 3,\
-"omegamed5.00.dat" using 1:2 every ::1 title "Med interaksjon, $\\omega=\\num{5.0}$" with lines lw 3,\
-"omegauten0.20.dat" using 1:2 every ::1 title "Uten interaksjon, $\\omega=\\num{0.20}$" with lines lw 3,\
-"omegamed0.20.dat" using 1:2 every ::1 title "Med interaksjon, $\\omega=\\num{0.20}$" with lines lw 3
+omegaer = "0.20 1.00 5.00"
+
+plot for [omega in omegaer] sprintf("omegauten%s.dat",omega) using 1:2 every ::1 title sprintf("No interaction, $\\omega=\\num{%s}$",omega) with lines lw 4,\
+for [omega in omegaer] sprintf("omegamed%s.dat",omega) using 1:2 every ::1 title sprintf("With interaction, $\\omega=\\num{%s}$",omega) with lines lw 4
+

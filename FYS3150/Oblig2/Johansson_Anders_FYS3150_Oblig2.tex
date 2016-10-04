@@ -2,7 +2,7 @@
 \pdfobjcompresslevel=0
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage[includeheadfoot,margin=0.8 in,top=0.6 in]{geometry}
-\usepackage{siunitx,physics,cancel,upgreek,varioref,minted,booktabs,tocloft, pdfpages}
+\usepackage{siunitx,physics,cancel,upgreek,varioref,listings,booktabs,tocloft, pdfpages}
 \usepackage{mathtools}
 \usepackage{babel}
 \usepackage{graphicx}
@@ -18,6 +18,7 @@
 \usepackage[linktoc=all, bookmarks=true, pdfauthor={Anders Johansson}]{hyperref}
 \renewcommand{\CancelColor}{\color{red}}
 \renewcommand{\exp}[1]{\mathrm{e}^{#1}}
+\newcommand{\R}{\mathbb{R}}
 \newcommand{\tittel}[1]{\title{#1 \vspace{-7ex}}\author{}\date{}\maketitle\thispagestyle{fancy}\pagestyle{fancy}\setcounter{page}{1}}
 
 \newcommand{\deloppg}[2][]{\subsection*{#2) #1}\addcontentsline{toc}{subsection}{#2)}\refstepcounter{subsection}\label{#2}}
@@ -29,6 +30,44 @@
 % \labelformat{equation}{likning~(#1)}
 % \labelformat{figure}{figur~#1}
 % \labelformat{table}{tabell~#1}
+
+\lstset{rangeprefix=/*\#,
+rangesuffix=\#*/,
+includerangemarker=false}
+\renewcommand{\lstlistingname}{Code snippet}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstset{showstringspaces=false,
+basicstyle=\footnotesize\ttfamily,
+keywordstyle=\color{codegreen},
+commentstyle=\color{magenta},
+numberstyle=\tiny\color{codegray},
+stringstyle=\color{codepurple},
+frameshape={RYRYNYYYY}{yny}{yny}{RYRYNYYYY},
+breaklines=true,
+literate={0}{{\textcolor{blue}{0}}}{1}%
+             {1}{{\textcolor{blue}{1}}}{1}%
+             {2}{{\textcolor{blue}{2}}}{1}%
+             {3}{{\textcolor{blue}{3}}}{1}%
+             {4}{{\textcolor{blue}{4}}}{1}%
+             {5}{{\textcolor{blue}{5}}}{1}%
+             {6}{{\textcolor{blue}{6}}}{1}%
+             {7}{{\textcolor{blue}{7}}}{1}%
+             {8}{{\textcolor{blue}{8}}}{1}%
+             {9}{{\textcolor{blue}{9}}}{1}%
+             {.0}{{\textcolor{blue}{.0}}}{2}% Following is to ensure that only periods
+             {.1}{{\textcolor{blue}{.1}}}{2}% followed by a digit are changed.
+             {.2}{{\textcolor{blue}{.2}}}{2}%
+             {.3}{{\textcolor{blue}{.3}}}{2}%
+             {.4}{{\textcolor{blue}{.4}}}{2}%
+             {.5}{{\textcolor{blue}{.5}}}{2}%
+             {.6}{{\textcolor{blue}{.6}}}{2}%
+             {.7}{{\textcolor{blue}{.7}}}{2}%
+             {.8}{{\textcolor{blue}{.8}}}{2}%
+             {.9}{{\textcolor{blue}{.9}}}{2}%
+}
 
 \renewcommand{\footrulewidth}{\headrulewidth}
 \tocloftpagestyle{fancy}
@@ -73,15 +112,32 @@ All files for this project are available at GitHub\footnote{\url{https://github.
 
 
 \section{Introduction}
-%%
-\section{Obligbesvarelse}
-\deloppg{a}
+
+
+
+
+
+\section{Theory}
+
+
+
+
+
+\subsection{Orthogonal transformations}
+Jacobi's method relies heavily on orthogonal transformations and their properties. Orthogonal transformations are, in \(\R^n\), functions on the form
+\[
+T:\vec{x}\mapsto U\vec{x}
+\]
+where \(\vec{x}\) is a vector in \(\R^n\) and \(U\) is a real, orthogonal \(n\times n\) matrix.
+
 If \(U\) is orthogonal, \(U^TU=I\). This implies:
 \[
-\vec{w}_i^T\vec{w}_j = \qty(U\vec{v}_i)^T\qty(U\vec{v}_j) = \vec{v}_i^T\overbrace{U^TU}^I\vec{v}_j = \vec{v}_i^T\vec{v}_j=\vec{v}_i\cdot \vec{v}_j
+T(\vec{v}_i)\cdot T(\vec{v}_j) = \qty(U\vec{v}_i)\cdot\qty(U\vec{v}_j) = \qty(U\vec{v}_i)^T\qty(U\vec{v}_j) = \vec{v}_i^T\overbrace{U^TU}^I\vec{v}_j = \vec{v}_i^T\vec{v}_j=\vec{v}_i\cdot \vec{v}_j
 \]
 Orthogonal transformations hence conserve the inner product, and therefore also the orthogonality.
 
+\section{Results and discussion}
+\subsection{Simulation for one particle}
 \begin{figure}[H]
 \centering
 \input{plot1.tex}
@@ -97,6 +153,7 @@ Orthogonal transformations hence conserve the inner product, and therefore also 
 The number of iterations is approximately quadrupled when the number of mesh points is doubled, indicating that the numbers of iterations runs as \(n^2\). This means that the number of iterations is proportional to the number of elements in the matrix. Note that the matrices handled in this project are tridiagonal, and the trends may be different for dense matrices.
 
 
+\subsection{Simulation for two particles}
 \begin{figure}[H]
 \centering
 \input{plot2.tex}
@@ -104,7 +161,31 @@ The number of iterations is approximately quadrupled when the number of mesh poi
 \end{figure}
 
 
+\section{Tests}
+\subsection{Ability to find eigenvalues and eigenvectors}
+The matrix
+\[
+A = \begin{bmatrix}7 & -2 & 0\\ -2 & 6 & -2\\ 0 & -2 & 5\end{bmatrix}
+\]
+has the pretty eigenvalues \(3\), \(6\) and \(9\), with corresponding eigenvectors
+\[
+\begin{bmatrix}1 \\ 2 \\ 2\end{bmatrix},\quad
+\begin{bmatrix}-2 \\ 1 \\ 2\end{bmatrix}, \quad
+\begin{bmatrix}2 \\ -2 \\ 1\end{bmatrix}
+\]
 
+The implementation of Jacobi's method can be tested on this matrix using
+\lstinputlisting[language=C++,linerange={eigenteststart-eigentestslutt},caption={Test of eigenvalues.}]{test.cpp}
+where \texttt{A} and \texttt{R} are \(3\times3\) pointer matrices and \texttt{n} is \(3\). Formatted printing of the resulting \texttt{A} and \texttt{R} yields
+\lstinputlisting[frame=none,language=]{eigentest.txt}
+This is the expected result, except that the program returns normalized eigenvectors.
+
+\subsection{Ability to find largest non-diagonal elements}
+A simple test is
+\lstinputlisting[language=C++,linerange={largeststart-largestend},caption={Test of search for largest non-diagonal element.}]{test.cpp}
+which yields
+\lstinputlisting[frame=none,language=]{storstetest.txt}
+This is correct, as the function searches for the element with the largest absolute value. It is not necessary to specify the upper triangle of the matrix, as the function is specialized for symmetric matrices and therefore only searches the lower triangle.
 
 
 

@@ -50,7 +50,7 @@ int schrodinger(int n, double rho_min, double rho_max, double* egenverdier, doub
         fprintf(fil,"%.6f;",(i+1)*h);
         for(j=0; j<3; j++){
             x_ij = egenvektorer[i][minsteegenverdier[j]];
-            fprintf(fil,"%.6f;",x_ij*x_ij);
+            fprintf(fil,"%.6f;",x_ij*x_ij/h);
         }
         fprintf(fil,"\n");
     }

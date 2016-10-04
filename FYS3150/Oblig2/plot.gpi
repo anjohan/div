@@ -1,4 +1,4 @@
-set terminal epslatex size 5,3 color colortext
+set terminal epslatex size 6,3 color colortext
 
 set output "plot1.tex"
 set grid
@@ -10,5 +10,6 @@ set datafile separator ';'
 
 set xlabel "$\\rho$"
 set ylabel "$u(\\rho)^2$"
+set xrange[0:5]
 
-plot for [col=2:4] "nlik250.dat" using 1:col with lines lw 3
+plot for [col=2:4] "nlik250.dat" using 1:col with lines lw 4

@@ -5,46 +5,55 @@
 int main(){
     double **A, **R;
     int iterasjoner, i, j, n = 3;
-    int *kl = new int[2];
     A = new double*[n];
     R = new double*[n];
     for(i=0; i<n; i++){
         A[i] = new double[n];
         R[i] = new double[n];
     }
-    lagidentitet(R,n);
+
+    /*#eigenteststart#*/
     A[0][0] = 7; A[0][1] = -2; A[0][2] = 0;
     A[1][0] = -2; A[1][1] = 6; A[1][2] = -2;
     A[2][0] = 0; A[2][1] = -2; A[2][2] = 5;
 
     iterasjoner = jacobi(A,R,n, 1E-12);
-    printf("%d\n----\n",iterasjoner);
+    /*#eigentestslutt#*/
+
     for(i=0; i<n; i++){
         for(j=0; j<n; j++){
             printf("%7.3f",A[i][j]);
         }
         printf("\n");
     }
-    printf("----------------\n");
+    printf("-----------------------\n");
     for(i=0; i<n; i++){
         for(j=0; j<n; j++){
             printf("%7.3f",R[i][j]);
         }
         printf("\n");
     }
-    printf("\n%.4f",finn_storste_utenfor_diagonal_symmetrisk(R,n,kl));
     delete [] A;
     delete [] R;
 
-    /*
-    double verdier[] = {-14,1,2,-15,-17,23,47};
-    int *res = new int[3];
-
-    finn_de_tre_minste(verdier,7,res);
-    int i;
-    for(i=0; i<3; i++){
-        printf("%d\n",res[i]);
+    FILE *file = fopen("storstetest.txt","w");
+    A = new double*[5];
+    int *kl = new int[2];
+    for(i=0; i<5; i++){
+        A[i] = new double[5];
     }
-    delete [] res;
-    */
+    /*#largeststart#*/
+    A[0][0] = 2;
+    A[1][0] = 4; A[1][1] = 12;
+    A[2][0] = -2; A[2][1] = -5; A[2][2] = 1;
+    A[3][0] = 1; A[3][1] = 0; A[3][2] = 4; A[3][3] = 2;
+    A[4][0] = 1; A[4][1] = 0; A[4][2] = 4; A[4][3] = 2; A[4][4] = -7;
+    finn_storste_utenfor_diagonal_symmetrisk(A,5,kl);
+    fprintf(file,"k=%d, l=%d",kl[0],kl[1]);
+    /*#largestend#*/
+    fclose(file);
+    for(i=0; i<5; i++){
+        delete [] A[i];
+    }
+    delete [] A;
 }
