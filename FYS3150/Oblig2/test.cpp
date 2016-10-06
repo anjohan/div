@@ -48,7 +48,7 @@ int main(){
     A[2][0] = -2; A[2][1] = -5; A[2][2] = 1;
     A[3][0] = 1; A[3][1] = 0; A[3][2] = 4; A[3][3] = 2;
     A[4][0] = 1; A[4][1] = 0; A[4][2] = 4; A[4][3] = 2; A[4][4] = -7;
-    finn_storste_utenfor_diagonal_symmetrisk(A,5,kl);
+    largest_nondiagonal_symmetric(A,5,kl);
     fprintf(file,"k=%d, l=%d",kl[0],kl[1]);
     /*#largestend#*/
     fclose(file);

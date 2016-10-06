@@ -1,4 +1,4 @@
-double finn_storste_utenfor_diagonal_symmetrisk(double** A, int n, int* kl);
+double largest_nondiagonal_symmetric(double** A, int n, int* kl);
 
 void lagidentitet(double** R, int n);
 

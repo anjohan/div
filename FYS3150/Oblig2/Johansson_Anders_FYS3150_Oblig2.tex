@@ -24,12 +24,12 @@
 \newcommand{\deloppg}[2][]{\subsection*{#2) #1}\addcontentsline{toc}{subsection}{#2)}\refstepcounter{subsection}\label{#2}}
 \newcommand{\oppg}[1]{\section*{Oppgave #1}\addcontentsline{toc}{section}{Oppgave #1}\refstepcounter{section}\label{oppg#1}}
 
-% \labelformat{section}{seksjon~#1}
-% \labelformat{subsection}{avsnitt~#1}
-% \labelformat{subsubsection}{avsnitt~#1}
-% \labelformat{equation}{likning~(#1)}
-% \labelformat{figure}{figur~#1}
-% \labelformat{table}{tabell~#1}
+\labelformat{section}{section~#1}
+\labelformat{subsection}{section~#1}
+\labelformat{subsubsection}{paragraph~#1}
+\labelformat{equation}{equation~(#1)}
+\labelformat{figure}{figure~#1}
+\labelformat{table}{table~#1}
 
 \lstset{rangeprefix=/*\#,
 rangesuffix=\#*/,
@@ -123,7 +123,7 @@ All files for this project are available at GitHub\footnote{\url{https://github.
 
 
 
-\subsection{Orthogonal transformations}
+\subsection{Orthogonal transformations of vectors}
 Jacobi's method relies heavily on orthogonal transformations and their properties. Orthogonal transformations are, in \(\R^n\), functions on the form
 \[
 T:\vec{x}\mapsto U\vec{x}
@@ -135,6 +135,97 @@ If \(U\) is orthogonal, \(U^TU=I\). This implies:
 T(\vec{v}_i)\cdot T(\vec{v}_j) = \qty(U\vec{v}_i)\cdot\qty(U\vec{v}_j) = \qty(U\vec{v}_i)^T\qty(U\vec{v}_j) = \vec{v}_i^T\overbrace{U^TU}^I\vec{v}_j = \vec{v}_i^T\vec{v}_j=\vec{v}_i\cdot \vec{v}_j
 \]
 Orthogonal transformations hence conserve the inner product, and therefore also the orthogonality.
+
+
+
+\subsection{Orthogonal similarity transformations of matrices}
+If we have a matrix \(A\) with an eigenvector \(\vec{x}\) with corresponding eigenvalue \(\lambda\), then
+\begin{alignat*}{2}
+A\vec{x} &= \lambda \vec{x}
+\intertext{Multiplying with the transpose of an orthogonal matrix \(S\), we get}
+S^TA\vec{x} &= \lambda S^T\vec{x}
+\intertext{As \(S\) is orthogonal, \(SS^T=I\), so we can sneak in an identity matrix disguised as \(SS^T\) between \(A\) and \(\vec{x}\) on the left hand side:}
+S^TASS^T\vec{x} &= \lambda S^T\vec{x}\\
+\qty(S^TAS)\qty(S^T\vec{x}) &= \lambda \qty(S^T\vec{x}) \eqtag{eigenvectransform}
+\end{alignat*}
+This proves that if \(A\) is transformed to \(S^TAS\), the eigenvalues remain the same, while the new eigenvector is \(S^T\vec{x}\).
+
+It is easy to prove that symmetry is conserved by the similarity transformation:
+\[
+\qty(S^TAS)^T = S^TA^T\qty(S^T)^T = S^TA^TS = S^TAS
+\]
+if and only if \(A^T=A\), i.e. when \(A\) is symmetric.
+
+It can also be shown that the Frobenius norm, the square root of the sum of the squares of the matrix elements, is also conserved by the transformation\autocite{compphys}.
+
+\subsection{Strategy for finding eigenvalues and eigenvectors, using orthogonal similarity transformations}
+If the transformation matrix \(S\) is chosen in a special way such that the largest non-diagonal element of \(A\) is transformed to \(0\), the sum of the squares of the non-diagonal elements decreases from the transformations. This means that if the transformation is applied repeatedly, the matrix is converging towards a diagonal matrix \(D\).
+
+If \(D=\operatorname{diag}\qty{d_1,d_2,\dots,d_n}\), the characteristic polynomial is given by
+\[
+\operatorname{det}\qty(\lambda I - D) = \qty(\lambda-d_1)\cdot\qty(\lambda-d_2)\cdot\ldots\cdot\qty(\lambda-d_n)
+\]
+and hence the eigenvalues of \(D\) are simply the diagonal elements. The eigenvectors can be chosen as the elements in the standard basis for \(\R^n\), i.e. the columns of the identity matrix.
+
+When \(A\) is transformed to \(D\), the matrix of eigenvectors, \(R\), is therefore transformed to \(I\). On the other hand, we know from \vref{eigenvectransform} that if \(\vec{x}\) is an eigenvector of \(A\), then \(S^T\vec{x}\) is an eigenvector of the transformed matrix. If \(A\) is transformed into \(D\) after \(n\) transformations with the transformation matrices \(S_1,S_2,\dots,S_n\), then each eigenvector \(\vec{x}\) is transformed to \(S_n^TS_{n-1}^T\dots S_1^T\vec{x}\). We must therefore have
+\[
+I = S_n^TS_{n-1}^T\dots S_1^TR \implies R = S_1S_2\dots S_nI = IS_1S_2\dots S_n \eqtag{findR}
+\]
+
+The conclusion is that if a suitable transformation matrix can be chosen, we have a method for finding both the eigenvalues and the eigenvectors of any symmetric matrix.
+
+\subsection{Choosing the transformation matrix}
+Jacobi discovered that one could choose a matrix \(S\) which is identical to the identity apart from the following elements:
+\[
+s_{kk} = s_{ll} = \cos(\theta), \quad s_{kl} = \sin(\theta), \quad s_{lk} = \sin(\theta)
+\]
+where \(\qty(k,l)\) are the indices of the largest non-diagonal element of the matrix to be transformed, and \(\theta\) is to be determined in such a way that the largest non-diagonal elements are transformed to \(0\).
+
+With \(B=S^TAS\), all elements apart from those in row or column \(k\) and \(l\) are left unchanged. The other elements are transformed as follows:
+\begin{alignat*}{2}
+b_{ik} &= b_{ki} = a_{ik}\cos(\theta) - a_{il}\sin(\theta), \quad i\neq k, i\neq l\\
+b_{il} &= b_{li} = a_{il}\cos(\theta) + a_{ik}\sin(\theta),\quad i\neq k, i\neq l\\
+b_{kk} &= a_{kk}\cos[2](\theta) - 2a_{kl}\cos(\theta)\sin(\theta) + a_{ll}\sin[2](\theta)\\
+b_{ll} &= a_{ll}\cos[2](\theta) + 2a_{kl}\cos(\theta)\sin(\theta) + a_{kk}\sin[2](\theta)\\
+b_{kl} &= b_{lk} = \qty(a_{kk} - a_{ll})\cos(\theta)\sin(\theta) + a_{kl}\qty(\cos[2](\theta)-\sin[2](\theta))
+\end{alignat*}
+Additionally, we know from \vref{findR} that the new eigenvector matrix is transformed by multiplying by \(S\) from the right hand side, which yields the matrix \(\tilde{R}\). All elements are left unchanged, apart from
+\begin{alignat*}{2}
+\tilde{r}_{ik} &= r_{ik}\cos(\theta) - r_{il}\sin(\theta)\\
+\tilde{r}_{il} &= r_{ik}\sin(\theta) + r_{il}\cos(\theta)
+\end{alignat*}
+We must now choose \(\theta\) such that \(a_{kl}\), the largest non-diagonal element, is transformed to \(0\). This means solving the equation \(b_{kl}=0\):
+ \begin{alignat*}{2}
+ 0 &= b_{kl} = \qty(a_{kk} - a_{ll})\cos(\theta)\sin(\theta) + a_{kl}\qty(\cos[2](\theta)-\sin[2](\theta))
+\end{alignat*}
+This leads to
+\begin{alignat*}{2}
+\qty(a_{ll}-a_{kk})\cos(\theta)\sin(\theta) &= a_{kl}\qty(\cos[2](\theta)-\sin[2](\theta))\\
+\frac{a_{ll}-a_{kk}}{a_{kl}} &=\frac{\cos[2](\theta)-\sin[2](\theta)}{\cos(\theta)\sin(\theta)}
+\intertext{Defining the left hand side as \(2\tau\) and dividing by \(\cos[2](\theta)\) in the numerator and denominator on the right hand side, we get}
+2\tau &=\frac{1-\tan[2](\theta)}{\tan(\theta)}\\
+0 &= \tan[2](\theta)-2\tau\tan(\theta)-1\\
+\tan(\theta) &= -\tau\pm\sqrt{\tau^2+1}
+\end{alignat*}
+Either sign in front of the square root can in principle be chosen. Numerically, however there is a difference. The point of the algorithm is to get the non-diagonal elements, of which \(a_{kl}\) is the largest, as small as possible, which means \(\tau\) will grow larger for every iteration. When \(\tau\) is large, \(\sqrt{\tau^2+1}\approx\abs{\tau}\).
+
+If \(\tau\) is positive and the \(+\) sign is chosen (or vice versa), a large, negative number and a large, positive number are added and give approximately \(0\). If for example the computer is able to store \(8\) digits in the mantissa and the result is \(6\) orders of magnitudes smaller, the result will only have \(2\) accurate digits.
+
+The conclusion is that if \(\tau\) is negative, the \(+\) sign should be chosen, while if \(\tau\) is positive, the \(-\) sign should be chosen.
+
+\(\cos(\theta)\) and \(\sin(\theta)\) can then be calculated from the formulas
+\[
+\cos(\theta)=\frac{1}{\sqrt{1+\tan[2](\theta)}}\qquad\qquad \sin(\theta)=\tan(\theta)\cos(\theta)
+\]
+
+\clearpage
+\subsection{Implementation of the algorithm}
+\lstinputlisting[language=C++,linerange={jacobistart-jacobiend}]{jacobi.cpp}
+
+
+
+
+
 
 \section{Results and discussion}
 \subsection{Simulation for one particle}
@@ -162,6 +253,7 @@ The number of iterations is approximately quadrupled when the number of mesh poi
 
 
 \section{Tests}
+The code is found at GitHub\footnote{\url{https://github.com/anjohan/Offentlig/blob/master/FYS3150/Oblig2/test.cpp}}.
 \subsection{Ability to find eigenvalues and eigenvectors}
 The matrix
 \[
@@ -195,7 +287,7 @@ This is correct, as the function searches for the element with the largest absol
 
 
 \clearpage
-\addcontentsline{toc}{section}{Referanser}
+\addcontentsline{toc}{section}{References}
 \printbibliography
 
 
