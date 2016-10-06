@@ -2,7 +2,7 @@ NAVN = Johansson_Anders_FYS3150_Oblig2
 FLAGG = -O3 -Wall -std=c++11
 all: pdf enpartikkel.x
 pdf: ${NAVN}.pdf
-${NAVN}.pdf: ${NAVN}.tex plot1.tex plot2.tex eigentest.txt
+${NAVN}.pdf: ${NAVN}.tex plot1.tex plot2.tex eigentest.txt kilder.bib
 	latexmk -f -pdf ${NAVN}.tex
 enpartikkel.x: enpartikkel.o funksjoner.o schrodinger.o jacobi.o Potensial.o
 	g++ -o enpartikkel.x enpartikkel.o funksjoner.o schrodinger.o jacobi.o Potensial.o
@@ -46,4 +46,4 @@ clean:
 	latexmk -c
 	rm *.bbl *.o *.x
 	rm -rf _minted-${NAVN}
-	rm *.dat *.eps *-converted-to.pdf plot*.tex *.txt
+	rm *.dat *.eps *-converted-to.pdf plot*.tex *.txt *.run.xml

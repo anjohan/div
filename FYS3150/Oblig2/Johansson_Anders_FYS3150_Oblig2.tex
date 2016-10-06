@@ -99,6 +99,9 @@ literate={0}{{\textcolor{blue}{0}}}{1}%
 \DefineBibliographyStrings{norsk}{%
   bibliography = {Referanser},
 }
+\DefineBibliographyStrings{english}{%
+  bibliography = {References},
+}
 \addbibresource{kilder.bib}
 
 \begin{document}
@@ -115,12 +118,41 @@ All files for this project are available at GitHub\footnote{\url{https://github.
 
 
 
+\section{Physical theory}
+This project deals with the famous Schödinger equation for various systems. A detailed analytical solution of the problems can be found in \autocite{griffiths}.
+\subsection{One particle in a harmonic oscillator}
+The time independent form of the Schrödinger equation for one particle is
+\[
+-\frac{\hbar^2}{2m}\nabla^2\psi(\vec{r}) + V(\vec{r})\psi(\vec{r}) = E\psi(\vec{r}) \eqtag{genslen}
+\]
+where \(V\) is a potential and \(\psi\) is the wave function of the particle. According to Max Born's interpretation, the absolute square of the wave function is a probability distribution, meaning that the probability of finding the particle in a spesific area is equal to the integral of the absolute square of the wave function over that area.
+
+If the potential is centrosymmetric, one can assume that the wave function is the product of one sentrosymmetric and one angle-dependent function. This leads to a separation of variables, where the angle-dependent equations have the spherical harmonics as solutions. The radial equation is
+\[
+-\frac{\hbar^2}{2m}\qty(\frac{1}{r^2}\dv{r}(r^2\dv{R(r)}{r}) - \frac{\ell\qty(\ell+1)}{r^2}R(r)) + V(r)R(r)=ER(r)
+\]
+If  we look at the states where the orbital quantum number \(\ell\) is \(0\) and introduce the function \(u(r)=rR(r)\), this can be simplified to
+\begin{alignat*}{2}
+-\frac{\hbar^2}{2m}\dv[2]{u(r)}{r} + V(r)u(r) &= Eu(r)
+\intertext{A harmonic oscillator means that the potential is given by \(V(r)=\tfrac{1}{2}kr^2\). Introducing the variable \(\rho=r/\alpha\) with \(\alpha=\qty(\hbar^2/mk)^{1/4}\) and defining \(\lambda=2m\alpha^2E/\hbar^2\), we arrive at the final equation}
+-\dv[2]{u(\rho)}{\rho}+\rho^2u(\rho)&=\lambda u(\rho)\eqtag{slen}
+\end{alignat*}
+
+\subsection{Two particles}
+For two particles in a harmonic oscillator potential, the Schrödinger equation can be written as
+\[
+\qty(-\frac{\hbar^2}{2m}\dv[2]{r_1} + \tfrac{1}{2}kr_1^2 - \frac{\hbar^2}{2m}\dv[2]{r_2} + \tfrac{1}{2}kr_2^2)u(r_1,r_2) = Eu(r_1,r_2)
+\]
+Using a similar approach as in the case with one particle, this can be rewritten as
+\begin{alignat*}{2}
+-\dv[2]{\psi(\rho)}{\rho} + \omega_r^2\rho^2\psi(\rho) &= \lambda\psi(\rho) \eqtag{slutento}
+\intertext{where \(\rho\) is the distance between the particles. There is also an equation for the position of the centre of mass for the system consisting of the two particles, which will not be studied here. If we include the Coulomb interaction between the electrons, the equation instead takes the form}
+-\dv[2]{\psi(\rho)}{\rho} + \omega_r^2\rho^2\psi(\rho) + \frac{1}{\rho} &= \lambda\psi(\rho) \eqtag{slmedto}
+\end{alignat*}
 
 
-\section{Theory}
 
-
-
+\section{Mathematical theory}
 
 
 \subsection{Orthogonal transformations of vectors}
@@ -207,7 +239,7 @@ This leads to
 0 &= \tan[2](\theta)-2\tau\tan(\theta)-1\\
 \tan(\theta) &= -\tau\pm\sqrt{\tau^2+1}
 \end{alignat*}
-Either sign in front of the square root can in principle be chosen. Numerically, however there is a difference. The point of the algorithm is to get the non-diagonal elements, of which \(a_{kl}\) is the largest, as small as possible, which means \(\tau\) will grow larger for every iteration. When \(\tau\) is large, \(\sqrt{\tau^2+1}\approx\abs{\tau}\).
+Either sign in front of the square root can in principle be chosen. Numerically, however, there is a difference. The point of the algorithm is to get the non-diagonal elements, of which \(a_{kl}\) is the largest, as small as possible, which means \(\tau\) will grow larger for every iteration. When \(\tau\) is large, \(\sqrt{\tau^2+1}\approx\abs{\tau}\).
 
 If \(\tau\) is positive and the \(+\) sign is chosen (or vice versa), a large, negative number and a large, positive number are added and give approximately \(0\). If for example the computer is able to store \(8\) digits in the mantissa and the result is \(6\) orders of magnitudes smaller, the result will only have \(2\) accurate digits.
 
@@ -220,7 +252,8 @@ The conclusion is that if \(\tau\) is negative, the \(+\) sign should be chosen,
 
 \clearpage
 \subsection{Implementation of the algorithm}
-\lstinputlisting[language=C++,linerange={jacobistart-jacobiend}]{jacobi.cpp}
+The complete function is available on GitHub\footnote{\url{https://github.com/anjohan/Offentlig/blob/master/FYS3150/Oblig2/jacobi.cpp}}.
+\lstinputlisting[language=C++,linerange={jacobistart-jacobiend},caption={Implementation of Jacobi's method in C++.}]{jacobi.cpp}
 
 
 
@@ -270,8 +303,7 @@ The implementation of Jacobi's method can be tested on this matrix using
 \lstinputlisting[language=C++,linerange={eigenteststart-eigentestslutt},caption={Test of eigenvalues.}]{test.cpp}
 where \texttt{A} and \texttt{R} are \(3\times3\) pointer matrices and \texttt{n} is \(3\). Formatted printing of the resulting \texttt{A} and \texttt{R} yields
 \lstinputlisting[frame=none,language=]{eigentest.txt}
-This is the expected result, except that the program returns normalized eigenvectors.
-
+This is the expected result, except that the program returns normalized eigenvectors. The second printed matrix has columns of eigenvectors corresponding to different eigenvalues for a diagonal matrix, so the columns should be orthogonal. Simple arithmetic shows that this is correct.
 \subsection{Ability to find largest non-diagonal elements}
 A simple test is
 \lstinputlisting[language=C++,linerange={largeststart-largestend},caption={Test of search for largest non-diagonal element.}]{test.cpp}

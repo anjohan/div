@@ -12,7 +12,7 @@ int jacobi(double** A, double** R, int n, double tolerance = 1E-8){
     lagidentitet(R,n);
     /*#jacobistart#*/
     max = largest_nondiagonal_symmetric(A,n,kl);
-    do {
+    while(iterations <= max_iterations && max > tolerance) {
         k = kl[0]; l = kl[1];
         a_kk = A[k][k]; a_ll = A[l][l]; a_kl = A[k][l];
         tau = (a_ll-a_kk)/(2*a_kl);
@@ -40,7 +40,7 @@ int jacobi(double** A, double** R, int n, double tolerance = 1E-8){
 
         iterations++;
         max = largest_nondiagonal_symmetric(A,n,kl);
-    } while(iterations <= max_iterations && max > tolerance);
+    }
     /*#jacobiend#*/
     return iterations;
 }
