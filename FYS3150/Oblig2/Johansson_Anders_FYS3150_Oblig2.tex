@@ -105,27 +105,53 @@ literate={0}{{\textcolor{blue}{0}}}{1}%
 \addbibresource{kilder.bib}
 
 \begin{document}
-%\includepdf{forside.pdf}
+\includepdf{forside.pdf}
 \pagestyle{fancy}
 \tableofcontents
+
+%      _    _         _                  _
+%     / \  | |__  ___| |_ _ __ __ _  ___| |_
+%    / _ \ | '_ \/ __| __| '__/ _` |/ __| __|
+%   / ___ \| |_) \__ \ |_| | | (_| | (__| |_
+%  /_/   \_\_.__/|___/\__|_|  \__,_|\___|\__|
+%
 
 \section{Abstract}
 
 All files for this project are available at GitHub\footnote{\url{https://github.com/anjohan/Offentlig/tree/master/FYS3150/Oblig2}}.
 
+%   ___       _                 _            _   _
+%  |_ _|_ __ | |_ _ __ ___   __| |_   _  ___| |_(_) ___  _ __
+%   | || '_ \| __| '__/ _ \ / _` | | | |/ __| __| |/ _ \| '_ \
+%   | || | | | |_| | | (_) | (_| | |_| | (__| |_| | (_) | | | |
+%  |___|_| |_|\__|_|  \___/ \__,_|\__,_|\___|\__|_|\___/|_| |_|
+%
 
 \section{Introduction}
 
-
+%  ____  _               _           _   _   _
+% |  _ \| |__  _   _ ___(_) ___ __ _| | | |_| |__   ___  ___  _ __ _   _
+% | |_) | '_ \| | | / __| |/ __/ _` | | | __| '_ \ / _ \/ _ \| '__| | | |
+% |  __/| | | | |_| \__ \ | (_| (_| | | | |_| | | |  __/ (_) | |  | |_| |
+% |_|   |_| |_|\__, |___/_|\___\__,_|_|  \__|_| |_|\___|\___/|_|   \__, |
+%              |___/                                               |___/
 
 \section{Physical theory}
 This project deals with the famous Schödinger equation for various systems. A detailed analytical solution of the problems can be found in \autocite{griffiths}.
+
+%    ___                                _   _      _
+%   / _ \ _ __   ___   _ __   __ _ _ __| |_(_) ___| | ___
+%  | | | | '_ \ / _ \ | '_ \ / _` | '__| __| |/ __| |/ _ \
+%  | |_| | | | |  __/ | |_) | (_| | |  | |_| | (__| |  __/
+%   \___/|_| |_|\___| | .__/ \__,_|_|   \__|_|\___|_|\___|
+%                     |_|
+
 \subsection{One particle in a harmonic oscillator}
 The time independent form of the Schrödinger equation for one particle is
 \[
 -\frac{\hbar^2}{2m}\nabla^2\psi(\vec{r}) + V(\vec{r})\psi(\vec{r}) = E\psi(\vec{r}) \eqtag{genslen}
 \]
-where \(V\) is a potential and \(\psi\) is the wave function of the particle. According to Max Born's interpretation, the absolute square of the wave function is a probability distribution, meaning that the probability of finding the particle in a spesific area is equal to the integral of the absolute square of the wave function over that area.
+where \(V\) is a potential and \(\psi\) is the wave function of the particle. According to Max Born's interpretation, the absolute square of the wave function is a probability distribution, meaning that the probability of finding the particle in a spesific area is equal to the integral of the absolute square of the wave function over that area. One consequence is that if the integral is taken over all of space, the result must be \(1\).
 
 If the potential is centrosymmetric, one can assume that the wave function is the product of one sentrosymmetric and one angle-dependent function. This leads to a separation of variables, where the angle-dependent equations have the spherical harmonics as solutions. The radial equation is
 \[
@@ -137,6 +163,15 @@ If  we look at the states where the orbital quantum number \(\ell\) is \(0\) and
 \intertext{A harmonic oscillator means that the potential is given by \(V(r)=\tfrac{1}{2}kr^2\). Introducing the variable \(\rho=r/\alpha\) with \(\alpha=\qty(\hbar^2/mk)^{1/4}\) and defining \(\lambda=2m\alpha^2E/\hbar^2\), we arrive at the final equation}
 -\dv[2]{u(\rho)}{\rho}+\rho^2u(\rho)&=\lambda u(\rho)\eqtag{slen}
 \end{alignat*}
+It is known\autocite{compphys} that this equation has \(\lambda=3,7,11,\dots\).
+
+%   _____                                  _   _      _
+%  |_   _|_      _____    _ __   __ _ _ __| |_(_) ___| | ___  ___
+%    | | \ \ /\ / / _ \  | '_ \ / _` | '__| __| |/ __| |/ _ \/ __|
+%    | |  \ V  V / (_) | | |_) | (_| | |  | |_| | (__| |  __/\__ \
+%    |_|   \_/\_/ \___/  | .__/ \__,_|_|   \__|_|\___|_|\___||___/
+%                        |_|
+
 
 \subsection{Two particles}
 For two particles in a harmonic oscillator potential, the Schrödinger equation can be written as
@@ -150,7 +185,77 @@ Using a similar approach as in the case with one particle, this can be rewritten
 -\dv[2]{\psi(\rho)}{\rho} + \omega_r^2\rho^2\psi(\rho) + \frac{1}{\rho} &= \lambda\psi(\rho) \eqtag{slmedto}
 \end{alignat*}
 
+%   _____                     __                            _   _               _
+%  |_   _| __ __ _ _ __  ___ / _| ___  _ __ _ __ ___   __ _| |_(_) ___  _ __   | |_ ___     __ _ _ __
+%    | || '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \ / _` | __| |/ _ \| '_ \  | __/ _ \   / _` | '_ \
+%    | || | | (_| | | | \__ \  _| (_) | |  | | | | | | (_| | |_| | (_) | | | | | || (_) | | (_| | | | |
+%    |_||_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|\__,_|\__|_|\___/|_| |_|  \__\___/   \__,_|_| |_|
+%    ___(_) __ _  ___ _ ____   ____ _| |_   _  ___   _ __  _ __ ___ | |__ | | ___ _ __ ___
+%   / _ \ |/ _` |/ _ \ '_ \ \ / / _` | | | | |/ _ \ | '_ \| '__/ _ \| '_ \| |/ _ \ '_ ` _ \
+%  |  __/ | (_| |  __/ | | \ V / (_| | | |_| |  __/ | |_) | | | (_) | |_) | |  __/ | | | | |
+%   \___|_|\__, |\___|_| |_|\_/ \__,_|_|\__,_|\___| | .__/|_|  \___/|_.__/|_|\___|_| |_| |_|
+%          |___/                                    |_|
 
+\subsection{Transformation to an eigenvalue problem}
+\Ref{slen}, \ref{slutento} and \ref{slmedto} can all be written on the generic form
+\[
+-\dv[2]{\psi(\rho)}{\rho} + V(\rho)\psi(\rho) = \lambda\psi(\rho)
+\]
+where \(V(\rho)\) is either \(\rho^2\), \(\omega_r^2\rho^2\) or \(\omega_r^2\rho^2+1/\rho\) depending on the situation.
+
+The wave function must be normalized, which requires that the integral of the absolute square of the function over all of space must be \(1\). Because \(\rho\) is a distance and therefore positive, all of space translates to \([0,\infty)\). The particles can not be on top of each other, so we must have \(\psi_0=0\), while normalizability requires that \(\psi_{n+1}=\psi(\infty)=0\). This gives the boundary conditions of the problem.
+
+As discussed in \autocite{oblig1}, this equation can be discretized using the three point approximation of the second derivative:
+\[
+\psi_i'' = \frac{\psi_{i+1} + \psi_{i-1} - 2\psi_i}{h^2} + O(h^2)
+\]
+Inserting this into the equation above, we get
+\[
+-\frac{\psi_{i+1} + \psi_{i-1} - 2\psi_i}{h^2} + V_i\psi_i = \lambda\psi_i
+\]
+where \(V_i=V(\rho_i)\). We know from the boundary conditions that \(\psi_0=\psi_{n+1}=0\), so the set of equations for the remaining \(n\) points can be written on a matrix form as
+\[
+\begin{bmatrix}
+\frac{2}{h^2} + V_1 & -\frac{1}{h^2} & 0 & 0 & 0 & \cdots & 0 & 0\\
+-\frac{1}{h^2} & \frac{2}{h^2} + V_2 & -\frac{1}{h^2} & 0 & 0 & \cdots & 0 & 0\\
+0 & -\frac{1}{h^2} & \frac{2}{h^2} + V_3 & -\frac{1}{h^2} & 0 & \cdots & 0 & 0\\
+\vdots & & & \ddots & & & & \vdots\\
+0 & 0 & \cdots & 0 & -\frac{1}{h^2} & \frac{2}{h^2} + V_{n-2} & -\frac{1}{h^2} & 0\\
+0 & 0 & \cdots & 0 & 0 & -\frac{1}{h^2} & \frac{2}{h^2} + V_{n-1} & -\frac{1}{h^2}\\
+0 & 0 & \cdots & 0 & 0 & 0 & -\frac{1}{h^2} & \frac{2}{h^2} + V_{n}\\
+\end{bmatrix}
+\begin{bmatrix}
+\psi_1\\
+\psi_2\\
+\psi_3\\
+\vdots\\
+\psi_{n-2}\\
+\psi_{n-1}\\
+\psi_n
+\end{bmatrix}
+=
+\lambda
+\begin{bmatrix}
+\psi_1\\
+\psi_2\\
+\psi_3\\
+\vdots\\
+\psi_{n-2}\\
+\psi_{n-1}\\
+\psi_n
+\end{bmatrix}
+\]
+If we define \(A\) as the matrix above and \(\vec{\psi}\) as \((\psi_1,\psi_2,\dots,\psi_n)\), we have an eigenvalue problem
+\[
+A\vec{\psi}=\lambda\vec{\psi}
+\]
+
+%   __  __       _   _                          _   _           _   _   _
+%  |  \/  | __ _| |_| |__   ___ _ __ ___   __ _| |_(_) ___ __ _| | | |_| |__   ___  ___  _ __ _   _
+%  | |\/| |/ _` | __| '_ \ / _ \ '_ ` _ \ / _` | __| |/ __/ _` | | | __| '_ \ / _ \/ _ \| '__| | | |
+%  | |  | | (_| | |_| | | |  __/ | | | | | (_| | |_| | (_| (_| | | | |_| | | |  __/ (_) | |  | |_| |
+%  |_|  |_|\__,_|\__|_| |_|\___|_| |_| |_|\__,_|\__|_|\___\__,_|_|  \__|_| |_|\___|\___/|_|   \__, |
+%                                                                                             |___/
 
 \section{Mathematical theory}
 
@@ -206,6 +311,22 @@ I = S_n^TS_{n-1}^T\dots S_1^TR \implies R = S_1S_2\dots S_nI = IS_1S_2\dots S_n 
 
 The conclusion is that if a suitable transformation matrix can be chosen, we have a method for finding both the eigenvalues and the eigenvectors of any symmetric matrix.
 
+%    ____ _                     _               _   _
+%   / ___| |__   ___   ___  ___(_)_ __   __ _  | |_| |__   ___
+%  | |   | '_ \ / _ \ / _ \/ __| | '_ \ / _` | | __| '_ \ / _ \
+%  | |___| | | | (_) | (_) \__ \ | | | | (_| | | |_| | | |  __/
+%   \____|_| |_|\___/ \___/|___/_|_| |_|\__, |  \__|_| |_|\___|_
+%  | |_ _ __ __ _ _ __  ___ / _| ___  _ |___/__ ___   __ _| |_(_) ___  _ __
+%  | __| '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \ / _` | __| |/ _ \| '_ \
+%  | |_| | | (_| | | | \__ \  _| (_) | |  | | | | | | (_| | |_| | (_) | | | |
+%   \__|_|  \__,_|_|_|_|___/_|  \___/|_|  |_| |_| |_|\__,_|\__|_|\___/|_| |_|
+%   _ __ ___   __ _| |_ _ __(_)_  __
+%  | '_ ` _ \ / _` | __| '__| \ \/ /
+%  | | | | | | (_| | |_| |  | |>  <
+%  |_| |_| |_|\__,_|\__|_|  |_/_/\_\
+
+
+
 \subsection{Choosing the transformation matrix}
 Jacobi discovered that one could choose a matrix \(S\) which is identical to the identity apart from the following elements:
 \[
@@ -257,7 +378,12 @@ The complete function is available on GitHub\footnote{\url{https://github.com/an
 
 
 
-
+%   ____                 _ _                         _       _ _                        _
+%  |  _ \ ___  ___ _   _| | |_ ___    __ _ _ __   __| |   __| (_)___  ___ _   _ ___ ___(_) ___  _ __
+%  | |_) / _ \/ __| | | | | __/ __|  / _` | '_ \ / _` |  / _` | / __|/ __| | | / __/ __| |/ _ \| '_ \
+%  |  _ <  __/\__ \ |_| | | |_\__ \ | (_| | | | | (_| | | (_| | \__ \ (__| |_| \__ \__ \ | (_) | | | |
+%  |_| \_\___||___/\__,_|_|\__|___/  \__,_|_| |_|\__,_|  \__,_|_|___/\___|\__,_|___/___/_|\___/|_| |_|
+%
 
 
 \section{Results and discussion}
@@ -265,7 +391,7 @@ The complete function is available on GitHub\footnote{\url{https://github.com/an
 \begin{figure}[H]
 \centering
 \input{plot1.tex}
-\caption{Simulation of one particle in a harmonic oscillator potential for \(n=250\) with \(\rho_{\max}=8\).}
+\caption{Simulation of one particle in a harmonic oscillator potential for \(n=250\) with \(\rho_{\max}=8\).}\label{fig:en}
 \end{figure}
 
 \begin{table}[H]
@@ -274,16 +400,28 @@ The complete function is available on GitHub\footnote{\url{https://github.com/an
 \]
 \caption{The three lowest eigenvalues found by the algorithm for the different number of mesh points \(n\). The analytical values are \(\lambda_0=3\), \(\lambda_1=7\) and \(\lambda_2=11\).}
 \end{table}
-The number of iterations is approximately quadrupled when the number of mesh points is doubled, indicating that the numbers of iterations runs as \(n^2\). This means that the number of iterations is proportional to the number of elements in the matrix. Note that the matrices handled in this project are tridiagonal, and the trends may be different for dense matrices.
+The number of iterations is approximately quadrupled when the number of mesh points is doubled, indicating that the numbers of iterations runs as \(n^2\). This means that the number of iterations is proportional to the number of elements in the matrix. However, the number of non-diagonal elements in the tridiagonal elements handled in this project is proportional to \(n\), so this trend is unlikely to hold for dense matrices.
 
 
 \subsection{Simulation for two particles}
 \begin{figure}[H]
 \centering
 \input{plot2.tex}
-\caption{Simulation of two particles, with and without Coulomb interaction, for two different values of \(\omega\). A larger \(\omega\) corresponds to a stronger harmonic oscillator.}
+\caption{Simulation of two particles, with and without Coulomb interaction, for two different values of \(\omega_r\). A larger \(\omega_r\) corresponds to a stronger harmonic oscillator.}\label{fig:to}
 \end{figure}
 
+Without interaction and with \(\omega_r=1\), \ref{slen} and \ref{slutento}, become identical, and we see from \vref{fig:en} and \vref{fig:to} that the algorithm finds the same eigenstates.
+
+The strength of the harmonic oscillator is represented by \(\omega_r\). When \(\omega_r\) is large, it is therefore expected that the particles are pulled closer to origo so that \(\rho\) decreases, and that their position is more sharply determined. This fits very well with the figure.
+
+Because the interaction between two electrons is repulsive, the particles are further apart when the interaction is taken into account. The effect of this is greater when \(\omega_r\) is smaller and the particles are more free to move around, as the Coulomb interaction is a far reaching force.
+
+%  _____         _
+% |_   _|__  ___| |_ ___
+%   | |/ _ \/ __| __/ __|
+%   | |  __/\__ \ |_\__ \
+%   |_|\___||___/\__|___/
+%
 
 \section{Tests}
 The code is found at GitHub\footnote{\url{https://github.com/anjohan/Offentlig/blob/master/FYS3150/Oblig2/test.cpp}}.

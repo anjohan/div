@@ -8,11 +8,11 @@ set key top right
 set datafile separator ';'
 
 set xlabel "$\\rho$"
-set ylabel "$u(\\rho)^2$"
+set ylabel "$\\psi(\\rho)^2$"
 set xrange[0:6.5]
 
 omegaer = "0.20 1.00 5.00"
 
-plot for [omega in omegaer] sprintf("omegauten%s.dat",omega) using 1:2 every ::1 title sprintf("No interaction, $\\omega=\\num{%s}$",omega) with lines lw 4,\
-for [omega in omegaer] sprintf("omegamed%s.dat",omega) using 1:2 every ::1 title sprintf("With interaction, $\\omega=\\num{%s}$",omega) with lines lw 4
+plot for [omega in omegaer] sprintf("omegauten%s.dat",omega) using 1:2 every ::1 title sprintf("No interaction, $\\omega_r=\\num{%s}$",omega) with lines lw 4,\
+for [omega in omegaer] sprintf("omegamed%s.dat",omega) using 1:2 every ::1 title sprintf("With interaction, $\\omega_r=\\num{%s}$",omega) with lines lw 4
 
