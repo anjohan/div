@@ -120,6 +120,10 @@ literate={0}{{\textcolor{blue}{0}}}{1}%
 
 All files for this project are available at GitHub\footnote{\url{https://github.com/anjohan/Offentlig/tree/master/FYS3150/Oblig2}}.
 
+In this project, Jacobi's method for finding eigenvalues and eigenvectors is derived, implemented and applied to Schrödinger's equation for both one and two electrons in a harmonic oscillator well, in the latter case both with and without Coulomb interaction between the particles.
+
+Jacobi's method proved to be quite slow even for small systems (e.g. with \(400\) steps), but it was successful in finding the energies and eigenstates for the harmonic oscillator. For the tridiagonal matrix which results from the three point approximation to the second derivative, the number of required rotations was proportional to the square of the number of steps, while the time was roughly proportional to the number of steps to the power of \(4\).
+
 %   ___       _                 _            _   _
 %  |_ _|_ __ | |_ _ __ ___   __| |_   _  ___| |_(_) ___  _ __
 %   | || '_ \| __| '__/ _ \ / _` | | | |/ __| __| |/ _ \| '_ \
@@ -128,6 +132,17 @@ All files for this project are available at GitHub\footnote{\url{https://github.
 %
 
 \section{Introduction}
+Differential equations play a vital role in physics, as many of the central laws and equations, such as Newtons laws and Schrödinger's equations, are formulated as differential equations. The majority of these equations are difficult, if not impossible, to solve analytically. As a result, methods for numerical solution of differential equations are important tools for physicists.
+
+Often, physical laws lead to differential equations where the derivative of some order of a function depends on the function itself. If the dependence is linear, discretisation of the function leads to an eigenvalue problem, which in most cases must be solved numerically.
+
+The goal of this report is to implement Jacobi's algorithm , which is an iterative scheme for finding the eigenvalues and eigenvectors of a matrix, and to use this to solve Schrödinger's equation.
+
+The first part of the report deals with both the physical and the mathematical theory of the problem. In the physical part, Schrödinger's equation is rewritten to a simpler form with dimensionless variables. This is followed by the mathematical part where properties of orthogonal transformations and orthogonal similarity transformations are summarized and in some cases proved, and then used to derive Jacobi's algorithm. The algorithm is then implemented in C++. The implementation is object oriented and utilises polymorphism, so it can be used to solve Schrödinger's equation for any potential. Two tests for the algorithm are also included.
+
+Later in the report, the implementation is applied to Schrödinger's equation for both one and two particles in a harmonic oscillator well, the latter both with and without Coulomb interaction. The required number of iterations and time is informally analysed, while the resulting eigenstates are given a physical interpretation.
+
+
 
 %  ____  _               _           _   _   _
 % |  _ \| |__  _   _ ___(_) ___ __ _| | | |_| |__   ___  ___  _ __ _   _
@@ -135,9 +150,9 @@ All files for this project are available at GitHub\footnote{\url{https://github.
 % |  __/| | | | |_| \__ \ | (_| (_| | | | |_| | | |  __/ (_) | |  | |_| |
 % |_|   |_| |_|\__, |___/_|\___\__,_|_|  \__|_| |_|\___|\___/|_|   \__, |
 %              |___/                                               |___/
-
+\clearpage
 \section{Physical theory}
-This project deals with the famous Schödinger equation for various systems. A detailed analytical solution of the problems can be found in \autocite{griffiths}.
+This project deals with the famous Schrödinger equation for various systems. A detailed analytical solution of the problems can be found in \autocite{griffiths}.
 
 %    ___                                _   _      _
 %   / _ \ _ __   ___   _ __   __ _ _ __| |_(_) ___| | ___
@@ -151,9 +166,9 @@ The time independent form of the Schrödinger equation for one particle is
 \[
 -\frac{\hbar^2}{2m}\nabla^2\psi(\vec{r}) + V(\vec{r})\psi(\vec{r}) = E\psi(\vec{r}) \eqtag{genslen}
 \]
-where \(V\) is a potential and \(\psi\) is the wave function of the particle. According to Max Born's interpretation, the absolute square of the wave function is a probability distribution, meaning that the probability of finding the particle in a spesific area is equal to the integral of the absolute square of the wave function over that area. One consequence is that if the integral is taken over all of space, the result must be \(1\).
+where \(V\) is a potential and \(\psi\) is the wave function of the particle. According to Max Born's interpretation, the absolute square of the wave function is a probability distribution, meaning that the probability of finding the particle in a specific area is equal to the integral of the absolute square of the wave function over that area. One consequence is that if the integral is taken over all of space, the result must be \(1\).
 
-If the potential is centrosymmetric, one can assume that the wave function is the product of one sentrosymmetric and one angle-dependent function. This leads to a separation of variables, where the angle-dependent equations have the spherical harmonics as solutions. The radial equation is
+If the potential is centrosymmetric, one can assume that the wave function is the product of one centrosymmetric and one angle-dependent function. This leads to a separation of variables, where the angle-dependent equations have the spherical harmonics as solutions. The radial equation is
 \[
 -\frac{\hbar^2}{2m}\qty(\frac{1}{r^2}\dv{r}(r^2\dv{R(r)}{r}) - \frac{\ell\qty(\ell+1)}{r^2}R(r)) + V(r)R(r)=ER(r)
 \]
@@ -205,7 +220,7 @@ where \(V(\rho)\) is either \(\rho^2\), \(\omega_r^2\rho^2\) or \(\omega_r^2\rho
 
 The wave function must be normalized, which requires that the integral of the absolute square of the function over all of space must be \(1\). Because \(\rho\) is a distance and therefore positive, all of space translates to \([0,\infty)\). The particles can not be on top of each other, so we must have \(\psi_0=0\), while normalizability requires that \(\psi_{n+1}=\psi(\infty)=0\). This gives the boundary conditions of the problem.
 
-As discussed in \autocite{oblig1}, this equation can be discretized using the three point approximation of the second derivative:
+As discussed in \autocite{oblig1}, this equation can be discretised using the three point approximation of the second derivative:
 \[
 \psi_i'' = \frac{\psi_{i+1} + \psi_{i-1} - 2\psi_i}{h^2} + O(h^2)
 \]
@@ -393,6 +408,7 @@ The complete function is available on GitHub\footnote{\url{https://github.com/an
 \input{plot1.tex}
 \caption{Simulation of one particle in a harmonic oscillator potential for \(n=250\) with \(\rho_{\max}=8\).}\label{fig:en}
 \end{figure}
+We see that when \(\lambda\), and therefore also the energy, increases, the particle is able to move further out from the minimum of the harmonic oscillator well. This fits well with the harmonic oscillator from classical mechanics. Additionally, the number of nodes increases as \(\lambda\) increases, which is a trend also found when solving for example the quantum mechanical particle-in-a-box problem.
 
 \begin{table}[H]
 \[
@@ -401,6 +417,8 @@ The complete function is available on GitHub\footnote{\url{https://github.com/an
 \caption{The three lowest eigenvalues found by the algorithm for the different number of mesh points \(n\). The analytical values are \(\lambda_0=3\), \(\lambda_1=7\) and \(\lambda_2=11\).}
 \end{table}
 The number of iterations is approximately quadrupled when the number of mesh points is doubled, indicating that the numbers of iterations runs as \(n^2\). This means that the number of iterations is proportional to the number of elements in the matrix. However, the number of non-diagonal elements in the tridiagonal elements handled in this project is proportional to \(n\), so this trend is unlikely to hold for dense matrices.
+
+When \(n\) is a few hundred, the runtime is already noticeable, implying that Jacobi's method is not well suited for finding the eigenvalues and eigenvectors for large systems. Note that the times listed include setting up the matrices etc. As \(n\) is doubled, e.g. from \(100\) to \(200\) or from \(200\) to \(400\), the time spent is multiplied with roughly \(16\), indicating that the time runs as \(n^4\).
 
 
 \subsection{Simulation for two particles}
@@ -442,6 +460,9 @@ The implementation of Jacobi's method can be tested on this matrix using
 where \texttt{A} and \texttt{R} are \(3\times3\) pointer matrices and \texttt{n} is \(3\). Formatted printing of the resulting \texttt{A} and \texttt{R} yields
 \lstinputlisting[frame=none,language=]{eigentest.txt}
 This is the expected result, except that the program returns normalized eigenvectors. The second printed matrix has columns of eigenvectors corresponding to different eigenvalues for a diagonal matrix, so the columns should be orthogonal. Simple arithmetic shows that this is correct.
+
+
+\clearpage
 \subsection{Ability to find largest non-diagonal elements}
 A simple test is
 \lstinputlisting[language=C++,linerange={largeststart-largestend},caption={Test of search for largest non-diagonal element.}]{test.cpp}
@@ -450,8 +471,15 @@ which yields
 This is correct, as the function searches for the element with the largest absolute value. It is not necessary to specify the upper triangle of the matrix, as the function is specialized for symmetric matrices and therefore only searches the lower triangle.
 
 
+%    ____                 _           _
+%   / ___|___  _ __   ___| |_   _ ___(_) ___  _ __
+%  | |   / _ \| '_ \ / __| | | | / __| |/ _ \| '_ \
+%  | |__| (_) | | | | (__| | |_| \__ \ | (_) | | | |
+%   \____\___/|_| |_|\___|_|\__,_|___/_|\___/|_| |_|
+%
 
-
+\section{Conclusion}
+In this project, Jacobi's algorithm was successfully implemented, and it proved sufficiently efficient to be able for solving Schrödinger's equation for several situations. The run time was, however, significant for as little as a few hundred steps, indicating that Jacobi's method is generally not very well suited for large systems. For much larger \(n\), it would be beneficial to instead implement either Householder's method or Lanczos' method. When the three point formula is used to approximate the second derivative, the resulting matrix is tridiagonal, so it would probably be wise to try and utilise this fact and its consequences in developing a more specialized algorithm (as was done with great success in project 1, see \autocite{oblig1}).
 
 
 
