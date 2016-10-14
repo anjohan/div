@@ -138,9 +138,9 @@ where \(G\) is the gravitational constant, \(\SI{6.67e-11}{\N\meter\squared\per\
 
 If there are \(n\) planets in the solar system, in addition to the sun, the sum of the forces on planet \(i\) with mass \(m_i\) is
 \begin{alignat*}{2}
-\sum{\vec{F}_i} &= \sum_{\substack{j=0\\j\neq i}}^n\frac{Gm_im_j}{\norm{\vec{r}_i-\vec{r}_j}^3}\qty(\vec{r}_i-\vec{r}_j)
+\sum{\vec{F}_i} &= \sum_{\substack{k=0\\k\neq i}}^n\frac{Gm_im_k}{\norm{\vec{r}_i-\vec{r}_k}^3}\qty(\vec{r}_i-\vec{r}_k)
 \intertext{with \(m_0=M_\odot\) and \(\vec{r}_0=\vec{0}\). From Newton's second law, we know that \(\sum{\vec{F}_i}=m_i\vec{a}_i\), so the acceleration of planet \(i\) is given by}
-\vec{a}_i &= \sum_{\substack{j=0\\j\neq i}}^n \frac{Gm_j}{\norm{\vec{r}_i-\vec{r}_j}^3}\qty(\vec{r}_i-\vec{r}_j) \eqtag{avec}
+\vec{a}_i &= \sum_{\substack{k=0\\k\neq i}}^n \frac{Gm_k}{\norm{\vec{r}_i-\vec{r}_k}^3}\qty(\vec{r}_i-\vec{r}_k) \eqtag{avec}
 \end{alignat*}
 As the sun has been fixed to origo, \(\vec{a}_0\) is set to \(\vec{0}\).
 
@@ -156,11 +156,11 @@ As the sun has been fixed to origo, \(\vec{a}_0\) is set to \(\vec{0}\).
 \subsection{Choice of units}
 In the solar system, seconds and meters are unpractical, as planets are millions of kilometers apart and take years to do one lap around the sun. As such, it is common to use so-called astronomical units, where \(\SI{1}{\astronomicalunit}\) is the mean distance between the sun and the earth, and time is measured in years. To express the gravitational constant in these units, we can use that if the earth were moving in a circle around the sun, the acceleration in Newton's second law would be given by the sentripetal acceleration:
 \[
-\frac{mv^2}{r} = \frac{GmM_\odot}{r^2} \implies G = \frac{rv^2}{M_\odot} = \SI{1}{\astronomicalunit}\cdot\qty(\frac{2\pi\cdot\SI{1}{\astronomicalunit}}{M_\odot\cdot\SI{1}{\year}})^2 = \frac{4\pi^2}{M_\odot}\  \si{\astronomicalunit\tothe3\per\year\squared}
+\frac{mv^2}{r} = \frac{GmM_\odot}{r^2} \implies G = \frac{r}{M_\odot}v^2 = \frac{\SI{1}{\astronomicalunit}}{M_\odot} \cdot \qty(\frac{2\pi\cdot\SI{1}{\astronomicalunit}}{\SI{1}{\year}})^2 = \frac{4\pi^2}{M_\odot} \cdot  \SI{1}{\astronomicalunit\tothe3\per\year\squared}
 \]
 With this change of units, \vref{avec} can be written as
 \[
-\vec{a}_i = \sum_{\substack{j=0\\j\neq i}}^n 4\pi^2\frac{m_j}{M_\odot}\frac{\vec{r}_i-\vec{r}_j}{\norm{\vec{r}_i-\vec{r}_j}^3}\cdot \SI{1}{\astronomicalunit\cubed\per\year\squared} \eqtag{avecast}
+\vec{a}_i = \sum_{\substack{k=0\\k\neq i}}^n 4\pi^2\frac{m_k}{M_\odot}\frac{\vec{r}_i-\vec{r}_k}{\norm{\vec{r}_i-\vec{r}_k}^3}\cdot \SI{1}{\astronomicalunit\cubed\per\year\squared} \eqtag{avecast}
 \]
 
 
@@ -172,10 +172,42 @@ With this change of units, \vref{avec} can be written as
 %
 
 \section{Mathematical theory}
+\Vref*{avecast}, together with some initial conditions, determines the motion of the bodies in the solar system. When written out in components, the equation gives a coupled set of differential equations. This set of equations is difficult, if at all possible, to solve analytically, so numerical work is required. As per usual, the time is discretised as \(t_i=t_0+ih\), where \(h\) is the time step, \(h=\qty(t_n-t_0)/n\). Acceleration, velocity and position are discretised correspondingly.
 
+\subsection{Forward Euler}
+The Forward Euler method, also called the Explicit Euler method, and hereafter called simply the Euler method, uses a first order Taylor polynomial to approximate a solution to the diffrential equation. With \(x'(t)=v(t)\) and \(v'(t)=a(t)\), we have that
+\begin{alignat*}{2}
+\vec{r}_i(t+h)&\approx \vec{r}_i(t)+h\vec{v}_i(t)\\
+\vec{v}_i(t+h)&\approx \vec{v}_i(t)+h\vec{a}_i(t)
+\intertext{Discretised version:}
+\vec{r}_{i,j+1} &\approx \vec{r}_{i,j} + h\vec{v}_{i,j}\\
+\vec{v}_{i,j+1} &\approx \vec{v}_{i,j} + h\vec{a}_{i,j}
+\end{alignat*}
+To clarify the indices: \(\vec{a}_{i,j}\) is the acceleration of planet \(i\) at time step \(j\). This is calculated from \vref{avecast}.
 
+From Taylor's formula, the error for a first order Taylor polynomial goes as \(O(h^2)\). This is the error made in each step --- the error is cumulated, so the total error will be proportional \(h\).
 
-
+\subsection{Velocity-Verlet}
+The Velocity-Verlet method, hereafter called the Verlet method, is based on a second order Taylor polynomial.
+\begin{alignat*}{2}
+\vec{r}_i(t+h) &\approx \vec{r}_i(t) + h\vec{v}_i(t) + \tfrac{1}{2}h^2\vec{a}_i(t)\\
+\vec{v}_i(t+h) &\approx \vec{v}_i(t) + h\vec{a}_i(t) + \tfrac{1}{2}h^2\vec{a}_i'(t)
+\end{alignat*}
+There is no explicit expression for \(\vec{a}'(t)\), however it can be approximated using the good old formula
+\[
+\vec{a}'(t)\approx\frac{\vec{a}(t+h)-\vec{a}(t)}{h}
+\]
+Since the acceleration is independent of the velocity, the newly updated position, \(\vec{a}(t+h)\), can be calculated using \(\vec{r}(t+h)\). Inserting this into the expression for \(\vec{v}(t+h)\), we get
+\begin{alignat*}{2}
+\vec{v}_i(t+h) &\approx \vec{v}_i(t) + h\vec{a}_i(t) + \tfrac{1}{2}h\qty(\vec{a}_i(t+h)-\vec{a}_i(t))\\
+&= \vec{v}_i(t) + \tfrac{1}{2}h\qty(\vec{a}_i(t)+\vec{a}_i(t+h))
+\end{alignat*}
+The discretised version then becomes
+\begin{alignat*}{2}
+\vec{r}_{i,j+1} &\approx \vec{r}_{i,j} + h\vec{v}_{i,j} + \tfrac{1}{2}h^2\vec{a}_{i,j}\\
+\vec{v}_{i,j+1} &\approx \vec{v}_{i,j} + \tfrac{1}{2}h\qty(\vec{a}_{i,j} + \vec{a}_{i,j+1})
+\end{alignat*}
+The error of a second order Taylor polynomial is given as \(O(h^3)\). The approximation for \(\vec{a}'(t)\) has an error proportional to \(h\), but this error is multiplied with \(h^2\) when inserted into the expression for \(\vec{v}_i(t+h)\). As such, the error for each step is proportional to \(h^3\). The error is again cumulated for each step, so the total error will be proportional to \(h^2\). This is one order better than the Euler method.
 
 
 

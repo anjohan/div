@@ -8,4 +8,5 @@ set smartindent
 set autochdir
 set mouse=a
 autocmd BufWritePre * :%s/\s\+$//e
+map <T-F1> :! make <Return>
 map <F2> :! python %
