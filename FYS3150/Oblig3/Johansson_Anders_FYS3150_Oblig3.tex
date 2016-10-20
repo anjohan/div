@@ -138,9 +138,9 @@ where \(G\) is the gravitational constant, \(\SI{6.67e-11}{\N\meter\squared\per\
 
 If there are \(n\) planets in the solar system, in addition to the sun, the sum of the forces on planet \(i\) with mass \(m_i\) is
 \begin{alignat*}{2}
-\sum{\vec{F}_i} &= \sum_{\substack{k=0\\k\neq i}}^n\frac{Gm_im_k}{\norm{\vec{r}_i-\vec{r}_k}^3}\qty(\vec{r}_i-\vec{r}_k)
+\sum{\vec{F}_i} &= \sum_{\substack{k=0\\k\neq i}}^n\frac{Gm_im_k}{\norm{\vec{r}_k-\vec{r}_i}^3}\qty(\vec{r}_k-\vec{r}_i)
 \intertext{with \(m_0=M_\odot\) and \(\vec{r}_0=\vec{0}\). From Newton's second law, we know that \(\sum{\vec{F}_i}=m_i\vec{a}_i\), so the acceleration of planet \(i\) is given by}
-\vec{a}_i &= \sum_{\substack{k=0\\k\neq i}}^n \frac{Gm_k}{\norm{\vec{r}_i-\vec{r}_k}^3}\qty(\vec{r}_i-\vec{r}_k) \eqtag{avec}
+\vec{a}_i &= \sum_{\substack{k=0\\k\neq i}}^n \frac{Gm_k}{\norm{\vec{r}_k-\vec{r}_i}^3}\qty(\vec{r}_k-\vec{r}_i) \eqtag{avec}
 \end{alignat*}
 As the sun has been fixed to origo, \(\vec{a}_0\) is set to \(\vec{0}\).
 
@@ -160,7 +160,7 @@ In the solar system, seconds and meters are unpractical, as planets are millions
 \]
 With this change of units, \vref{avec} can be written as
 \[
-\vec{a}_i = \sum_{\substack{k=0\\k\neq i}}^n 4\pi^2\frac{m_k}{M_\odot}\frac{\vec{r}_i-\vec{r}_k}{\norm{\vec{r}_i-\vec{r}_k}^3}\cdot \SI{1}{\astronomicalunit\cubed\per\year\squared} \eqtag{avecast}
+\vec{a}_i = \sum_{\substack{k=0\\k\neq i}}^n 4\pi^2\frac{m_k}{M_\odot}\frac{\vec{r}_k-\vec{r}_i}{\norm{\vec{r}_k-\vec{r}_i}^3}\cdot \SI{1}{\astronomicalunit\cubed\per\year\squared} \eqtag{avecast}
 \]
 
 

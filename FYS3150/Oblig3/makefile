@@ -11,4 +11,5 @@ edit:
 clean:
 	latexmk -c
 	rm *.bbl *.run.xml
+	rm *.o
 	#rm *.dat *.eps *-converted-to.pdf plot*.tex *.txt *.run.xml
