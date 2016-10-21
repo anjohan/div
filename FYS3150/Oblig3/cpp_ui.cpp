@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <string.h>
+#include "vec.h"
 #include "vec3.h"
 #include "planet.h"
 #include "solarsystem.h"
@@ -29,8 +30,10 @@ int main(int argc, char* argv[]){
         vx = atof(argv[i+5]);
         vy = atof(argv[i+6]);
         vz = atof(argv[i+7]);
-        vec3 r(x,y,z);
-        vec3 v(vx,vy,vz);
+        struct vec r;
+        r.x = x; r.y = y; r.z = z;
+        struct vec v;
+        v.x = vx; v.y = vy; v.z = vz;
         Planet p(name,m,r,v);
         planets.push_back(p);
     }

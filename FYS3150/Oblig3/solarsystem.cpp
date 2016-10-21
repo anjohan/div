@@ -3,14 +3,12 @@
 void SolarSystem::solve_euler(){
     int i;
     double t = t0;
-    write_data(t);
-    calculate_accelerations();
     for(i=0; i<n; i++){
+        write_data(t);
+        calculate_accelerations();
         euler_update_positions_velocities();
         reset_accelerations();
-        calculate_accelerations();
         t += dt;
-        write_data(t);
     }
 }
 
@@ -43,8 +41,12 @@ void SolarSystem::write_data(double t){
     fprintf(file,"%f",t);
     int i;
     for(i=0; i<number_of_planets; i++){
-        vec3 r = planets[i].position();
-        fprintf(file," %f %f %f",r[0],r[1],r[2]);
+        vec r = planets[i].r;
+        vec v = planets[i].v;
+        vec a = planets[i].a;
+        fprintf(file," %f %f %f",r.x,r.y,r.z);
+        fprintf(file," %f %f %f",v.x,v.y,v.z);
+        fprintf(file," %f %f %f",a.x,a.y,a.z);
     }
     fprintf(file,"\n");
 }
