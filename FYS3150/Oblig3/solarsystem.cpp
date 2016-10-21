@@ -3,6 +3,7 @@
 void SolarSystem::solve_euler(){
     int i;
     double t = t0;
+    reset_accelerations();
     calculate_accelerations();
     write_data(t);
     for(i=0; i<n; i++){
