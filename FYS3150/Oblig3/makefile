@@ -3,7 +3,7 @@ FLAGG = -O3 -Wall -std=c++11
 all: pdf
 pdf: ${NAVN}.pdf
 ${NAVN}.pdf: ${NAVN}.tex test.tex
-	latexmk -f -pdf ${NAVN}.tex
+	latexmk -pdf ${NAVN}.tex
 read: ${NAVN}.pdf
 	evince ${NAVN}.pdf &
 edit:
@@ -17,7 +17,7 @@ planet.o: planet.cpp planet.h vec.o
 vec.o: vec.cpp vec.h
 	g++ -c ${FLAGG} vec.cpp
 test.dat: cpp_ui.x
-	./cpp_ui.x "test.dat" "euler" 0 1 1000000 "sun" 1.0 0 0 0 0 0 0 "earth" 0.03 0 1.0 0 6.28 0 0
+	./cpp_ui.x "test.dat" "euler" 0 1 10000 "sun" 1.0 0 0 0 0 0 0 "earth" 0.03 0 1.0 0 6.28 0 0
 test.tex: test.dat test.gpi
 	gnuplot test.gpi
 solarsystem.o: solarsystem.cpp solarsystem.h planet.o vec.o
