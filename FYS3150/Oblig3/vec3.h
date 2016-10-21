@@ -1,8 +1,8 @@
 #ifndef VEC3_H
 #define VEC3_H
+#include <cstdio>
 
-class vec3
-    {
+class vec3{
     public:
         double components[3];
         vec3();
@@ -20,8 +20,10 @@ class vec3
         vec3 operator+(vec3 rhs);
         vec3 operator-(vec3 rhs);
         vec3 operator*(double rhs);
+        void operator*=(double rhs);
         void copy(vec3 rhs);
         void reset();
-    };
+        void print();
+};
 
 #endif

@@ -42,7 +42,7 @@ vec3 vec3::operator-(vec3 rhs){
     return operator+(rhs * (-1));
 }
 
-vec3 vec3::operator*=(double rhs){
+void vec3::operator*=(double rhs){
     components[0] *= rhs;
     components[1] *= rhs;
     components[2] *= rhs;
@@ -60,4 +60,8 @@ double vec3::lengthSquared(){
 
 double vec3::length(){
     return sqrt(lengthSquared());
+}
+
+void vec3::print(){
+    printf("%.18f %.18f %.18f\n",components[0],components[1],components[2]);
 }

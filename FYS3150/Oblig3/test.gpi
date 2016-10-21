@@ -1,0 +1,6 @@
+set terminal epslatex size 6,4 color colortext
+
+set output "test.tex"
+
+plot "test.dat" using 2:3 every 1000 title "Sun" with linespoints pt 3 lw 3,\
+"test.dat" using 5:6 every 1000 title "Earth" with linespoints pt 5 lw 3
