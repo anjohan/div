@@ -30,11 +30,7 @@ int main(int argc, char* argv[]){
         vx = atof(argv[i+5]);
         vy = atof(argv[i+6]);
         vz = atof(argv[i+7]);
-        struct vec r;
-        r.x = x; r.y = y; r.z = z;
-        struct vec v;
-        v.x = vx; v.y = vy; v.z = vz;
-        Planet p(name,m,r,v);
+        Planet p(name,m,x,y,z,vx,vy,vz);
         planets.push_back(p);
     }
     SolarSystem solarsystem(filename,planets,t0,tn,n);

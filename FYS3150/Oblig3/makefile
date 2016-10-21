@@ -17,7 +17,7 @@ planet.o: planet.cpp planet.h vec.o
 vec.o: vec.cpp vec.h
 	g++ -c ${FLAGG} vec.cpp
 test.dat: cpp_ui.x
-	./cpp_ui.x "test.dat" "euler" 0 1 2 "sun" 1.0 0 0 0 0 0 0 "earth" 1 1.0 0 0 1.0 6.28 0
+	./cpp_ui.x "test.dat" "euler" 0 0.5 10000 "sun" 1.0 0 0 0 0 0 0 "earth" 1.0 1.0 0 0 1.0 6.28 0
 test.tex: test.dat test.gpi
 	gnuplot test.gpi
 solarsystem.o: solarsystem.cpp solarsystem.h planet.o vec.o

@@ -16,12 +16,14 @@ class SolarSystem{
             tn = tn_in;
             n = n_in;
             dt = (tn-t0)/(n-1);
+            int i;
+            for(i=0; i<number_of_planets; i++){
+                planets[i].set_dt(dt);
+            }
             printf("dt: %f\n",dt);
             file = fopen(filename,"w");
         }
-        ~SolarSystem(){
-            fclose(file);
-        }
+        void finish(){fclose(file);}
         void solve_euler();
     private:
         vector<Planet> planets;
