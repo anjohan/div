@@ -22,6 +22,7 @@ class Planet{
         void euler_update_velocity();
         void calculate_acceleration(Planet other);
         void set_dt(double dt_in){dt = dt_in;}
+        double get_mass_relation_4pi2(){return mass_relation_4pi2;}
     private:
         vec3 a, v, r, a_next, a_tmp, dr;
         char* name;
