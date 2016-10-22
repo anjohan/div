@@ -20,6 +20,7 @@ void Planet::euler_update_velocity(){
     printf("%s, a*dt: %f %f %f\n",name, dt*ax, dt*ay, dt*az);
     */
 }
+
 void Planet::calculate_acceleration(Planet other){
     double dx, dy, dz;
     dx = other.x - x;
@@ -30,4 +31,23 @@ void Planet::calculate_acceleration(Planet other){
     ax += dx*faktor;
     ay += dy*faktor;
     az += dz*faktor;
+}
+
+void Planet::verlet_update_position(){
+    x += dt*vx + 0.5*dt*dt*ax;
+    y += dt*vy + 0.5*dt*dt*ay;
+    z += dt*vz + 0.5*dt*dt*az;
+}
+
+void Planet::verlet_update_velocity(){
+    vx += 0.5*dt*(ax+ax_old);
+    vy += 0.5*dt*(ay+ay_old);
+    vz += 0.5*dt*(az+az_old);
+}
+
+void Planet::move_acceleration(){
+    ax_old = ax;
+    ay_old = ay;
+    az_old = az;
+    ax = 0; ay = 0; az = 0;
 }

@@ -8,7 +8,7 @@
 #include "solarsystem.h"
 
 int main(int argc, char* argv[]){
-    if(argc < 22 || (argc - 6) % 8 != 0){
+    if(argc < 23 || (argc - 7) % 8 != 0){
         printf("%d command line arguments provided. 5+8n required for n bodies, 21 minimum.\n", argc-1);
         return 1;
     }
@@ -17,11 +17,12 @@ int main(int argc, char* argv[]){
     double t0 = atof(argv[3]);
     double tn = atof(argv[4]);
     int n = atoi(argv[5]);
+    int dn = atoi(argv[6]);
     char* name;
     int i; double m;
     vector<Planet> planets;
     double x,y,z,vx,vy,vz;
-    for(i=6; i < argc; i+=8){
+    for(i=7; i < argc; i+=8){
         name = argv[i];
         m = atof(argv[i+1]);
         x = atof(argv[i+2]);
@@ -33,9 +34,17 @@ int main(int argc, char* argv[]){
         Planet p(name,m,x,y,z,vx,vy,vz);
         planets.push_back(p);
     }
-    SolarSystem solarsystem(filename,planets,t0,tn,n);
+    SolarSystem solarsystem(filename,planets,t0,tn,n,dn);
     if(strcmp(method,"euler")==0){
         printf("Solving with Forward Euler.\n");
         solarsystem.solve_euler();
+    }
+    else if(strcmp(method,"verlet")==0){
+        printf("Solving with Velocity-Verlet.\n");
+        solarsystem.solve_verlet();
+    }
+    else{
+        printf("Invalid method %s specified.",method);
+        return 1;
     }
 }

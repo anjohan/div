@@ -79,28 +79,39 @@
     \fi%
     \setlength{\fboxrule}{0.5pt}%
     \setlength{\fboxsep}{1pt}%
-\begin{picture}(7200.00,7200.00)%
+\begin{picture}(5760.00,5760.00)%
     \gplgaddtomacro\gplbacktext{%
       \csname LTb\endcsname%
-      \put(726,735){\makebox(0,0)[r]{\strut{}$-1$}}%
-      \put(726,2211){\makebox(0,0)[r]{\strut{}$-0.5$}}%
-      \put(726,3688){\makebox(0,0)[r]{\strut{}$0$}}%
-      \put(726,5164){\makebox(0,0)[r]{\strut{}$0.5$}}%
-      \put(726,6640){\makebox(0,0)[r]{\strut{}$1$}}%
-      \put(1128,220){\makebox(0,0){\strut{}$-1$}}%
-      \put(2479,220){\makebox(0,0){\strut{}$-0.5$}}%
-      \put(3831,220){\makebox(0,0){\strut{}$0$}}%
-      \put(5182,220){\makebox(0,0){\strut{}$0.5$}}%
-      \put(6533,220){\makebox(0,0){\strut{}$1$}}%
+      \put(946,704){\makebox(0,0)[r]{\strut{}$-1.5$}}%
+      \put(946,1503){\makebox(0,0)[r]{\strut{}$-1$}}%
+      \put(946,2301){\makebox(0,0)[r]{\strut{}$-0.5$}}%
+      \put(946,3100){\makebox(0,0)[r]{\strut{}$0$}}%
+      \put(946,3898){\makebox(0,0)[r]{\strut{}$0.5$}}%
+      \put(946,4697){\makebox(0,0)[r]{\strut{}$1$}}%
+      \put(946,5495){\makebox(0,0)[r]{\strut{}$1.5$}}%
+      \put(1078,484){\makebox(0,0){\strut{}$-1.5$}}%
+      \put(1792,484){\makebox(0,0){\strut{}$-1$}}%
+      \put(2506,484){\makebox(0,0){\strut{}$-0.5$}}%
+      \put(3221,484){\makebox(0,0){\strut{}$0$}}%
+      \put(3935,484){\makebox(0,0){\strut{}$0.5$}}%
+      \put(4649,484){\makebox(0,0){\strut{}$1$}}%
+      \put(5363,484){\makebox(0,0){\strut{}$1.5$}}%
     }%
     \gplgaddtomacro\gplfronttext{%
       \csname LTb\endcsname%
-      \put(5816,6762){\makebox(0,0)[r]{\strut{}Sun}}%
+      \put(176,3099){\rotatebox{-270}{\makebox(0,0){\strut{}$y\ [\si{\astronomicalunit}]$}}}%
+      \put(3220,154){\makebox(0,0){\strut{}$x\ [\si{\astronomicalunit}]$}}%
       \csname LTb\endcsname%
-      \put(5816,6542){\makebox(0,0)[r]{\strut{}Earth}}%
+      \put(4376,5322){\makebox(0,0)[r]{\strut{}Sun, Euler}}%
+      \csname LTb\endcsname%
+      \put(4376,5102){\makebox(0,0)[r]{\strut{}Earth, Euler}}%
+      \csname LTb\endcsname%
+      \put(4376,4882){\makebox(0,0)[r]{\strut{}Sun, Verlet}}%
+      \csname LTb\endcsname%
+      \put(4376,4662){\makebox(0,0)[r]{\strut{}Earth, Verlet}}%
     }%
     \gplbacktext
-    \put(0,0){\includegraphics{test}}%
+    \put(0,0){\includegraphics{earthsun}}%
     \gplfronttext
   \end{picture}%
 \endgroup

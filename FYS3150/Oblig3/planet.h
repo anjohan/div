@@ -21,13 +21,17 @@ class Planet{
         }
         void reset_acceleration(){
             ax = 0; ay = 0; az = 0;
+            ax_old = 0; ay_old = 0; az_old = 0;
         }
         void euler_update_position();
         void euler_update_velocity();
+        void verlet_update_position();
+        void verlet_update_velocity();
         void calculate_acceleration(Planet other);
+        void move_acceleration();
         void set_dt(double dt_in){dt = dt_in;}
         double get_mass_relation_4pi2(){return mass_relation_4pi2;}
-        double x, y, z, vx, vy, vz, ax, ay, az;
+        double x, y, z, vx, vy, vz, ax, ay, az, ax_old, ay_old, az_old;
     private:
         char* name;
         double mass_relation_4pi2, dr_norm, dt;

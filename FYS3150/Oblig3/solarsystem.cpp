@@ -8,11 +8,34 @@ void SolarSystem::solve_euler(){
     write_data(t);
     for(i=0; i<n; i++){
         euler_update_positions_velocities();
-        calculate_accelerations();
-        write_data(t);
         reset_accelerations();
+        calculate_accelerations();
+        if(i % dn == 0){
+            write_data(t);
+        }
         t += dt;
     }
+    write_data(t);
+    finish();
+}
+
+void SolarSystem::solve_verlet(){
+    int i;
+    double t = t0;
+    reset_accelerations();
+    calculate_accelerations();
+    write_data(t);
+    for(i=0; i<n; i++){
+        verlet_update_positions();
+        move_accelerations();
+        calculate_accelerations();
+        verlet_update_velocities();
+        if(i % dn == 0){
+            write_data(t);
+        }
+        t += dt;
+    }
+    write_data(t);
     finish();
 }
 
@@ -20,6 +43,27 @@ void SolarSystem::reset_accelerations(){
     int i;
     for(i=0; i<number_of_planets; i++){
         planets[i].reset_acceleration();
+    }
+}
+
+void SolarSystem::move_accelerations(){
+    int i;
+    for(i=0; i<number_of_planets; i++){
+        planets[i].move_acceleration();
+    }
+}
+
+void SolarSystem::verlet_update_positions(){
+    int i;
+    for(i=0; i<number_of_planets; i++){
+        planets[i].verlet_update_position();
+    }
+}
+
+void SolarSystem::verlet_update_velocities(){
+    int i;
+    for(i=0; i<number_of_planets; i++){
+        planets[i].verlet_update_velocity();
     }
 }
 
@@ -47,7 +91,7 @@ void SolarSystem::write_data(double t){
     for(i=0; i<number_of_planets; i++){
         fprintf(file," %f %f %f",planets[i].x,planets[i].y,planets[i].z);
         fprintf(file," %f %f %f",planets[i].vx,planets[i].vy,planets[i].vz);
-        fprintf(file," %f %f %f",planets[i].ax,planets[i].ay,planets[i].az);
+        //fprintf(file," %f %f %f",planets[i].ax,planets[i].ay,planets[i].az);
     }
     fprintf(file,"\n");
 }
