@@ -4,6 +4,8 @@ void SolarSystem::solve_euler(){
     int i;
     double t = t0;
     reset_accelerations();
+    clock_t start, end;
+    start = clock();
     calculate_accelerations();
     write_data(t);
     for(i=0; i<n; i++){
@@ -16,6 +18,9 @@ void SolarSystem::solve_euler(){
         t += dt;
     }
     write_data(t);
+    end = clock();
+    double time = ((double) (end - start))/CLOCKS_PER_SEC;
+    fprintf(file,"# %f",time);
     finish();
 }
 
@@ -23,6 +28,8 @@ void SolarSystem::solve_verlet(){
     int i;
     double t = t0;
     reset_accelerations();
+    clock_t start, end;
+    start = clock();
     calculate_accelerations();
     write_data(t);
     for(i=0; i<=n; i++){
@@ -36,6 +43,9 @@ void SolarSystem::solve_verlet(){
         t += dt;
     }
     write_data(t);
+    end = clock();
+    double time = ((double) (end - start))/CLOCKS_PER_SEC;
+    fprintf(file,"# %f",time);
     finish();
 }
 

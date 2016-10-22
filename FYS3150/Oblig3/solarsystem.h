@@ -5,6 +5,7 @@
 #include "vec3.h"
 #include <string>
 #include <cstdio>
+#include <ctime>
 using namespace std;
 
 class SolarSystem{
@@ -21,7 +22,7 @@ class SolarSystem{
             for(i=0; i<number_of_planets; i++){
                 planets[i].set_dt(dt);
             }
-            printf("dt: %f\n",dt);
+            //printf("dt: %f\n",dt);
             file = fopen(filename,"w");
         }
         void finish(){fclose(file);}

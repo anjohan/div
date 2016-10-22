@@ -7,8 +7,8 @@ done
 wait
 for i in `seq $1 $2`; do
     n=$[10**$i]
-    sisteeuler=(`tail -n 1 euler$n.dat`)
-    sisteverlet=(`tail -n 1 verlet$n.dat`)
+    sisteeuler=(`tail -n 2 euler$n.dat`)
+    sisteverlet=(`tail -n 2 verlet$n.dat`)
     eulerx=${sisteeuler[7]}
     verletx=${sisteverlet[7]}
     eulery=${sisteeuler[8]}

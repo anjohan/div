@@ -1,9 +1,6 @@
 #include <cstdio>
 #include <vector>
-#include <string>
 #include <string.h>
-#include "vec.h"
-#include "vec3.h"
 #include "planet.h"
 #include "solarsystem.h"
 
