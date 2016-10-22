@@ -25,7 +25,7 @@ void SolarSystem::solve_verlet(){
     reset_accelerations();
     calculate_accelerations();
     write_data(t);
-    for(i=0; i<n; i++){
+    for(i=0; i<=n; i++){
         verlet_update_positions();
         move_accelerations();
         calculate_accelerations();
