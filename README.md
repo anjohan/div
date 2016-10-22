@@ -1,4 +1,16 @@
 # Offentlig
+The pdf should be updated.
+
+## To do everything:
+`make`
+
+Dependencies:
+* g++
+* Python 2.7
+* texlive with latexmk
+* bash
+* gnuplot 5.0
+
 
 ```
 usage: python_ui.py [-h] [-f FILENAME] [-m {euler,verlet}] [-t0 T0] [-tn TN]
