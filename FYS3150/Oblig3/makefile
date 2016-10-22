@@ -2,7 +2,7 @@ NAVN = Johansson_Anders_FYS3150_Oblig3
 FLAGG = -O3 -Wall -std=c++11
 all: pdf
 pdf: ${NAVN}.pdf
-${NAVN}.pdf: ${NAVN}.tex earthsun.tex error.tex table.dat
+${NAVN}.pdf: ${NAVN}.tex earthsun.tex error.tex
 	latexmk -quiet -pdf ${NAVN}.tex
 read: ${NAVN}.pdf
 	evince ${NAVN}.pdf &
@@ -26,8 +26,6 @@ error.tex: error.dat error.gpi
 	gnuplot error.gpi
 error.dat: errorearthsun.sh cpp_ui.x
 	bash errorearthsun.sh 2 8
-table.dat: error.dat erroranalysis.py
-	python erroranalysis.py
 clean:
 	latexmk -c
 	rm *.o *.x
