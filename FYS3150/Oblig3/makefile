@@ -18,7 +18,7 @@ solarsystem.o: solarsystem.cpp solarsystem.h planet.o
 	g++ -c ${FLAGG} solarsystem.cpp
 vec.o: vec.cpp vec.h
 	g++ -c ${FLAGG} vec.cpp
-earthsun.tex: earthsuneuler.dat earthsunverlet.dat python_ui.py
+earthsun.tex: earthsuneuler.dat earthsunverlet.dat python_ui.py earthsun.gpi
 	gnuplot earthsun.gpi
 earthsuneuler.dat eartnsunverlet.dat: earthsun.sh cpp_ui.x python_ui.py
 	./earthsun.sh

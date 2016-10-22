@@ -53,5 +53,5 @@ for planet in planets:
     for element in planet:
         argstring += " %s" % element
 
-print argstring
+#print argstring
 os.system("./cpp_ui.x " + argstring)

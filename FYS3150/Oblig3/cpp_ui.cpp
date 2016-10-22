@@ -36,11 +36,11 @@ int main(int argc, char* argv[]){
     }
     SolarSystem solarsystem(filename,planets,t0,tn,n,dn);
     if(strcmp(method,"euler")==0){
-        printf("Solving with Forward Euler.\n");
+        //printf("Solving with Forward Euler.\n");
         solarsystem.solve_euler();
     }
     else if(strcmp(method,"verlet")==0){
-        printf("Solving with Velocity-Verlet.\n");
+        //printf("Solving with Velocity-Verlet.\n");
         solarsystem.solve_verlet();
     }
     else{

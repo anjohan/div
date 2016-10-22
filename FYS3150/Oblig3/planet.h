@@ -17,7 +17,7 @@ class Planet{
             vx = vx_in;
             vy = vy_in;
             vz = vz_in;
-            printf("Planet %s created with x=%f, y=%f, z=%f, vx=%f, vy=%f, vz=%f, m/M=%f\n",name, x,y,z,vx,vy,vz,mass_relative_to_sun);
+            //printf("Planet %s created with x=%f, y=%f, z=%f, vx=%f, vy=%f, vz=%f, m/M=%f\n",name, x,y,z,vx,vy,vz,mass_relative_to_sun);
         }
         void reset_acceleration(){
             ax = 0; ay = 0; az = 0;
