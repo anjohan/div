@@ -11,7 +11,16 @@ Dependencies:
 * bash
 * gnuplot 5.0
 
+## User interface (only works for non-relativistic simulation of system where all bodies are moving)
+### Example
+```
+python python_ui.py -m verlet -f earthsunverlet.dat -tn 1 -n 1000 -s -b earth 3E-6 1 0 0 0 6.28 0
+```
+Simulates for one year with 1000 data points, using the verlet method. Data is saved do earthsunverlet.dat.
 
+The earth is set to begin at (1,0,0) with velocity (0,6.28,0), and a sun is placed such that the center of mass is in (0,0,0) and stationary.
+
+### Documentation `python python_ui.py -h`
 ```
 usage: python_ui.py [-h] [-f FILENAME] [-m {euler,verlet}] [-t0 T0] [-tn TN]
                     [-n N] [-dn DN] [-s]
