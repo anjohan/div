@@ -29,9 +29,9 @@ final_velocities = array(final_values[3:6]).transpose()
 # |_| |_| |_|\___/|_| |_| |_|\___|_| |_|\__|\__,_|_| |_| |_|
 
 initial_momentums = array([mass*velocity for mass,velocity in zip(masses,initial_velocities)])
-initial_momentum = sum(initial_momentums,axis=1)
+initial_momentum = sum(initial_momentums,axis=0)
 final_momentums = array([mass*velocity for mass,velocity in zip(masses,final_velocities)])
-final_momentum = sum(final_momentums,axis=1)
+final_momentum = sum(final_momentums,axis=0)
 
 momentum_difference = norm(initial_momentum-final_momentum)
 if momentum_difference > 1E-6:
@@ -81,10 +81,10 @@ else:
 # |_| |_| |_|\___/|_| |_| |_|\___|_| |_|\__|\__,_|_| |_| |_|
 
 initial_angular_momentums = array([cross(position,momentum) for position,momentum in zip(initial_positions,initial_momentums)])
-initial_angular_momentum = sum(initial_angular_momentums,axis=1)
+initial_angular_momentum = sum(initial_angular_momentums,axis=0)
 
 final_angular_momentums = array([cross(position,momentum) for position,momentum in zip(final_positions,final_momentums)])
-final_angular_momentum = sum(final_angular_momentums,axis=1)
+final_angular_momentum = sum(final_angular_momentums,axis=0)
 
 angular_momentum_difference = norm(initial_angular_momentum-final_angular_momentum)
 if angular_momentum_difference > 1E-8:

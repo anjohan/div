@@ -1,0 +1,22 @@
+set terminal epslatex size 6,5 color colortext
+
+set output "everything.tex"
+set view equal xy
+
+set xlabel "$x\\ [\\si{\\astronomicalunit}]$"
+set ylabel "$y\\ [\\si{\\astronomicalunit}]$"
+set zlabel "$z\\ [\\si{\\astronomicalunit}]$"
+set grid
+set zrange[-0.5:0.5]
+
+set view equal xy
+set view 75,30
+
+splot "everything.dat" using 8:9:10 title "Mercury" with lines lw 3,\
+"" using 14:15:16 title "Venus" with lines lw 3,\
+"" using 20:21:22 title "Earth" with lines lw 3,\
+"" using 26:27:28 title "Mars" with lines lw 3,\
+"" using 32:33:34 title "Jupiter" with lines lw 3,\
+"" using 38:39:40 title "Saturn" with lines lw 3,\
+"" using 44:45:46 title "Uranus" with lines lw 3,\
+"" using 2:3:4 title "Sun" with linespoints lw 3 pt 7

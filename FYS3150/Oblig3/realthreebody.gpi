@@ -1,0 +1,18 @@
+set terminal epslatex size 6,5 color colortext
+
+set output "realthreebody.tex"
+set view equal xy
+
+set xlabel "$x\\ [\\si{\\astronomicalunit}]$"
+set ylabel "$y\\ [\\si{\\astronomicalunit}]$"
+set zlabel "$z\\ [\\si{\\astronomicalunit}]$"
+set grid
+set zrange[-1:1]
+set ztics 1
+
+set view equal xyz
+#set view 65,30
+
+splot "realthreebody.dat" using 8:9:10 title "Earth" with lines lw 3,\
+"" using 14:15:16 title "Jupiter" with lines lw 3,\
+"" using 2:3:4 title "Sun" with linespoints lw 3 pt 7

@@ -2,7 +2,7 @@ NAVN = Johansson_Anders_FYS3150_Oblig3
 FLAGG = -O3 -Wall -std=c++11
 all: pdf
 pdf: ${NAVN}.pdf
-${NAVN}.pdf: ${NAVN}.tex earthsun.tex error.tex timetable.dat earthsunverlettest.dat earthsuneulertest.dat
+${NAVN}.pdf: ${NAVN}.tex earthsun.tex error.tex timetable.dat earthsunverlettest.dat earthsuneulertest.dat threebody.tex realthreebody.tex everything.tex
 	latexmk -quiet -pdf ${NAVN}.tex
 read: ${NAVN}.pdf
 	evince ${NAVN}.pdf &
@@ -30,6 +30,18 @@ error.dat: errorearthsun.sh cpp_ui.x
 	bash errorearthsun.sh 2 7
 timetable.dat: cpp_ui.x python_ui.py timetable.py
 	python timetable.py 2 8
+threebody.tex: threebody1.dat threebody.gpi
+	gnuplot threebody.gpi
+threebody1.dat: threebody.sh cpp_ui.x python_ui.py
+	bash threebody.sh
+realthreebody.tex: realthreebody.dat realthreebody.gpi
+	gnuplot realthreebody.gpi
+realthreebody.dat: realthreebody.sh cpp_ui.x python_ui.py
+	bash realthreebody.sh
+everything.tex: everything.dat everything.gpi
+	gnuplot everything.gpi
+everything.dat: everything.sh cpp_ui.x python_ui.py
+	bash everything.sh
 clean:
 	latexmk -c
 	rm *.o *.x

@@ -9,7 +9,7 @@ parser = ArgumentParser(description="User-friendly interface for simulating the 
 
 parser.add_argument("-f","--filename",type=str,help="Name of file in which to store calculated data.")
 
-parser.add_argument("-m","--method",choices=["euler","verlet"],default="euler",help="Numerical method to be used for simulation.")
+parser.add_argument("-m","--method",choices=["euler","verlet"],default="verlet",help="Numerical method to be used for simulation.")
 
 parser.add_argument("-t0","--initial_time",type=float,default=0,help="Start time for the simulation.",dest="t0")
 
