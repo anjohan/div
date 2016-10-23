@@ -6,7 +6,7 @@ nslutt = int(sys.argv[2])
 with open("timetable.dat","w") as outfile:
     outfile.write(r"""
         \[\begin{array}{rrrr}\toprule
-        \multicolumn{1}{c}{n} & \text{Euler time} & \text{Verlet time} & \text{Ratio}""")
+        \multicolumn{1}{c}{\text{Number of time steps}} & \multicolumn{1}{c}{\text{Euler time}} & \multicolumn{1}{c}{\text{Verlet time}} & \multicolumn{1}{c}{\text{Ratio}}""")
     for eksp in range(nstart,nslutt+1):
         n = 10**eksp
         os.system("""

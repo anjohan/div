@@ -15,5 +15,3 @@ for i in `seq $1 $2`; do
     verlety=${sisteverlet[8]}
     echo $n $eulerx $eulery $verletx $verlety >> error.dat
 done
-rm euler*.dat
-rm verlet*.dat
