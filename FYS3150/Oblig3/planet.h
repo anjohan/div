@@ -10,7 +10,8 @@ class Planet{
     public:
         Planet(char* name_in, double mass_relative_to_sun, double x_in, double y_in, double z_in, double vx_in, double vy_in, double vz_in){
             name = name_in;
-            mass_relation_4pi2  = 4 * M_PI * M_PI * mass_relative_to_sun;
+            mass_ratio = mass_relative_to_sun;
+            mass_ratio_4pi2  = 4 * M_PI * M_PI * mass_relative_to_sun;
             x = x_in;
             y = y_in;
             z = z_in;
@@ -27,14 +28,24 @@ class Planet{
         void euler_update_velocity();
         void verlet_update_position();
         void verlet_update_velocity();
-        void calculate_acceleration(Planet other);
+        virtual void calculate_acceleration(Planet* other);
         void move_acceleration();
-        void set_dt(double dt_in){dt = dt_in;}
-        double get_mass_relation_4pi2(){return mass_relation_4pi2;}
+        void set_dt(double dt_in){
+            dt = dt_in;
+            halfdt = 0.5*dt;
+            halfdt2 = 0.5*dt*dt;
+        }
         double x, y, z, vx, vy, vz, ax, ay, az, ax_old, ay_old, az_old;
+        double mass_ratio, mass_ratio_4pi2;
     private:
         char* name;
-        double mass_relation_4pi2, dr_norm, dt;
+        double dt, halfdt, halfdt2;
+};
+
+class StationaryPlanet : public Planet{
+    public:
+        StationaryPlanet(char* name_in, double mass_relative_to_sun, double x_in, double y_in, double z_in, double vx_in, double vy_in, double vz_in) : Planet(name_in, mass_relative_to_sun, x_in, y_in, z_in, vx_in, vy_in, vz_in){;}
+        virtual void calculate_acceleration(Planet* other){;}
 };
 
 #endif

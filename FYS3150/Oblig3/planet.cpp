@@ -21,28 +21,28 @@ void Planet::euler_update_velocity(){
     */
 }
 
-void Planet::calculate_acceleration(Planet other){
+void Planet::calculate_acceleration(Planet* other){
     double dx, dy, dz;
-    dx = other.x - x;
-    dy = other.y - y;
-    dz = other.z - z;
+    dx = other->x - x;
+    dy = other->y - y;
+    dz = other->z - z;
     double dr_norm = sqrt(dx*dx + dy*dy + dz*dz);
-    double faktor = other.get_mass_relation_4pi2()/(dr_norm*dr_norm*dr_norm);
-    ax += dx*faktor;
-    ay += dy*faktor;
-    az += dz*faktor;
+    double factor = other->mass_ratio_4pi2/(dr_norm*dr_norm*dr_norm);
+    ax += dx*factor;
+    ay += dy*factor;
+    az += dz*factor;
 }
 
 void Planet::verlet_update_position(){
-    x += dt*vx + 0.5*dt*dt*ax;
-    y += dt*vy + 0.5*dt*dt*ay;
-    z += dt*vz + 0.5*dt*dt*az;
+    x += dt*vx + halfdt2*ax;
+    y += dt*vy + halfdt2*ay;
+    z += dt*vz + halfdt2*az;
 }
 
 void Planet::verlet_update_velocity(){
-    vx += 0.5*dt*(ax+ax_old);
-    vy += 0.5*dt*(ay+ay_old);
-    vz += 0.5*dt*(az+az_old);
+    vx += halfdt*(ax+ax_old);
+    vy += halfdt*(ay+ay_old);
+    vz += halfdt*(az+az_old);
 }
 
 void Planet::move_acceleration(){

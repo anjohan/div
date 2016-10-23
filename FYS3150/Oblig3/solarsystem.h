@@ -10,26 +10,12 @@ using namespace std;
 
 class SolarSystem{
     public:
-        SolarSystem(char* filename, vector<Planet> planets_in, double t0_in, double tn_in, int n_in, int dn_in){
-            planets = planets_in;
-            number_of_planets = planets.size();
-            t0 = t0_in;
-            tn = tn_in;
-            n = n_in;
-            dn = dn_in;
-            dt = (tn-t0)/(n-1);
-            int i;
-            for(i=0; i<number_of_planets; i++){
-                planets[i].set_dt(dt);
-            }
-            //printf("dt: %f\n",dt);
-            file = fopen(filename,"w");
-        }
+        SolarSystem(char* filename, vector<Planet*> planets_in, double t0_in, double tn_in, int n_in, int dn_in);
         void finish(){fclose(file);}
         void solve_euler();
         void solve_verlet();
     private:
-        vector<Planet> planets;
+        vector<Planet*> planets;
         int number_of_planets, n, dn;
         double t0, tn, dt;
         FILE* file;

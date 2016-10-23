@@ -5,21 +5,23 @@
 #include "solarsystem.h"
 
 int main(int argc, char* argv[]){
-    if(argc < 23 || (argc - 7) % 8 != 0){
-        printf("%d command line arguments provided. 5+8n required for n bodies, 21 minimum.\n", argc-1);
+    if(argc < 24 || (argc - 8) % 8 != 0){
+        printf("%d command line arguments provided. 5+8n required for n bodies, 23 minimum.\n", argc-1);
         return 1;
     }
     char* filename = argv[1];
     char* method = argv[2];
-    double t0 = atof(argv[3]);
-    double tn = atof(argv[4]);
-    int n = atoi(argv[5]);
-    int dn = atoi(argv[6]);
+    char* sunmotion = argv[3];
+    double t0 = atof(argv[4]);
+    double tn = atof(argv[5]);
+    int n = atoi(argv[6]);
+    int dn = atoi(argv[7]);
     char* name;
     int i; double m;
-    vector<Planet> planets;
+    vector<Planet*> planets;
     double x,y,z,vx,vy,vz;
-    for(i=7; i < argc; i+=8){
+    Planet *p;
+    for(i=8; i < argc; i+=8){
         name = argv[i];
         m = atof(argv[i+1]);
         x = atof(argv[i+2]);
@@ -28,7 +30,12 @@ int main(int argc, char* argv[]){
         vx = atof(argv[i+5]);
         vy = atof(argv[i+6]);
         vz = atof(argv[i+7]);
-        Planet p(name,m,x,y,z,vx,vy,vz);
+        if(strcmp(sunmotion,"fixed")==0 && strcmp(name,"sun")==0){
+            p = new StationaryPlanet(name,m,x,y,z,vx,vy,vz);
+        }
+        else{
+            p = new Planet(name,m,x,y,z,vx,vy,vz);
+        }
         planets.push_back(p);
     }
     SolarSystem solarsystem(filename,planets,t0,tn,n,dn);
@@ -43,5 +50,9 @@ int main(int argc, char* argv[]){
     else{
         printf("Invalid method %s specified.",method);
         return 1;
+    }
+    int number_of_planets = planets.size();
+    for(i=0; i<number_of_planets; i++){
+        delete planets[i];
     }
 }

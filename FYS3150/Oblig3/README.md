@@ -12,7 +12,7 @@ Dependencies:
 * bash
 * gnuplot 5.0
 
-## User interface (only works for non-relativistic simulation of system where all bodies are moving)
+## User interface (only works for non-relativistic simulation)
 ### Example
 ```
 python python_ui.py -m verlet -f earthsunverlet.dat -tn 1 -n 1000 -s -b earth 3E-6 1 0 0 0 6.28 0
@@ -24,7 +24,7 @@ The earth is set to begin at (1,0,0) with velocity (0,6.28,0), and a sun is plac
 ### Documentation `python python_ui.py -h`
 ```
 usage: python_ui.py [-h] [-f FILENAME] [-m {euler,verlet}] [-t0 T0] [-tn TN]
-                    [-n N] [-dn DN] [-s]
+                    [-n N] [-dn DN] [--fixedsun] [-s]
                     [-b name masssolar masses x y z vx vy vz]
 
 User-friendly interface for simulating the solar system.
@@ -43,8 +43,10 @@ optional arguments:
                         Number of integration points.
   -dn DN, --write_interval DN
                         Write data to file at every dn'th point.
+  --fixedsun            Fix a sun at origo.
   -s, --sun             Add a sun with position and velocity such that the
-                        center of mass is in origo and stationary.
+                        center of mass is in origo and stationary (or fixed at
+                        origo if --fixedsun is used).
   -b name mass(solar masses) x y z vx vy vz, --body name mass(solar masses) x y z vx vy vz
                         Add a body (one -b for each body).
 ```

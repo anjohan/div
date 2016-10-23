@@ -19,7 +19,9 @@ parser.add_argument("-n","--integration_points",dest="n",type=int,default=100000
 
 parser.add_argument("-dn","--write_interval",dest="dn",type=int,default=1,help="Write data to file at every dn'th point.")
 
-parser.add_argument("-s","--sun",action="store_true",help="Add a sun with position and velocity such that the center of mass is in origo and stationary.")
+parser.add_argument("--fixedsun",action="store_true",help="Fix a sun at origo.")
+
+parser.add_argument("-s","--sun",action="store_true",help="Add a sun with position and velocity such that the center of mass is in origo and stationary (or fixed at origo if --fixedsun is used).")
 
 parser.add_argument("-b","--body",action="append",nargs=8,help="Add a body (one -b for each body).", metavar=("name", "mass(solar masses)", "x", "y", "z", "vx", "vy", "vz"))
 
@@ -42,13 +44,18 @@ planets = args.body
 for planet in planets:
     planet[1:] = [float(element) for element in planet[1:]]
 
-if args.sun:
+if args.sun or args.fixedsun:
     sun = ["sun",1]
-    for i in range(2,8):
-        sun.append(-sum([planet[1]*planet[i] for planet in planets]))
+    if args.fixedsun:
+        sunmode = "fixed"
+        sun += [0,0,0,0,0,0]
+    else:
+        sunmode = "moving"
+        for i in range(2,8):
+            sun.append(-sum([planet[1]*planet[i] for planet in planets]))
     planets = [sun] + planets
 
-argstring = "%s %s %s %s %s %s" % (args.filename,args.method,args.t0,args.tn,args.n,args.dn)
+argstring = "%s %s %s %s %s %s %s" % (args.filename,args.method,sunmode,args.t0,args.tn,args.n,args.dn)
 for planet in planets:
     for element in planet:
         argstring += " %s" % element
