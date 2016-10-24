@@ -60,7 +60,7 @@ void PerihelionFinder::verlet_update_position(){
     r_old = r;
     r = x*x + y*y + z*z;
     if(r_reallyold > r_old && r_old < r){ // Perihelion found!
-        double theta_p = atan2(y_old,x_old);
+        double theta_p = atan(y_old/x_old);
         double t = i*dt;
         theta_p *= 180/M_PI*3600; // Arc seconds.
         fprintf(perihelionfile,"%f %f\n",t,theta_p);

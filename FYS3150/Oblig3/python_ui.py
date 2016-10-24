@@ -44,16 +44,17 @@ planets = args.body
 for planet in planets:
     planet[1:] = [float(element) for element in planet[1:]]
 
+sunmode = "moving"
 if args.sun or args.fixedsun:
     sun = ["sun",1]
     if args.fixedsun:
         sunmode = "fixed"
         sun += [0,0,0,0,0,0]
     else:
-        sunmode = "moving"
         for i in range(2,8):
             sun.append(-sum([planet[1]*planet[i] for planet in planets]))
     planets = [sun] + planets
+
 
 argstring = "%s %s %s %s %s %s %s" % (args.filename,args.method,sunmode,args.t0,args.tn,args.n,args.dn)
 for planet in planets:

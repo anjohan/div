@@ -18,7 +18,6 @@ class Planet{
             vx = vx_in;
             vy = vy_in;
             vz = vz_in;
-            //printf("Planet %s created with x=%f, y=%f, z=%f, vx=%f, vy=%f, vz=%f, m/M=%f\n",name, x,y,z,vx,vy,vz,mass_relative_to_sun);
         }
         virtual ~Planet(){;}
         void reset_acceleration(){
@@ -57,8 +56,12 @@ class PerihelionFinder : public Planet{
             filename = new char[100];
             sprintf(filename,"%sperihelion.dat",name);
             perihelionfile = fopen(filename,"w");
+            r = 0; r_old = 1; r_reallyold = 0;
         }
         void verlet_update_position();
+        virtual void calculate_acceleration(Planet* other){
+            Planet::calculate_acceleration(other);
+        }
         virtual ~PerihelionFinder(){
             fclose(perihelionfile);
             delete [] filename;

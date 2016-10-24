@@ -1,0 +1,12 @@
+set terminal epslatex size 6,4 color colortext
+
+set output "perihelion.tex"
+set view equal xy
+
+set xlabel "$t\\ [\\si{\\year}]$"
+set ylabel "$\\theta_p\\ ['']$"
+set grid
+
+
+plot "mercuryclassicperihelion.dat" using 1:2 title "Classical" with lines lw 3,\
+"mercuryrelativisticperihelion.dat" using 1:2 title "Relativistic" with lines lw 3,\
