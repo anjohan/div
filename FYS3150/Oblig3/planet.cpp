@@ -4,21 +4,11 @@ void Planet::euler_update_position(){
     x += dt*vx;
     y += dt*vy;
     z += dt*vz;
-    /*
-    printf("%s, v: %f %f %f\n",name, vx, vy, vz);
-    printf("%s, dt: %f\n",name, dt);
-    printf("%s, v*dt: %f %f %f\n",name, dt*vx, dt*vy, dt*vz);
-    */
 }
 void Planet::euler_update_velocity(){
     vx += dt*ax;
     vy += dt*ay;
     vz += dt*az;
-    /*
-    printf("%s, a: %f %f %f\n",name, ax, ay, az);
-    printf("%s, dt: %f\n",name, dt);
-    printf("%s, a*dt: %f %f %f\n",name, dt*ax, dt*ay, dt*az);
-    */
 }
 
 void Planet::calculate_acceleration(Planet* other){
@@ -76,7 +66,7 @@ void RelativisticPlanet::calculate_acceleration(Planet* other){
     double lx, ly, lz;
     lx = y*vz-z*vy;
     ly = z*vx-x*vz;
-    lz = x*vy-y*vz;
+    lz = x*vy-y*vx;
     double l_norm2 = lx*lx + ly*ly + lz*lz;
     double dr_norm = sqrt(dx*dx + dy*dy + dz*dz);
     double factor1 = other->mass_ratio_4pi2/(dr_norm*dr_norm*dr_norm);

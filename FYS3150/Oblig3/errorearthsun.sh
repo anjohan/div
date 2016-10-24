@@ -1,4 +1,8 @@
-touch error.dat
+outfile=error.dat
+if [ -f $outfile ]; then
+    rm $outfile
+fi
+touch $outfile
 for i in `seq $1 $2`; do
     n=$[10**$i]
     python python_ui.py -m euler -f euler$n.dat -tn 1 -n $n -dn $n -s -b earth 3E-6 1 0 0 0 6.28318530718 0 &

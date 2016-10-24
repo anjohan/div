@@ -22,6 +22,7 @@ splot "everything.dat" using 8:9:10 title "Mercury" with lines lw 3,\
 "" using 2:3:4 title "Sun" with linespoints lw 3 pt 7
 
 set output "inner.tex"
+set zrange[-0.1:0.1]
 
 splot "everything.dat" using 8:9:10 title "Mercury" with lines lw 3,\
 "" using 14:15:16 title "Venus" with lines lw 3,\
