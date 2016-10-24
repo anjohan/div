@@ -51,3 +51,38 @@ void Planet::move_acceleration(){
     az_old = az;
     ax = 0; ay = 0; az = 0;
 }
+
+
+void PerihelionFinder::verlet_update_position(){
+    double x_old = x, y_old = y;
+    Planet::verlet_update_position();
+    r_reallyold = r_old;
+    r_old = r;
+    r = x*x + y*y + z*z;
+    if(r_reallyold > r_old && r_old < r){ // Perihelion found!
+        double theta_p = atan2(y_old,x_old);
+        double t = i*dt;
+        theta_p *= 180/M_PI*3600; // Arc seconds.
+        fprintf(perihelionfile,"%f %f\n",t,theta_p);
+    }
+    i++;
+}
+
+void RelativisticPlanet::calculate_acceleration(Planet* other){
+    double dx, dy, dz;
+    dx = other->x - x;
+    dy = other->y - y;
+    dz = other->z - z;
+    double lx, ly, lz;
+    lx = y*vz-z*vy;
+    ly = z*vx-x*vz;
+    lz = x*vy-y*vz;
+    double l_norm2 = lx*lx + ly*ly + lz*lz;
+    double dr_norm = sqrt(dx*dx + dy*dy + dz*dz);
+    double factor1 = other->mass_ratio_4pi2/(dr_norm*dr_norm*dr_norm);
+    double factor2 = 1+3*l_norm2/(dr_norm*dr_norm*c*c);
+    double factor = factor1*factor2;
+    ax += dx*factor;
+    ay += dy*factor;
+    az += dz*factor;
+}

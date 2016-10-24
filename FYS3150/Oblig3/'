@@ -133,7 +133,6 @@ The existence of these laws is, however, not sufficient to know the position of 
 
 In this project, both the most famous algorithm, the Forward Euler method, and one of the most used algorithms, the Velocity Verlet method, are derived and discussed. Their time usage and results are compared for the eart-sun-system, where the Verlet method proves its superior accuracy and ability to conserve momentum, energy and angular momentum, at the cost of a \(\SI{30}{\percent}\) increase in run time. The stability of the Verlet algorithm is then tested on three body systems with very different mass ratios, where the algorithm struggles to give realistic results. Then, the Verlet method is applied to all the planets in the solar system.
 
-Finally, a relativistic correction is made to Newton's gravitational law. This causes the elliptic orbit of Mercury to rotate slightly, resulting in the so-called perihelion precession. The experimental results are verified.
 
 
 
@@ -195,7 +194,7 @@ Note that the acceleration is no longer purely position dependent, so the Verlet
 %
 
 \section{Mathematical theory}
-\Vref*{avecast}, together with some initial conditions, determines the motion of the bodies in the solar system. When written out in components, the equation gives a coupled set of differential equations. This set of equations is difficult, if at all possible, to solve analytically, so numerical work is required. As per usual, the time is discretised as \(t_i=t_0+ih\), where \(h\) is the time step, \(h=\qty(t_n-t_0)/n\). Acceleration, velocity and position are discretised correspondingly\autocite{oblig1}.
+\Vref*{avecast}, together with some initial conditions, determines the motion of the bodies in the solar system. When written out in components, the equation gives a coupled set of differential equations. This set of equations is difficult, if at all possible, to solve analytically, so numerical work is required. As per usual, the time is discretised as \(t_i=t_0+ih\), where \(h\) is the time step, \(h=\qty(t_n-t_0)/n\)\autocite{oblig1}. Acceleration, velocity and position are discretised correspondingly.
 
 
 %             _
