@@ -1,7 +1,5 @@
 #ifndef PLANET_H
 #define PLANET_H
-#include "vec3.h"
-#include "vec.h"
 #include <cmath>
 #include <cstdio>
 using namespace std;

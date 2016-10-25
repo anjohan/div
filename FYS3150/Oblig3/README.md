@@ -2,7 +2,7 @@ The pdf should be complete, so there is no need to do any compiling.
 
 ## To do everything:
 ```
-make
+make -j
 ```
 Note that this will take forever (i.e. several minutes), as all simulations are rerun.
 

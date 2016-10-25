@@ -16,41 +16,41 @@ solarsystem.o: solarsystem.cpp solarsystem.h planet.o
 	g++ -c ${FLAGG} solarsystem.cpp
 earthsun.plt: earthsuneuler.dat earthsunverlet.dat python_ui.py earthsun.gpi
 	gnuplot earthsun.gpi
-earthsuneuler.dat eartnsunverlet.dat: earthsun.sh cpp_ui.x python_ui.py
+earthsuneuler.dat earthsunverlet.dat: earthsun.sh cpp_ui.x python_ui.py timetable.dat
 	./earthsun.sh
-earthsuneulertest.dat: conservation.py earthsuneuler.dat
+earthsuneulertest.dat: conservation.py earthsuneuler.dat timetable.dat
 	python conservation.py earthsuneuler.dat > earthsuneulertest.dat
-earthsunverlettest.dat: conservation.py earthsunverlet.dat
+earthsunverlettest.dat: conservation.py earthsunverlet.dat timetable.dat
 	python conservation.py earthsunverlet.dat > earthsunverlettest.dat
 error.plt: error.dat error.gpi
 	gnuplot error.gpi
-error.dat: errorearthsun.sh cpp_ui.x
+error.dat: errorearthsun.sh cpp_ui.x timetable.dat
 	bash errorearthsun.sh 2 7
 timetable.dat: cpp_ui.x python_ui.py timetable.py
 	python timetable.py 2 8
 threebody.plt: threebody1.dat threebody.gpi
 	gnuplot threebody.gpi
-threebody1.dat: threebody.sh cpp_ui.x python_ui.py
+threebody1.dat: threebody.sh cpp_ui.x python_ui.py timetable.dat
 	bash threebody.sh
 realthreebody.plt: realthreebody.dat realthreebody.gpi
 	gnuplot realthreebody.gpi
-realthreebody.dat: realthreebody.sh cpp_ui.x python_ui.py
+realthreebody.dat: realthreebody.sh cpp_ui.x python_ui.py timetable.dat
 	bash realthreebody.sh
 everything.plt: everything.dat everything.gpi
 	gnuplot everything.gpi
-everything.dat: everything.sh cpp_ui.x python_ui.py
+everything.dat:  everything.sh cpp_ui.x python_ui.py timetable.dat
 	bash everything.sh
+mercuryclassicperihelion.dat: perihelion.x planet.o solarsystem.o timetable.dat
+	./perihelion.x
 perihelion.plt: perihelion.gpi mercuryclassicperihelion.dat
 	gnuplot perihelion.gpi
-mercuryclassicperihelion.dat: perihelion.x
-	./perihelion.x
 perihelion.x: perihelion.cpp planet.o solarsystem.o
 	g++ -o perihelion.x ${FLAGG} perihelion.cpp planet.o solarsystem.o
 gitlog.pdf: ../github_activity.py
 	python ../github_activity.py -d .. -o Oblig3/gitlog.pdf
 escape.plt: escape.gpi escape4.dat
 	gnuplot escape.gpi
-escape4.dat: escape.sh python_ui.py cpp_ui.x
+escape4.dat: escape.sh python_ui.py cpp_ui.x timetable.dat
 	bash escape.sh
 edit:
 	vim Johansson_Anders_FYS3150_Oblig3.tex makefile *.gpi *.sh *.h *.cpp *.py

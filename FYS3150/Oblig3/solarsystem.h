@@ -2,8 +2,6 @@
 #define SOLARSYSTEM_H
 #include "planet.h"
 #include <vector>
-#include "vec3.h"
-#include <string>
 #include <cstdio>
 #include <ctime>
 using namespace std;

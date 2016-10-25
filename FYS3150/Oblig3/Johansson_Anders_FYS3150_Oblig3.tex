@@ -120,7 +120,7 @@ breaklines=true,
 %
 
 \begin{abstract}
-In this project, various variations of solar systems are modelled using two different numerical algorithms for solving differential equations: The Forward Euler method and the Velocity-Verlet method. Both methods are derived with qualitative error analysis. The algorithms are applied to two, three and many body systems, with and without relativistic corrections and moving suns, in both two and three dimensions. Stability of the Verlet method is tested using a three body system with different mass ratios. The results coincide well with observed, elliptical orbits for the Verlet method, while the Forward Euler method proves to be insufficiently accurate. Benchmarking the algorithms shows that the theoretically predicted time ratio of \(\num{1.3}\) for a two body system fits quite well.
+In this project, various variations of solar systems are modelled using two different numerical algorithms for solving differential equations: The Forward Euler method and the Velocity-Verlet method. Both methods are derived with qualitative error analysis. The algorithms are applied to two, three and many body systems, with and without relativistic corrections and moving suns, in both two and three dimensions. Stability of the Verlet method is tested using a three body system with different mass ratios. The results coincide well with observed, elliptical orbits for the Verlet method, while the Forward Euler method proves to be insufficiently accurate. The effect of general relativity is confirmed through a simulation of the perihelion precession of Mercury. Benchmarking the algorithms shows that the theoretically predicted time ratio for a two body system fits quite well.
 \end{abstract}
 
 
@@ -440,7 +440,7 @@ From the figure, it is clear that the sun barely moves. We also see that the pla
 \begin{figure}[H]
 \centering
 \input{inner.plt}
-\caption{A closer look at the inner planets in the figure above. The tilting is again exaggereted, because 3D is cool.}
+\caption{A closer look at the inner planets in the figure above. The tilting is again exaggerated, because 3D is cool.}
 \end{figure}
 
 
@@ -451,7 +451,7 @@ From the figure, it is clear that the sun barely moves. We also see that the pla
 % | .__/ \___|_|  |_|_| |_|\___|_|_|\___/|_| |_|
 % |_|
 \subsection{The perihelion precession of Mercury}
-In this simulation, effect of the relativistic correction is visualised through a plot of the movement of the perihelion point of Mercury. To do this, the classes \texttt{PerihelionFinder} (classical) and \texttt{RelativisticPlanet} have been used, see \program{planet.h} and \program{planet.cpp}. I have not had time to add the relativistic effect to \program{python\_ui.py}, so the solar system was set up manually in \program{perihelion.py}. The sun was placed such that the center of mass was stationary and in origo.
+In this simulation, the effect of the relativistic correction in \vref{avecastrel} is visualised through a plot of the movement of the perihelion point of Mercury. To do this, the classes \texttt{PerihelionFinder} (classical) and \texttt{RelativisticPlanet} have been used, see \program{planet.h} and \program{planet.cpp}. I have not had time to add the relativistic effect to \program{python\_ui.py}, so the solar system was set up manually in \program{perihelion.cpp}. The sun was placed such that the center of mass was stationary and in origo.
 \begin{figure}[H]
 \centering
 \input{perihelion.plt}
