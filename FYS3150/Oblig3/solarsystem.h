@@ -17,7 +17,7 @@ class SolarSystem{
     private:
         vector<Planet*> planets;
         int number_of_planets, dn;
-        long int n;
+        int n;
         double t0, tn, dt;
         FILE* file;
         void reset_accelerations();

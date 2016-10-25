@@ -1,6 +1,6 @@
 set terminal epslatex size 6,5 color colortext
 
-set output "everything.tex"
+set output "everything.plt"
 set view equal xy
 
 set xlabel "$x\\ [\\si{\\astronomicalunit}]$"
@@ -21,7 +21,7 @@ splot "everything.dat" using 8:9:10 title "Mercury" with lines lw 3,\
 "" using 44:45:46 title "Uranus" with lines lw 3,\
 "" using 2:3:4 title "Sun" with linespoints lw 3 pt 7
 
-set output "inner.tex"
+set output "inner.plt"
 set zrange[-0.1:0.1]
 
 splot "everything.dat" using 8:9:10 title "Mercury" with lines lw 3,\

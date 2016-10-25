@@ -20,7 +20,7 @@ SolarSystem::SolarSystem(char* filename, vector<Planet*> planets_in, double t0_i
 }
 
 void SolarSystem::solve_euler(){
-    long int i;
+    int i;
     double t = t0;
     reset_accelerations();
     clock_t start, end;

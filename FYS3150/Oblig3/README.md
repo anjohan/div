@@ -1,9 +1,10 @@
-The pdf should be complete, so there is no need to do any compilations.
+The pdf should be complete, so there is no need to do any compiling.
 
 ## To do everything:
 ```
 make
 ```
+Note that this will take forever (i.e. several minutes), as all simulations are rerun.
 
 Dependencies:
 * g++

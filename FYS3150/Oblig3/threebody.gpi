@@ -1,6 +1,6 @@
 set terminal epslatex size 5,5 color colortext
 
-set output "threebody.tex"
+set output "threebody.plt"
 set view equal xy
 
 set xlabel "$x\\ [\\si{\\astronomicalunit}]$"

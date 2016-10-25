@@ -1,6 +1,6 @@
 set terminal epslatex size 6,4 color colortext
 
-set output "perihelion.tex"
+set output "perihelion.plt"
 set view equal xy
 
 set xlabel "$t\\ [\\si{\\year}]$"
