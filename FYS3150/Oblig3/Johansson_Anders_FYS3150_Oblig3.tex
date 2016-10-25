@@ -131,7 +131,7 @@ Planets and their motion have fascinated mankind for millenia. Perhaps the bigge
 
 The existence of these laws is, however, not sufficient to know the position of the planets -- one also has to solve the equations, typically differential equations, that arise. This is often non-trivial, or even impossible, which means that numerical methods must once again be applied. The goal of this project is to solve the equations and predict the motion of the planets in our solar system.
 
-In this project, both the most famous algorithm, the Forward Euler method, and one of the most used algorithms, the Velocity Verlet method, are derived and discussed. Their time usage and results are compared for the eart-sun-system, where the Verlet method proves its superior accuracy and ability to conserve momentum, energy and angular momentum, at the cost of a \(\SI{30}{\percent}\) increase in run time. The stability of the Verlet algorithm is then tested on three body systems with very different mass ratios, where the algorithm struggles to give realistic results. Then, the Verlet method is applied to all the planets in the solar system.
+In this project, both the most famous algorithm, the Forward Euler method, and one of the most used algorithms, the Velocity Verlet method, are derived and discussed. Their time usage and results are compared for the earth-sun-system, where the Verlet method proves its superior accuracy and ability to conserve momentum, energy and angular momentum, at the cost of a \(\SI{30}{\percent}\) increase in run time. The stability of the Verlet algorithm is then tested on three body systems with very different mass ratios, where the algorithm struggles to give realistic results. Then, the Verlet method is applied to all the planets in the solar system.
 
 Finally, a relativistic correction is made to Newton's gravitational law. This causes the elliptic orbit of Mercury to rotate slightly, resulting in the so-called perihelion precession. The experimental results are verified.
 
@@ -156,7 +156,6 @@ If there are \(n\) planets in the solar system, in addition to the sun, the sum 
 \intertext{with \(m_0=M_\odot\) and \(\vec{r}_0=\vec{0}\). From Newton's second law, we know that \(\sum{\vec{F}_i}=m_i\vec{a}_i\), so the acceleration of planet \(i\) is given by}
 \vec{a}_i &= \sum_{\substack{k=0\\k\neq i}}^n \frac{Gm_k}{\norm{\vec{r}_k-\vec{r}_i}^3}\qty(\vec{r}_k-\vec{r}_i) \eqtag{avec}
 \end{alignat*}
-As the sun has been fixed to origo, \(\vec{a}_0\) is set to \(\vec{0}\).
 
 
 %             _          _
@@ -256,7 +255,7 @@ The implementation is heavily object oriented and modular by design. The \texttt
 
 The relativistic correction can not be run with \program{python\_ui.py} - this must be run manually. See \program{perihelion.cpp} for an example. \texttt{PerihelionFinder} and its subclass \texttt{RelativisticPlanet} have overloaded methods for this purpose.
 
-In my implementation, the data is stored by writing to file. This means that the simulation requires less than 150 kB, which is very positive. The amount of data written to file can easily be controlled through the \texttt{dn}
+In my implementation, the data is stored by writing to file. This means that the simulation requires less than 150 kB of memory, which is very positive. The amount of data written to file can easily be controlled through the \texttt{dn} parameter.
 
 \subsection{Number of floating point operations (FLOPs)}
 \renewcommand{\theenumii}{\arabic{enumii}}
