@@ -59,5 +59,5 @@ clean:
 	rm *.o *.x
 	rm *.bbl
 	rm *.run.xml
-	rm *.plt
+	rm *.plt gitlog.pdf
 	rm *.dat *.eps *-converted-to.pdf
