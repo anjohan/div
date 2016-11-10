@@ -1,9 +1,11 @@
 NAVN = Johansson_Anders_FYS3150_Oblig4
-FLAGG = -O3 -Wall -std=c++11
-all: pdf
+FLAGG = -Wall -std=c++11 -g
+all: pdf ising.x
 pdf: ${NAVN}.pdf
 ${NAVN}.pdf: ${NAVN}.tex kilder.bib
 	latexmk -quiet -pdf ${NAVN}.tex
+ising.x: ising.cpp
+	g++ ${FLAGG} -o ising.x ising.cpp
 read: ${NAVN}.pdf
 	evince ${NAVN}.pdf &
 edit:
