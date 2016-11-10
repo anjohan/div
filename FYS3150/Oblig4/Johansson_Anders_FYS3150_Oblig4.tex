@@ -191,6 +191,32 @@ The expectation value of the energy can then be found from
     &= \frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}\qty(16J\exp{8J\beta}-16J\exp{-8J\beta})\\
     &= \frac{8J\qty(\exp{8J\beta}-\exp{-8J\beta})}{\exp{8J\beta}+\exp{-8J\beta}+6}
 \end{alignat*}
+yielding the heat capacity
+\begin{alignat*}{2}
+    C_V &= \pdv{T}(\langle E\rangle) = \pdv{\beta}{T}\pdv{\beta}(\langle E\rangle)=-\frac{1}{kT^2}\pdv{\beta}(\langle E\rangle)\\
+    &= -\frac{1}{kT^2}\pdv{\beta}(\frac{8J\qty(\exp{8J\beta}-\exp{-8J\beta})}{\exp{8J\beta}+\exp{-8J\beta}+6})\\
+    &= -\frac{8J}{kT^2}\frac{8J\qty(\exp{8J\beta}+\exp{-8J\beta})(\exp{8J\beta}+\exp{-8J\beta}+6)-\qty(\exp{8J\beta}-\exp{-8J\beta})8J\qty(\exp{8J\beta}-\exp{-8J\beta})}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}\\
+    &= -\frac{64J^2}{kT^2}\frac{6\qty(\exp{8J\beta}+\exp{-8J\beta})+\qty(\exp{8J\beta}+\exp{-8J\beta})^2-\qty(\exp{8J\beta}-\exp{-8J\beta})^2}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}\\
+    &= -\frac{64J^2}{kT^2}\frac{6\qty(\exp{8J\beta}+\exp{-8J\beta})+\exp{16J\beta}+2+\exp{-16J\beta}-\qty(\exp{16J\beta}-2+\exp{-16\beta})}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}\\
+    &= -\frac{64J^2}{kT^2}\frac{6\qty(\exp{8J\beta}+\exp{-8J\beta})+4}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}
+\end{alignat*}
+To find the various quantities connected to magnetization, we use the general formula
+\[
+\langle A\rangle = \frac{1}{Z}\sum_{\substack{\text{all}\\ \text{micro-}\\ \text{states}}}A_i\exp{-\beta E_i}
+\]
+Mean magnetic moment(s):
+\begin{alignat*}{2}
+    \langle M\rangle &= \frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}\qty(-4\exp{8J\beta}+4\cdot(-2)+0+0+4\cdot2+4\exp{8J\beta})=0\\
+    \langle M^2\rangle &= \frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12} \qty(\qty(-4)^2\exp{8J\beta}+4\cdot\qty(-2)^2+0+0+4\cdot2^2+4^2\exp{8J\beta})\\
+    &= \frac{32\qty(\exp{8J\beta}+1)}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}
+    = \frac{16\qty(\exp{8J\beta}+1)}{\exp{8J\beta} + \exp{-8J\beta} + 6}\\
+    \langle \abs{M}\rangle &= \frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}\qty(\abs{-4}\exp{8J\beta}+4\cdot\abs{-2}+0+0+4\cdot2+4\exp{8J\beta})\\
+    &= \frac{8\qty(\exp{8J\beta}+2)}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}
+    = \frac{4\qty(\exp{8J\beta}+2)}{\exp{8J\beta} + \exp{-8J\beta} + 6}
+    \intertext{Magnetic susceptibility:}
+    \chi &= \beta\qty(\langle M^2\rangle - \cancel{\langle M\rangle^2})=
+    \frac{16\beta\qty(\exp{8J\beta}+1)}{\exp{8J\beta} + \exp{-8J\beta} + 6}
+\end{alignat*}
 
 
 
