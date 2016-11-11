@@ -11,216 +11,232 @@
 \usepackage{fancyhdr}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{textcomp}
-\usepackage{lastpage}
-\usepackage{microtype}
-\usepackage{ifthen}
-\usepackage{longtable}
-\usepackage[linktoc=all, bookmarks=true, pdfauthor={Anders Johansson}]{hyperref}
-\renewcommand{\CancelColor}{\color{red}}
-\renewcommand{\exp}[1]{\mathrm{e}^{#1}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\tittel}[1]{\title{#1 \vspace{-7ex}}\author{}\date{}\maketitle\thispagestyle{fancy}\pagestyle{fancy}\setcounter{page}{1}}
+    \usepackage{amssymb}
+    \usepackage{textcomp}
+    \usepackage{lastpage}
+    \usepackage{microtype}
+    \usepackage{ifthen}
+    \usepackage{longtable}
+    \usepackage[linktoc=all, bookmarks=true, pdfauthor={Anders Johansson}]{hyperref}
+    \renewcommand{\CancelColor}{\color{red}}
+    \renewcommand{\exp}[1]{\mathrm{e}^{#1}}
+    \newcommand{\R}{\mathbb{R}}
+    \newcommand{\tittel}[1]{\title{#1 \vspace{-7ex}}\author{}\date{}\maketitle\thispagestyle{fancy}\pagestyle{fancy}\setcounter{page}{1}}
 
-\newcommand{\deloppg}[2][]{\subsection*{#2) #1}\addcontentsline{toc}{subsection}{#2)}\refstepcounter{subsection}\label{#2}}
-\newcommand{\oppg}[1]{\section*{Oppgave #1}\addcontentsline{toc}{section}{Oppgave #1}\refstepcounter{section}\label{oppg#1}}
+    \newcommand{\deloppg}[2][]{\subsection*{#2) #1}\addcontentsline{toc}{subsection}{#2)}\refstepcounter{subsection}\label{#2}}
+    \newcommand{\oppg}[1]{\section*{Oppgave #1}\addcontentsline{toc}{section}{Oppgave #1}\refstepcounter{section}\label{oppg#1}}
 
-\labelformat{section}{section~#1}
-\labelformat{subsection}{section~#1}
-\labelformat{subsubsection}{paragraph~#1}
-\labelformat{equation}{equation~(#1)}
-\labelformat{figure}{figure~#1}
-\labelformat{table}{table~#1}
+    \labelformat{section}{section~#1}
+    \labelformat{subsection}{section~#1}
+    \labelformat{subsubsection}{paragraph~#1}
+    \labelformat{equation}{equation~(#1)}
+    \labelformat{figure}{figure~#1}
+    \labelformat{table}{table~#1}
 
-\lstset{rangeprefix=/*\#,
-rangesuffix=\#*/,
-includerangemarker=false}
-\renewcommand{\lstlistingname}{Code snippet}
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-\lstset{showstringspaces=false,
-basicstyle=\footnotesize\ttfamily,
-keywordstyle=\color{codegreen},
-commentstyle=\color{magenta},
-numberstyle=\tiny\color{codegray},
-stringstyle=\color{codepurple},
-frameshape={RYRYNYYYY}{yny}{yny}{RYRYNYYYY},
-breaklines=true,
-%literate={0}{{\textcolor{blue}{0}}}{1}%
-%             {1}{{\textcolor{blue}{1}}}{1}%
-%             {2}{{\textcolor{blue}{2}}}{1}%
-%             {3}{{\textcolor{blue}{3}}}{1}%
-%             {4}{{\textcolor{blue}{4}}}{1}%
-%             {5}{{\textcolor{blue}{5}}}{1}%
-%             {6}{{\textcolor{blue}{6}}}{1}%
-%             {7}{{\textcolor{blue}{7}}}{1}%
-%             {8}{{\textcolor{blue}{8}}}{1}%
-%             {9}{{\textcolor{blue}{9}}}{1}%
-%             {.0}{{\textcolor{blue}{.0}}}{2}% Following is to ensure that only periods
-%             {.1}{{\textcolor{blue}{.1}}}{2}% followed by a digit are changed.
-%             {.2}{{\textcolor{blue}{.2}}}{2}%
-%             {.3}{{\textcolor{blue}{.3}}}{2}%
-%             {.4}{{\textcolor{blue}{.4}}}{2}%
-%             {.5}{{\textcolor{blue}{.5}}}{2}%
-%             {.6}{{\textcolor{blue}{.6}}}{2}%
-%             {.7}{{\textcolor{blue}{.7}}}{2}%
-%             {.8}{{\textcolor{blue}{.8}}}{2}%
-%             {.9}{{\textcolor{blue}{.9}}}{2}%
-}
+    \lstset{rangeprefix=/*\#,
+    rangesuffix=\#*/,
+    includerangemarker=false}
+    \renewcommand{\lstlistingname}{Code snippet}
+    \definecolor{codegreen}{rgb}{0,0.6,0}
+    \definecolor{codegray}{rgb}{0.5,0.5,0.5}
+    \definecolor{codepurple}{rgb}{0.58,0,0.82}
+    \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+    \lstset{showstringspaces=false,
+    basicstyle=\footnotesize\ttfamily,
+    keywordstyle=\color{codegreen},
+    commentstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    frameshape={RYRYNYYYY}{yny}{yny}{RYRYNYYYY},
+    breaklines=true,
+    %literate={0}{{\textcolor{blue}{0}}}{1}%
+    %             {1}{{\textcolor{blue}{1}}}{1}%
+    %             {2}{{\textcolor{blue}{2}}}{1}%
+    %             {3}{{\textcolor{blue}{3}}}{1}%
+    %             {4}{{\textcolor{blue}{4}}}{1}%
+    %             {5}{{\textcolor{blue}{5}}}{1}%
+    %             {6}{{\textcolor{blue}{6}}}{1}%
+    %             {7}{{\textcolor{blue}{7}}}{1}%
+    %             {8}{{\textcolor{blue}{8}}}{1}%
+    %             {9}{{\textcolor{blue}{9}}}{1}%
+    %             {.0}{{\textcolor{blue}{.0}}}{2}% Following is to ensure that only periods
+    %             {.1}{{\textcolor{blue}{.1}}}{2}% followed by a digit are changed.
+    %             {.2}{{\textcolor{blue}{.2}}}{2}%
+    %             {.3}{{\textcolor{blue}{.3}}}{2}%
+    %             {.4}{{\textcolor{blue}{.4}}}{2}%
+    %             {.5}{{\textcolor{blue}{.5}}}{2}%
+    %             {.6}{{\textcolor{blue}{.6}}}{2}%
+    %             {.7}{{\textcolor{blue}{.7}}}{2}%
+    %             {.8}{{\textcolor{blue}{.8}}}{2}%
+    %             {.9}{{\textcolor{blue}{.9}}}{2}%
+    }
 
-\renewcommand{\footrulewidth}{\headrulewidth}
-\tocloftpagestyle{fancy}
+    \renewcommand{\footrulewidth}{\headrulewidth}
+    \tocloftpagestyle{fancy}
 
-\setcounter{secnumdepth}{4}
-\renewcommand{\thesection}{\arabic{section}}
-\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
-\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
-\setlength{\parindent}{0cm}
-\setlength{\parskip}{1em}
+    \setcounter{secnumdepth}{4}
+    \renewcommand{\thesection}{\arabic{section}}
+    \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+    \renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+    \setlength{\parindent}{0cm}
+    \setlength{\parskip}{1em}
 
-\newcommand{\eqtag}[1]{\refstepcounter{equation}\tag{\theequation}\label{#1}}
-\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=black}
+    \newcommand{\eqtag}[1]{\refstepcounter{equation}\tag{\theequation}\label{#1}}
+    \hypersetup{colorlinks=true,urlcolor=blue,linkcolor=black}
 
-\sisetup{detect-all}
-\sisetup{exponent-product = \cdot, output-product = \cdot,per-mode=symbol}
-\sisetup{output-decimal-marker={.}}
-\sisetup{round-mode = off, round-precision=3}
-\sisetup{number-unit-product = \ }
-\DeclareSIUnit\year{yr}
+    \sisetup{detect-all}
+    \sisetup{exponent-product = \cdot, output-product = \cdot,per-mode=symbol}
+    \sisetup{output-decimal-marker={.}}
+    \sisetup{round-mode = off, round-precision=3}
+    \sisetup{number-unit-product = \ }
+    \DeclareSIUnit\year{yr}
 
-\allowdisplaybreaks[4]
-\fancyhf{}
+    \allowdisplaybreaks[4]
+    \fancyhf{}
 
-\rhead{Anders Johansson}
-\rfoot{Page \thepage{} of \pageref{LastPage}}
-\lhead{FYS3150}
-%
-\usepackage[backend=biber,citestyle=numeric-comp,bibstyle=numeric,sorting=none]{biblatex}
-\DefineBibliographyStrings{norsk}{%
-  bibliography = {Referanser},
-}
-\DefineBibliographyStrings{english}{%
-  bibliography = {References},
-}
-\addbibresource{kilder.bib}
+    \rhead{Anders Johansson}
+    \rfoot{Page \thepage{} of \pageref{LastPage}}
+    \lhead{FYS3150}
+    %
+    \usepackage[backend=biber,citestyle=numeric-comp,bibstyle=numeric,sorting=none]{biblatex}
+    \DefineBibliographyStrings{norsk}{%
+      bibliography = {Referanser},
+    }
+    \DefineBibliographyStrings{english}{%
+      bibliography = {References},
+    }
+    \addbibresource{kilder.bib}
 
-\newcommand{\program}[1]{\href{https://github.com/anjohan/Offentlig/blob/master/FYS3150/Oblig4/#1}{#1}}
+    \newcommand{\program}[1]{\href{https://github.com/anjohan/Offentlig/blob/master/FYS3150/Oblig4/#1}{#1}}
 
-\newcommand{\gray}[1]{\textcolor{gray}{#1}}
-\newcommand{\spin}[1]{\ifthenelse{#1 = 1}{\uparrow}{\downarrow}}
-\newcommand{\tilstand}[4]{
-    \(\displaystyle
-        \begin{matrix}
-                & \gray{\spin{#3}} & \gray{\spin{#4}}\\
-            \gray{\spin{#2}} & \spin{#1}  & \spin{#2} & \gray{\spin{#1}}\\
-            \gray{\spin{#4}} & \spin{#3} & \spin{#4} &  \gray{\spin{#3}}\\
-                & \gray{\spin{#1}} & \gray{\spin{#2}}
-        \end{matrix}
-    \)
-}
+    \newcommand{\gray}[1]{\textcolor{gray}{#1}}
+    \newcommand{\spin}[1]{\ifthenelse{#1 = 1}{\uparrow}{\downarrow}}
+    \newcommand{\tilstand}[4]{
+        \(\displaystyle
+            \begin{matrix}
+                    & \gray{\spin{#3}} & \gray{\spin{#4}}\\
+                \gray{\spin{#2}} & \spin{#1}  & \spin{#2} & \gray{\spin{#1}}\\
+                \gray{\spin{#4}} & \spin{#3} & \spin{#4} &  \gray{\spin{#3}}\\
+                    & \gray{\spin{#1}} & \gray{\spin{#2}}
+            \end{matrix}
+        \)
+    }
 
-\title{FYS3150 Project 4}
-\author{Anders Johansson}
-\begin{document}
-%\includepdf{forside.pdf}
-\maketitle
-\pagestyle{fancy}
-\tableofcontents
+    \title{FYS3150 Project 4}
+    \author{Anders Johansson}
+    \begin{document}
+    %\includepdf{forside.pdf}
+    \maketitle
+    \pagestyle{fancy}
+    \tableofcontents
 
-\begin{abstract}
-\end{abstract}
+    \begin{abstract}
+    \end{abstract}
 
-\section{Introduction}
+    \section{Introduction}
 
-\section{Theory}
+    \section{Theory}
 
-\subsection{Example: Analytical expression for the \(2\times2\) case}
-For a \(2\times2\) lattice, the thermodynamic quantities can be found analytically without too much work. To find the partition function, we need to write out all possible microstates and calculate their energies. Using the periodic boundary conditions, we get
-\begin{longtable}{ccc}\toprule
-Microstate & Energy & Magnetization\\ \midrule
-\endfirsthead
-\midrule
-Microstate & Energy & Magnetization\\ \midrule
-\endhead
-\bottomrule
-\endlastfoot
-    \tilstand{0}{0}{0}{0} & \(E = -8J\) & \(M = -4\)\\ \midrule
-    \tilstand{0}{0}{0}{1} & \(E = 0\) & \(M = -2\)\\ \midrule
-    \tilstand{0}{0}{1}{0} & \(E = 0\) & \(M = -2\)\\ \midrule
-    \tilstand{0}{0}{1}{1} & \(E = 0\) & \(M = 0\)\\ \midrule
-    \tilstand{0}{1}{0}{0} & \(E = 0\) & \(M = -2\)\\ \midrule
-    \tilstand{0}{1}{0}{1} & \(E = 0\) & \(M = 0\)\\ \midrule
-    \tilstand{0}{1}{1}{0} & \(E = 8J\) & \(M = 0\)\\ \midrule
-    \tilstand{0}{1}{1}{1} & \(E = 0\) & \(M = 2\)\\ \midrule
-    \tilstand{1}{0}{0}{0} & \(E = 0\) & \(M = -2\)\\ \midrule
-    \tilstand{1}{0}{0}{1} & \(E = 8J \) & \(M = 0\)\\ \midrule
-    \tilstand{1}{0}{1}{0} & \(E = 0 \) & \(M = 0\)\\ \midrule
-    \tilstand{1}{0}{1}{1} & \(E = 0 \) & \(M = 2\)\\ \midrule
-    \tilstand{1}{1}{0}{0} & \(E = 0 \) & \(M = 0\)\\ \midrule
-    \tilstand{1}{1}{0}{1} & \(E = 0 \) & \(M = 2\)\\ \midrule
-    \tilstand{1}{1}{1}{0} & \(E = 0 \) & \(M = 2\)\\ \midrule
-    \tilstand{1}{1}{1}{1} & \(E = -8J \) & \(M = 4\)\\
-\end{longtable}
+    \section{Results}
 
-To summarise, we have
-\begin{table}[H]
-    \centering
-    \begin{tabular}{cccc}\toprule
-        Number of \(\uparrow\) & Multiplicity & Energy & Magnetisation\\ \midrule
-        \(4\) & \(1\) & \(-8J\) & \(4\) \\ \midrule
-        \(3\) & \(4\) & \(0\) & \(2\) \\ \midrule
-        \(2\) & \(2\) & \(8J\) & \(0\) \\ \midrule
-        \(2\) & \(4\) & \(0\) & \(0\) \\ \midrule
-        \(1\) & \(4\) & \(0\) & \(-2\) \\ \midrule
-        \(0\) & \(1\) & \(-8J\) & \(-4\) \\ \bottomrule
-    \end{tabular}
-\end{table}
+    \subsection{Example: Analytical expression for the \(2\times2\) case}
+    For a \(2\times2\) lattice, the thermodynamic quantities can be found analytically without too much work. To find the partition function, we need to write out all possible microstates and calculate their energies. Using the periodic boundary conditions, we get
+    \begin{longtable}{ccc}\toprule
+    Microstate & Energy & Magnetization\\ \midrule
+    \endfirsthead
+    \midrule
+    Microstate & Energy & Magnetization\\ \midrule
+    \endhead
+    \bottomrule
+    \endlastfoot
+        \tilstand{0}{0}{0}{0} & \(E = -8J\) & \(M = -4\)\\ \midrule
+        \tilstand{0}{0}{0}{1} & \(E = 0\) & \(M = -2\)\\ \midrule
+        \tilstand{0}{0}{1}{0} & \(E = 0\) & \(M = -2\)\\ \midrule
+        \tilstand{0}{0}{1}{1} & \(E = 0\) & \(M = 0\)\\ \midrule
+        \tilstand{0}{1}{0}{0} & \(E = 0\) & \(M = -2\)\\ \midrule
+        \tilstand{0}{1}{0}{1} & \(E = 0\) & \(M = 0\)\\ \midrule
+        \tilstand{0}{1}{1}{0} & \(E = 8J\) & \(M = 0\)\\ \midrule
+        \tilstand{0}{1}{1}{1} & \(E = 0\) & \(M = 2\)\\ \midrule
+        \tilstand{1}{0}{0}{0} & \(E = 0\) & \(M = -2\)\\ \midrule
+        \tilstand{1}{0}{0}{1} & \(E = 8J \) & \(M = 0\)\\ \midrule
+        \tilstand{1}{0}{1}{0} & \(E = 0 \) & \(M = 0\)\\ \midrule
+        \tilstand{1}{0}{1}{1} & \(E = 0 \) & \(M = 2\)\\ \midrule
+        \tilstand{1}{1}{0}{0} & \(E = 0 \) & \(M = 0\)\\ \midrule
+        \tilstand{1}{1}{0}{1} & \(E = 0 \) & \(M = 2\)\\ \midrule
+        \tilstand{1}{1}{1}{0} & \(E = 0 \) & \(M = 2\)\\ \midrule
+        \tilstand{1}{1}{1}{1} & \(E = -8J \) & \(M = 4\)\\
+    \end{longtable}
 
-Summing over all microstates, we get the partition function
-\[
-    Z = \sum_{\substack{\text{all}\\ \text{micro-}\\ \text{states}}} \exp{-\beta E_i}
-    = 2\exp{8J\beta} + 2\exp{-8J\beta} + 12
-\]
+    To summarise, we have
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{cccc}\toprule
+            Number of \(\uparrow\) & Multiplicity & Energy & Magnetisation\\ \midrule
+            \(4\) & \(1\) & \(-8J\) & \(4\) \\ \midrule
+            \(3\) & \(4\) & \(0\) & \(2\) \\ \midrule
+            \(2\) & \(2\) & \(8J\) & \(0\) \\ \midrule
+            \(2\) & \(4\) & \(0\) & \(0\) \\ \midrule
+            \(1\) & \(4\) & \(0\) & \(-2\) \\ \midrule
+            \(0\) & \(1\) & \(-8J\) & \(-4\) \\ \bottomrule
+        \end{tabular}
+    \end{table}
 
-The expectation value of the energy can then be found from
-\begin{alignat*}{2}
-    \langle E\rangle &= \pdv{\ln(Z)}{\beta} = \pdv{\beta}(\ln(2\exp{8J\beta} + 2\exp{-8J\beta} + 12))\\
-    &= \frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}\qty(16J\exp{8J\beta}-16J\exp{-8J\beta})\\
-    &= \frac{8J\qty(\exp{8J\beta}-\exp{-8J\beta})}{\exp{8J\beta}+\exp{-8J\beta}+6}
-\end{alignat*}
-yielding the heat capacity
-\begin{alignat*}{2}
-    C_V &= \pdv{T}(\langle E\rangle) = \pdv{\beta}{T}\pdv{\beta}(\langle E\rangle)=-\frac{1}{kT^2}\pdv{\beta}(\langle E\rangle)\\
-    &= -\frac{1}{kT^2}\pdv{\beta}(\frac{8J\qty(\exp{8J\beta}-\exp{-8J\beta})}{\exp{8J\beta}+\exp{-8J\beta}+6})\\
-    &= -\frac{8J}{kT^2}\frac{8J\qty(\exp{8J\beta}+\exp{-8J\beta})(\exp{8J\beta}+\exp{-8J\beta}+6)-\qty(\exp{8J\beta}-\exp{-8J\beta})8J\qty(\exp{8J\beta}-\exp{-8J\beta})}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}\\
-    &= -\frac{64J^2}{kT^2}\frac{6\qty(\exp{8J\beta}+\exp{-8J\beta})+\qty(\exp{8J\beta}+\exp{-8J\beta})^2-\qty(\exp{8J\beta}-\exp{-8J\beta})^2}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}\\
-    &= -\frac{64J^2}{kT^2}\frac{6\qty(\exp{8J\beta}+\exp{-8J\beta})+\exp{16J\beta}+2+\exp{-16J\beta}-\qty(\exp{16J\beta}-2+\exp{-16\beta})}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}\\
-        &= -\frac{64J^2}{kT^2}\frac{6\qty(\exp{8J\beta}+\exp{-8J\beta})+4}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}
-\end{alignat*}
-To find the various quantities connected to magnetization, we use the general formula
-\[
-\langle A\rangle = \frac{1}{Z}\sum_{\substack{\text{all}\\ \text{micro-}\\ \text{states}}}A_i\exp{-\beta E_i}
-\]
-Mean magnetic moment(s):
-\begin{alignat*}{2}
-    \langle M\rangle &= \frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}\qty(-4\exp{8J\beta}+4\cdot(-2)+0+0+4\cdot2+4\exp{8J\beta})=0\\
-    \langle M^2\rangle &= \frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12} \qty(\qty(-4)^2\exp{8J\beta}+4\cdot\qty(-2)^2+0+0+4\cdot2^2+4^2\exp{8J\beta})\\
-    &= \frac{32\qty(\exp{8J\beta}+1)}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}
-    = \frac{16\qty(\exp{8J\beta}+1)}{\exp{8J\beta} + \exp{-8J\beta} + 6}\\
-    \langle \abs{M}\rangle &= \frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}\qty(\abs{-4}\exp{8J\beta}+4\cdot\abs{-2}+0+0+4\cdot2+4\exp{8J\beta})\\
-    &= \frac{8\qty(\exp{8J\beta}+2)}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}
-    = \frac{4\qty(\exp{8J\beta}+2)}{\exp{8J\beta} + \exp{-8J\beta} + 6}
-    \intertext{Magnetic susceptibility:}
-    \chi &= \beta\qty(\langle M^2\rangle - \cancel{\langle M\rangle^2})=
+    Summing over all microstates, we get the partition function
+    \[
+        Z = \sum_{\substack{\text{all}\\ \text{micro-}\\ \text{states}}} \exp{-\beta E_i}
+        = 2\exp{8J\beta} + 2\exp{-8J\beta} + 12
+    \]
+
+    The expectation value of the energy can then be found from
+    \begin{alignat*}{2}
+        \langle E\rangle &= -\pdv{\ln(Z)}{\beta} = -\pdv{\beta}(\ln(2\exp{8J\beta} + 2\exp{-8J\beta} + 12))\\
+        &= -\frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}\qty(16J\exp{8J\beta}-16J\exp{-8J\beta})\\
+        &= -\frac{8J\qty(\exp{8J\beta}-\exp{-8J\beta})}{\exp{8J\beta}+\exp{-8J\beta}+6}
+    \end{alignat*}
+    yielding the heat capacity
+    \begin{alignat*}{2}
+        C_V &= \pdv{T}(\langle E\rangle) = \pdv{\beta}{T}\pdv{\beta}(\langle E\rangle)=-\frac{1}{kT^2}\pdv{\beta}(\langle E\rangle)\\
+        &= -\frac{1}{kT^2}\pdv{\beta}(-\frac{8J\qty(\exp{8J\beta}-\exp{-8J\beta})}{\exp{8J\beta}+\exp{-8J\beta}+6})\\
+        &= \frac{8J}{kT^2}\frac{8J\qty(\exp{8J\beta}+\exp{-8J\beta})(\exp{8J\beta}+\exp{-8J\beta}+6)-\qty(\exp{8J\beta}-\exp{-8J\beta})8J\qty(\exp{8J\beta}-\exp{-8J\beta})}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}\\
+        &= \frac{64J^2}{kT^2}\frac{6\qty(\exp{8J\beta}+\exp{-8J\beta})+\qty(\exp{8J\beta}+\exp{-8J\beta})^2-\qty(\exp{8J\beta}-\exp{-8J\beta})^2}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}\\
+        &= \frac{64J^2}{kT^2}\frac{6\qty(\exp{8J\beta}+\exp{-8J\beta})+\exp{16J\beta}+2+\exp{-16J\beta}-\qty(\exp{16J\beta}-2+\exp{-16\beta})}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}\\
+        &= \frac{64J^2}{kT^2}\frac{6\qty(\exp{8J\beta}+\exp{-8J\beta})+4}{\qty(\exp{8J\beta}+\exp{-8J\beta}+6)^2}
+    \end{alignat*}
+    To find the various quantities connected to magnetization, we use the general formula
+    \[
+        \langle A\rangle = \frac{1}{Z}\sum_{\substack{\text{all}\\ \text{micro-}\\ \text{states}}}A_i\exp{-\beta E_i}
+    \]
+    Mean magnetic moment(s):
+    \begin{alignat*}{2}
+        \langle M\rangle &= \frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}\qty(-4\exp{8J\beta}+4\cdot(-2)+0+0+4\cdot2+4\exp{8J\beta})=0\\
+        \langle M^2\rangle &= \frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12} \qty(\qty(-4)^2\exp{8J\beta}+4\cdot\qty(-2)^2+0+0+4\cdot2^2+4^2\exp{8J\beta})\\
+        &= \frac{32\qty(\exp{8J\beta}+1)}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}
+        = \frac{16\qty(\exp{8J\beta}+1)}{\exp{8J\beta} + \exp{-8J\beta} + 6}\\
+        \langle \abs{M}\rangle &= \frac{1}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}\qty(\abs{-4}\exp{8J\beta}+4\cdot\abs{-2}+0+0+4\cdot2+4\exp{8J\beta})\\
+        &= \frac{8\qty(\exp{8J\beta}+2)}{2\exp{8J\beta} + 2\exp{-8J\beta} + 12}
+        = \frac{4\qty(\exp{8J\beta}+2)}{\exp{8J\beta} + \exp{-8J\beta} + 6}
+        \intertext{Magnetic susceptibility:}
+        \chi &= \beta\qty(\langle M^2\rangle - \cancel{\langle M\rangle^2})=
     \frac{16\beta\qty(\exp{8J\beta}+1)}{\exp{8J\beta} + \exp{-8J\beta} + 6}
 \end{alignat*}
 
+\subsection{Comparison with numerical results}
+With \(J=1\) and \(\beta=1\), the above expressions give
+\begin{alignat*}{2}
+\langle E\rangle &= \num{-7.9839} \qquad& C_V &= \num{0.128329}\\
+\langle \abs{M}\rangle &= \num{3.99464} \qquad& \chi &= \num{15.9732}
+\end{alignat*}
 
+Running \(\num{100000}\) Monte Carlo cycles with the same parameters gives \vref{2by2}.
 
+\begin{figure}[H]
+\centering
+\input{2by2.plt}\caption{Numerical results from \num{100000} Monte Carlo cycles.}\label{2by2}
+\end{figure}
 
+These results fit fairly well with the numbers calculated above, but we see from the graphs that the values for the heat capacity and magnetic susceptibility have yet to settle down completely. Running with \(\num{10000000}\) Monte Carlo cycles yields
+\lstinputlisting[frame=none,language=]{2by2longres.dat}
+where the numbers are \(i\), \(T\), \(\langle E\rangle\), \(\langle E^2\rangle\), \(\langle M\rangle\), \(\langle M^2\rangle\), \(\langle \abs{M}\rangle\), \(C_V\) and \(\chi\). The results fit very well with the analytical results.
 
 
 
