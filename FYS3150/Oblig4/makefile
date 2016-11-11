@@ -24,6 +24,6 @@ clean:
 	latexmk -c
 	rm *.bbl
 	rm *.run.xml
-	rm *.o *.x
+	rm *.o
 	rm *.plt
 	rm *.dat *.eps *-converted-to.pdf
