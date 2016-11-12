@@ -1,0 +1,52 @@
+set terminal epslatex size 6.5,6 color colortext
+
+set format x "$\\num{%.0e}$"
+set format y "$\\num{%g}$"
+
+set xtics N/2
+
+dN = 1
+set key bottom right
+set xlabel "Iteration cycles"
+
+set style line 1 lw 5 lc rgb "blue"
+set style line 2 lw 5 lc rgb "red"
+
+set output outfile
+
+coldfile = sprintf("cold%s",infile)
+hotfile = sprintf("hot%s",infile)
+
+set multiplot layout 2,2 scale 1,1
+
+set ytics 0.5
+set yrange [-2.2:0.2]
+set ylabel "$E/L^2$"
+set title "\\textbf{Energy}"
+plot coldfile using 1:2 every dN title "$T=1$" with lines ls 1, \
+hotfile using 1:2 every dN title "$T=\\num{2.4}$" with lines ls 2
+
+set ytics auto
+unset yrange
+#set yrange[0:13]
+set ylabel "$C_V/L^2$"
+set title "\\textbf{Heat capacity}"
+plot coldfile using 1:5 every dN title "$T=1$" with lines ls 1, \
+hotfile using 1:5 every dN title "$T=\\num{2.4}$" with lines ls 2
+
+set ytics 0.2
+set yrange[0:1.1]
+set ylabel "$\\abs{M}/L^2$"
+set title "\\textbf{Magnetisation}"
+plot coldfile using 1:4 every dN title "$T=1$" with lines ls 1, \
+hotfile using 1:4 every dN title "$T=\\num{2.4}$" with lines ls 2
+
+set ytics auto
+#set yrange[0:4.5]
+unset yrange
+set ylabel "$\\chi/L^2$"
+set title "\\textbf{Magnetic susceptibility}"
+plot coldfile using 1:6 every dN title "$T=1$" with lines ls 1, \
+hotfile using 1:6 every dN title "$T=\\num{2.4}$" with lines ls 2
+
+unset multiplot
