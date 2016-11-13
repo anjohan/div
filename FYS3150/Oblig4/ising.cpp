@@ -31,19 +31,19 @@ int calculate_magnetic_moment(int **spins, int L){
 }
 
 void output(FILE* file, int i, int L, double T, int E, int E2, int M, int M2, int Mabs){
-    double divisorinv = 1.0/(i*L*L);
+    double divisorinv = 1.0/i;
     double beta = 1/T;
     double E_value = E*divisorinv;
     double E2_value = E2*divisorinv;
     double M_value = M*divisorinv;
     double M2_value = M2*divisorinv;
     double Mabs_value = Mabs*divisorinv;
-    double C_V = (E2 - E*E)*beta*beta*divisorinv;
-    double chi = (M2 - M*M)*beta*divisorinv;
-    // divisorinv  = 1.0/(L*L);
-    // E_value *= divisorinv;
-    // M_value *= divisorinv;
-    // Mabs_value *= divisorinv;
+    divisorinv = 1.0/(L*L);
+    double C_V = (E2_value - E_value*E_value)*beta*beta*divisorinv;
+    double chi = (M2_value - M_value*M_value)*beta*divisorinv;
+    E_value *= divisorinv;
+    M_value *= divisorinv;
+    Mabs_value *= divisorinv;
     fprintf(file,"%d %g %g %g %g %g\n",i,E_value,M_value,Mabs_value,C_V,chi);
 }
 

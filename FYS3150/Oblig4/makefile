@@ -27,7 +27,7 @@ ising.o: ising.cpp ising.h
 read: ${NAVN}.pdf
 	evince ${NAVN}.pdf &
 edit:
-	vim Johansson_Anders_FYS3150_Oblig4.tex makefile *.bib *.cpp
+	vim Johansson_Anders_FYS3150_Oblig4.tex makefile *.bib *.cpp *.h *.gpi
 clean:
 	latexmk -c
 	rm *.bbl
