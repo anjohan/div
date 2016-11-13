@@ -98,7 +98,6 @@ void ising(FILE* file, const char* startmode, int L, int N, int dN, double T){
             int spin_left = spins[index(flip_x-1,L)][flip_y];
             int energy_difference = 2*spins[flip_x][flip_y]*(spin_above+spin_below+spin_right+spin_left);
             if(random(gen) <= probabilities[(energy_difference+8)/4]){
-                //printf("Flipping (%d,%d)\n",flip_x,flip_y);
                 energy += energy_difference;
                 spins[flip_x][flip_y] *= -1;
                 magnetic_moment += 2*spins[flip_x][flip_y];

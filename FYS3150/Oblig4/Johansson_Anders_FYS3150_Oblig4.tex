@@ -146,7 +146,7 @@ The Ising model was developed by the famous physicist Wilhelm Lenz and given to 
 
 In this project, the Ising model is used to describe a two-dimensional ferromagnetic, chrystalline material, modelled as a grid of spins where each spin can have the values \(\pm1\). For an infinite grid, the analytical solution was found by Lars Onsager, while a \(2\times2\) grid is solved analytically in this project.
 
-The problem with analytical solutions for other sizes is finding the partition function, which is the "holy grail" of statistical mechanics. From this quantity, all the other thermodynamic quantities like energy can be calculated. The difficulty arises from the formula for the partition function, which includes summing over all possible microstates. With each spin having two possible values, a simple \(10\times10\) grid will have \(2^{10\cdot10}\approx10^{30}\) possible microstates. For comparison, only approximately \(10^{17}\) seconds have passed since the creation of the universe.
+The problem with analytical solutions for other sizes is finding the partition function, which is the "holy grail" of statistical mechanics. From this quantity, other thermodynamic quantities can be calculated. The difficulty arises from the formula for the partition function, which includes summing over all possible microstates. With each spin having two possible values, a simple \(10\times10\) grid will have \(2^{10\cdot10}\approx10^{30}\) possible microstates. For comparison, only approximately \(10^{17}\) seconds have passed since the creation of the universe. Considering that the UiO computing cluster is capable of approximately \(10^{14}\) calculations per second, it would take this supercomputer at least \(\SI{10}{\percent}\) of the time since Big Bang to calculate the partition function.
 
 As a consequence, calculating the partition function analytically for a grid of reasonable size is not a viable option, and numerical approximations must once again be applied. Fortunately, the Metropolis algorithm, declared one of the top 10 algorithms of the 20th century\autocite{top10algo}, fits the problem very well.
 
@@ -160,6 +160,13 @@ This report starts off with a lenghty introduction, before giving an overview of
 % | .__/|_| |_|\__, |___/_|\___\__,_|_|  \__|_| |_|\___|\___/|_|   \__, |
 % |_|          |___/                                               |___/
 \section{Physical theory}
+
+%  _     _
+% (_)___(_)_ __   __ _
+% | / __| | '_ \ / _` |
+% | \__ \ | | | | (_| |
+% |_|___/_|_| |_|\__, |
+%                |___/
 \subsection{The Ising model}
 As stated in the introduction, the Ising model describes a coupled system where nearest neighbours affect each other. In this project, the Ising model is applied to a two-dimensional magnetic material modelled as a grid or lattice of spins, where each spin \(s_i\) can have the values \(+1\) or \(-1\), denoted by \(\uparrow\) and \(\downarrow\) respectively. Assuming that all couplings are of equal magnitude, the coupling in the Ising model leads to the energy
 \[
@@ -167,6 +174,17 @@ E = -J\sum_{\langle ij\rangle}s_is_j\eqtag{energy}
 \]
 where the sum is over the nearest neighbours. From this expression, we see that if \(J\) is positive, the energy is minimised when all spins are aligned in parallel, which is the behaviour of a ferromagnetic material. If, on the other hand, \(J\) is negative, a state where all spins are antiparallel to each other has the lowest energy, corresponding to an antiferromagnetic material.
 
+\subsubsection{Borders}
+The treatment of the borders of the lattice is a technicality which shows up when the lattice is not infinite. In the so-called thermodynamic limit, where the lattice is infinite, all spins are surrounded by equally many other spins. With a finite lattice, however, this is not the case, which causes finite size effects.
+
+One possible workaround is to ignore this problem completely, while a smarter alternative is to use what is commonly referred to as periodic boundary conditions. The idea behind this is to simulate an infinite lattice by assuming e.g. that the spins to the right of the right edge of the grid would be equal to the spins on the left edge. This approach has been implemented in \program{ising.cpp}.
+
+%      _        _         _
+%  ___| |_ __ _| |_ _ __ | |__  _   _ ___
+% / __| __/ _` | __| '_ \| '_ \| | | / __|
+% \__ \ || (_| | |_| |_) | | | | |_| \__ \
+% |___/\__\__,_|\__| .__/|_| |_|\__, |___/
+%                  |_|          |___/
 \subsection{Statistical physics}
 The basis for the statistical physics of this problem is the probability distribution used for the macrostates, which is the Boltzmann distribution. This distribution states that the probability of a system being in a state with energy \(E_i\) is proportional to \(\exp{-\beta E_i}\), where \(\beta=1/kT\). This probability distribution needs to be normalised, and with the normalisation factor denoted \(1/Z\), we get the equation
 \[
@@ -187,19 +205,62 @@ C_V &= \frac{1}{kT^2}\qty(\langle E^2\rangle - \langle E\rangle^2)\\
 \end{alignat*}
 
 
-%                  _   _                          _   _           _
-%  _ __ ___   __ _| |_| |__   ___ _ __ ___   __ _| |_(_) ___ __ _| |
-% | '_ ` _ \ / _` | __| '_ \ / _ \ '_ ` _ \ / _` | __| |/ __/ _` | |
-% | | | | | | (_| | |_| | | |  __/ | | | | | (_| | |_| | (_| (_| | |
-% |_| |_| |_|\__,_|\__|_| |_|\___|_| |_| |_|\__,_|\__|_|\___\__,_|_|
-%  _   _
+
+%                                  _        _   _                   _
+%   ___ ___  _ __ ___  _ __  _   _| |_ __ _| |_(_) ___  _ __   __ _| |
+%  / __/ _ \| '_ ` _ \| '_ \| | | | __/ _` | __| |/ _ \| '_ \ / _` | |
+% | (_| (_) | | | | | | |_) | |_| | || (_| | |_| | (_) | | | | (_| | |
+%  \___\___/|_| |_| |_| .__/ \__,_|\__\__,_|\__|_|\___/|_| |_|\__,_|_|
+%  _   _              |_|
 % | |_| |__   ___  ___  _ __ _   _
 % | __| '_ \ / _ \/ _ \| '__| | | |
 % | |_| | | |  __/ (_) | |  | |_| |
 %  \__|_| |_|\___|\___/|_|   \__, |
 %                            |___/
-\section{Mathematical theory}
+\section{Computational theory}
+In this project, the famous Metropolis algorithm is used to do a Monte Carlo simulation of the Ising model. General Monte Carlo methods are based on probabilities and randomness, combined with the law of large numbers, which states that the mean value of a series of experiments will converge towards the expectation value. The Metropolis algorithm is no exception.
 
+As discussed in the introduction, it is not possible to calculate the partition function needed for the Boltzmann distribution. As such, the numerical method has to manage without the partition function. The method used in the Metropolis algorithm chooses to instead look at the ratios of the probabilities, as the partition function will then cancel. Assume that the system is in state \(i\) with energy \(E_i\) and considers jumping to state \(j\) with energy \(E_j\). The ratio of the probabilities of being in these two states then becomes
+\[
+\frac{P(E_j)}{P(E_i)} = \frac{\exp{-\beta E_j}/Z}{\exp{-\beta E_i}/Z} = \exp{-\beta\qty(E_j-E_i)} = \exp{-\beta\Delta E}
+\]
+When the energy decreases, \(\Delta E<0\) and the ratio becomes greater than \(1\). When the energy increases, the ratio similarly becomes less than \(1\). The Metropolis algorithm says that if the energy decreases, the proposed change of state should be accepted, otherwise it should be accepted with a probability \(\exp{-\beta\Delta E}\). This balances the attractions towards a state with lower energy and a state with higher multiplicity (entropy), thus minimising Helmholtz's free energy, \(F=E-TS\).
+
+\subsection{The Metropolis algorithm}
+Choosing to for each step flip one spin, the above discussion can be summarised as
+\begin{enumerate}
+\item Choose one of the spins at random.
+\item Calculate what the change in energy will be if the spin is flipped.
+\item Decide whether to flip the spin or not.
+\begin{itemize}
+\item If the change in energy is negative: Flip the spin.
+\item Else: Draw a random number in the interval \(\qty[0,1]\). Flip the spin if the number is smaller than \(\exp{-\beta\Delta E}\).
+\end{itemize}
+\item Update expectation values.
+\end{enumerate}
+With \(L\) rows and \(L\) columns in the lattice, one Monte Carlo cycle denotes the process of \(L^2\) attempts at flipping spins.
+
+\subsection{Technicalities}
+While it on paper is straight forward to calculate the energy difference and then \(\exp{-\beta \Delta E}\), calculating an exponential is an expensive computation compared to the flipping of spins. Fortunately, it can be shown\autocite{compphys} that in a two-dimensional lattice, only five different energy differences are possible, namely \(-8J\), \(-4J\), \(0\), \(4J\), \(8J\). As such, the exponentials can be precalculated. In order to calculate the energy difference itself as efficiently as possible, it can also be shown that when flipping spin \(j\),
+\[
+\Delta E = 2Js_j\sum_{\langle k\rangle} s_k
+\]
+where \(s_j\) is the spin \emph{before} the flip and the sum is over the nearest neighbours of spin \(j\). Similarly, the change in magnetic moment can be calculated as
+\[
+\Delta M = -2Js_j
+\]
+where \(s_j\) again is the spin \emph{before} the flip. Alternatively, the spin can be flipped before the change in magnetic moment is calculated with the opposite sign in the formula above.
+
+
+
+%  _                 _                           _        _   _
+% (_)_ __ ___  _ __ | | ___ _ __ ___   ___ _ __ | |_ __ _| |_(_) ___  _ __
+% | | '_ ` _ \| '_ \| |/ _ \ '_ ` _ \ / _ \ '_ \| __/ _` | __| |/ _ \| '_ \
+% | | | | | | | |_) | |  __/ | | | | |  __/ | | | || (_| | |_| | (_) | | | |
+% |_|_| |_| |_| .__/|_|\___|_| |_| |_|\___|_| |_|\__\__,_|\__|_|\___/|_| |_|
+%             |_|
+\section{Implementation}
+Threads something-something, code snippets, yada-yada.
 
 %                      _ _
 %  _ __ ___  ___ _   _| | |_ ___
@@ -311,9 +372,9 @@ Mean magnetic moment(s):
 % |_| |_|\__,_|_| |_| |_|\___|_|  |_|\___\__,_|_|
 \subsubsection{Numerical results}
 With \(J=1\) and \(\beta=1\), the above expressions give
-\begin{alignat*}{2}
-\langle E\rangle/L^2 &= \num{-1.99598} \qquad& C_V/L^2 &= \num{0.03208}\\
-\langle \abs{M}\rangle/L^2 &= \num{0.99866} \qquad& \chi/L^2 &= \num{3.9933}
+\begin{alignat*}{8}
+\langle E\rangle/L^2 &=& \num{-1.99598} \qquad&& C_V/L^2 &=& \num{0.03208}\\
+\langle \abs{M}\rangle/L^2 &=& \num{0.99866} \qquad&& \chi/L^2 &=& \num{3.9933}
 \end{alignat*}
 
 Running \(\num{100000}\) Monte Carlo cycles with the same parameters gives \vref{2by2}.
