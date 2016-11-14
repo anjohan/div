@@ -12,5 +12,5 @@ int calculate_energy(int **spins, int L);
 
 void output(FILE* file, int i, double T, double E, double E2, double M, double M2, double Mabs);
 
-void ising(FILE* file, const char* mode, int L, int N, int dN, double T);
+void ising(FILE* file, const char* mode, int L, int N, int dN, double T, int startindex);
 #endif

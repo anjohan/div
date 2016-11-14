@@ -8,17 +8,18 @@ using namespace std;
 void findpdf(const char* infile, const char* outfile);
 
 int main(){
-    int L = 20, N = 1000000, dN = 1;
+    int L = 20, N = 1000000, dN = 1, startindex=0;
     double hotT = 2.4, coldT = 1.0;
     FILE* hotfile = fopen("hotanalysis.dat","w");
     FILE* coldfile = fopen("coldanalysis.dat","w");
     FILE* orderedhotfile = fopen("hotorderedanalysis.dat","w");
     FILE* orderedcoldfile = fopen("coldorderedanalysis.dat","w");
 
-    thread hot(ising,hotfile,"random",L,N,dN,hotT);
-    thread cold(ising,coldfile,"random",L,N,dN,coldT);
-    thread orderedhot(ising,orderedhotfile,"ordered",L,N,dN,hotT);
-    thread orderedcold(ising,orderedcoldfile,"ordered",L,N,dN,coldT);
+    /*#threadstart#*/
+    thread hot(ising,hotfile,"random",L,N,dN,hotT,startindex);
+    thread cold(ising,coldfile,"random",L,N,dN,coldT,startindex);
+    thread orderedhot(ising,orderedhotfile,"o",L,N,dN,hotT,startindex);
+    thread orderedcold(ising,orderedcoldfile,"o",L,N,dN,coldT,startindex);
 
     hot.join();
     cold.join();
@@ -30,6 +31,7 @@ int main(){
     orderedcold.join();
     hotpdf.join();
     coldpdf.join();
+    /*#threadend#*/
 }
 
 void findpdf(const char* infilename, const char* outfilename){
