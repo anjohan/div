@@ -2,11 +2,11 @@ NAVN = Johansson_Anders_FYS3150_Oblig4
 FLAGG = -Wall -std=c++11 -O3 -pthread
 all: pdf
 pdf: ${NAVN}.pdf
-figs: 2by2.plt randomanalysis.plt
+figs: 2by2.plt randomanalysis.plt accepted.plt probdist.plt
 ${NAVN}.pdf: ${NAVN}.tex kilder.bib figs
 	latexmk -quiet -pdf ${NAVN}.tex
 2by2.plt: multiplot.gpi cold2by2.dat
-	gnuplot -e "outfile='2by2.plt'; infile='2by2.dat'; N=1000000" multiplot.gpi
+	gnuplot -e "outfile='2by2.plt'; infile='2by2.dat'; N=100000" multiplot.gpi
 cold2by2.dat: 2by2.x
 	./2by2.x
 	tail -n 1 2by2long.dat > 2by2longres.dat
@@ -16,6 +16,10 @@ cold2by2.dat: 2by2.x
 	g++ ${FLAGG} -c 2by2.cpp
 randomanalysis.plt: multiplot.gpi coldanalysis.dat plotanalysis.sh
 	bash plotanalysis.sh
+accepted.plt: accepted.gpi coldanalysis.dat
+	gnuplot accepted.gpi
+probdist.plt: probdist.gpi coldanalysis.dat
+	gnuplot probdist.gpi
 coldanalysis.dat: analysis.x
 	./analysis.x
 analysis.x: analysis.o ising.o

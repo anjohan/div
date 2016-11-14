@@ -1,0 +1,23 @@
+set terminal epslatex size 6,6 color colortext
+
+set output "probdist.plt"
+
+set style fill solid 1.0
+set format x "$\\num{%g}$"
+set format y "$\\num{%g}$"
+
+set xlabel "$E$"
+set xrange[-820:-300]
+set ylabel "Number of occurrences"
+
+set multiplot layout 2,1 scale 1,1
+
+set title "\\textbf{Low temperature}"
+
+plot "coldpdf.dat" title "$T=1$" with boxes lc rgb "blue"
+
+set title "\\textbf{High temperature}"
+
+plot "hotpdf.dat" title "$T=\\num{2.4}$" with boxes lc rgb "red"
+
+unset multiplot

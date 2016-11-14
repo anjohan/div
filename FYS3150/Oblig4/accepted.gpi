@@ -1,0 +1,18 @@
+set terminal epslatex size 6,4 color colortext
+
+set output "accepted.plt"
+
+set format x "$\\num{%g}$"
+set format y "$\\num{%g}$"
+#set xtics 500000
+
+set style line 1 lw 5 lc rgb "blue"
+set style line 2 lw 5 lc rgb "red"
+
+set logscale xy
+
+set xlabel "Monte Carlo cycles"
+set ylabel "Accepted flips"
+
+plot "coldanalysis.dat" using 1:8 title "$T=1$" with lines ls 1, \
+"hotanalysis.dat" using 1:8 title "$T=\\num{2.4}$" with lines ls 2
