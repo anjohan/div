@@ -2,7 +2,7 @@ NAVN = Johansson_Anders_FYS3150_Oblig4
 FLAGG = -Wall -std=c++11 -O3 -pthread
 all: pdf
 pdf: ${NAVN}.pdf
-figs: 2by2.plt randomanalysis.plt accepted.plt probdist.plt
+figs: 2by2.plt randomanalysis.plt accepted.plt probdist.plt 20atifi.plt
 ${NAVN}.pdf: ${NAVN}.tex kilder.bib figs
 	latexmk -quiet -pdf ${NAVN}.tex
 2by2.plt: multiplot.gpi cold2by2.dat
@@ -31,6 +31,8 @@ phases.o: phases.cpp
 	g++ ${FLAGG} -c phases.cpp
 phases.x: phases.o ising.o
 	g++ ${FLAGG} -o phases.x phases.o ising.o
+20atifi.plt: plotphases.gpi
+	gnuplot -e "infile='20Tsfrom2.2to2.4.imp'; outfile='20atifi.plt'" plotphases.gpi
 read: ${NAVN}.pdf
 	evince ${NAVN}.pdf &
 edit:

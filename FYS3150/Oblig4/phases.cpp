@@ -4,15 +4,16 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
-    if(argc < 4){
+    if(argc < 5){
         printf("Too few arguments!\n");
         return 1;
     }
     const char* outfilename = argv[1];
-    int number_of_temperatures = atoi(argv[2]);
-    int number_of_parallels = atoi(argv[3]);
+    int N = atoif(argv[2]);
+    int number_of_temperatures = atoi(argv[3]);
+    int number_of_parallels = atoi(argv[4]);
 
-    int N = 100000, dN = N+13, startindex=20000;
+    int dN = N+13, startindex=20000;
     double Tstart = 2.2, Tend = 2.4;
     double dT = (Tend-Tstart)/(number_of_temperatures-1);
 
