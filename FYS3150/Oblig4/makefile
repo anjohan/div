@@ -31,6 +31,10 @@ phases.o: phases.cpp
 	g++ ${FLAGG} -c phases.cpp
 phases.x: phases.o ising.o
 	g++ ${FLAGG} -o phases.x phases.o ising.o
+timetest.o: timetest.cpp
+	g++ ${FLAGG} -c timetest.cpp
+timetest.x: timetest.o ising.o
+	g++ ${FLAGG} -o timetest.x timetest.o ising.o
 40atcondor.plt: plotphases.gpi
 	gnuplot -e "infile='40Tsfrom2.2to2.4.imp'; outfile='40atcondor.plt'" plotphases.gpi
 40atcondor.dat: findcritical.py
