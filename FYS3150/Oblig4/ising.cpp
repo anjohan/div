@@ -68,7 +68,7 @@ void monte_carlo_cycle(int** spins, double* probabilities, int &L, int &L2, doub
 
 
 
-void ising(FILE* file, const char* startmode, int L, int N, int dN, double T, int startindex){
+void ising(FILE* file, const char* startmode, int L, int N, int dN, double T, int startindex, double* returnvalues){
     int i, j;
     int L2 = L*L;
 
@@ -121,4 +121,8 @@ void ising(FILE* file, const char* startmode, int L, int N, int dN, double T, in
     }
     delete [] spins;
     delete [] probabilities;
+    returnvalues[0] = expected_energy/(endindex*L2);
+    returnvalues[1] = (expected_energy2/endindex - (expected_energy/endindex)*(expected_energy/endindex))/L2;
+    returnvalues[2] = expected_magnetic_moment_abs/(endindex*L2);
+    returnvalues[3] = (expected_magnetic_moment2/endindex - (expected_magnetic_moment/endindex)*(expected_magnetic_moment/endindex))/L2;
 }

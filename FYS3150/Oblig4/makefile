@@ -9,7 +9,6 @@ ${NAVN}.pdf: ${NAVN}.tex kilder.bib figs
 	gnuplot -e "outfile='2by2.plt'; infile='2by2.dat'; N=100000" multiplot.gpi
 cold2by2.dat: 2by2.x
 	./2by2.x
-	tail -n 1 2by2long.dat > 2by2longres.dat
 2by2.x: ising.o 2by2.o
 	g++ ${FLAGG} -o 2by2.x 2by2.o ising.o
 2by2.o: 2by2.cpp
@@ -28,6 +27,10 @@ analysis.o: analysis.cpp
 	g++ ${FLAGG} -c analysis.cpp
 ising.o: ising.cpp ising.h
 	g++ ${FLAGG} -c ising.cpp
+phases.o: phases.cpp
+	g++ ${FLAGG} -c phases.cpp
+phases.x: phases.o ising.o
+	g++ ${FLAGG} -o phases.x phases.o ising.o
 read: ${NAVN}.pdf
 	evince ${NAVN}.pdf &
 edit:

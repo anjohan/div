@@ -15,11 +15,16 @@ int main(){
     FILE* orderedhotfile = fopen("hotorderedanalysis.dat","w");
     FILE* orderedcoldfile = fopen("coldorderedanalysis.dat","w");
 
+    double *hotres = new double[4];
+    double *coldres = new double[4];
+    double *hotres2 = new double[4];
+    double *coldres2 = new double[4];
+
     /*#threadstart#*/
-    thread hot(ising,hotfile,"random",L,N,dN,hotT,startindex);
-    thread cold(ising,coldfile,"random",L,N,dN,coldT,startindex);
-    thread orderedhot(ising,orderedhotfile,"o",L,N,dN,hotT,startindex);
-    thread orderedcold(ising,orderedcoldfile,"o",L,N,dN,coldT,startindex);
+    thread hot(ising,hotfile,"random",L,N,dN,hotT,startindex,hotres);
+    thread cold(ising,coldfile,"random",L,N,dN,coldT,startindex,coldres);
+    thread orderedhot(ising,orderedhotfile,"o",L,N,dN,hotT,startindex,hotres2);
+    thread orderedcold(ising,orderedcoldfile,"o",L,N,dN,coldT,startindex,coldres2);
 
     hot.join();
     cold.join();
