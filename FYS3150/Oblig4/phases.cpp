@@ -9,7 +9,7 @@ int main(int argc, char* argv[]){
         return 1;
     }
     const char* outfilename = argv[1];
-    int N = atoif(argv[2]);
+    int N = atoi(argv[2]);
     int number_of_temperatures = atoi(argv[3]);
     int number_of_parallels = atoi(argv[4]);
 
