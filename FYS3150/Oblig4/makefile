@@ -38,7 +38,7 @@ phases.x: phases.o ising.o
 read: ${NAVN}.pdf
 	evince ${NAVN}.pdf &
 edit:
-	vim Johansson_Anders_FYS3150_Oblig4.tex makefile *.bib *.cpp *.h *.gpi
+	vim Johansson_Anders_FYS3150_Oblig4.tex makefile *.bib *.cpp *.h *.gpi *.py
 clean:
 	latexmk -c
 	rm *.bbl

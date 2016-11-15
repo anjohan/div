@@ -125,8 +125,8 @@ breaklines=true,
 \title{FYS3150 Project 4}
 \author{Anders Johansson}
 \begin{document}
-%\includepdf{forside.pdf}
-\maketitle
+\includepdf{forside.pdf}
+%\maketitle
 \pagestyle{fancy}
 \tableofcontents
 
@@ -204,6 +204,35 @@ C_V &= \frac{1}{kT^2}\qty(\langle E^2\rangle - \langle E\rangle^2)\\
 \chi &= \frac{1}{kT}\qty(\langle M^2\rangle - \langle M\rangle^2)
 \end{alignat*}
 
+%        _                      _                       _ _   _
+%  _ __ | |__   __ _ ___  ___  | |_ _ __ __ _ _ __  ___(_) |_(_) ___  _ __  ___
+% | '_ \| '_ \ / _` / __|/ _ \ | __| '__/ _` | '_ \/ __| | __| |/ _ \| '_ \/ __|
+% | |_) | | | | (_| \__ \  __/ | |_| | | (_| | | | \__ \ | |_| | (_) | | | \__ \
+% | .__/|_| |_|\__,_|___/\___|  \__|_|  \__,_|_| |_|___/_|\__|_|\___/|_| |_|___/
+% |_|
+\subsection{Phase transitions}
+One of the great achievements of the two-dimensional Ising model is its ability to predict a phase transition in ferromagnetic materials, and ability which the one-dimensional version lacks. When a ferromagnetic material is heated, a temperature is reached where the materials suddenly start behaving paramagnetic, i.e. where the magnetic moment drops to zero.
+
+A more dramatic change, which is easier to analyse numerically, is that both the heat capacity and the diverge when the temperature approaches the critical temperature. As such, the critical temperature can be found numerically as the point where the magnetic susceptibility has its largest value. One can derive the following expression for the magnetic susceptibility as a function of temperature, which shows the divergence:
+\[
+\chi(T) \propto \abs{T_C-T}^{-\alpha}
+\]
+where \(\alpha\) is a positive constant, so \(T=T_C\) leads to a division by zero.
+
+As the analytical expression for the two dimensional Ising model is known for the thermodynamic limit, it is interesting to attempt an approximation of the critical temperature in the thermodynamic limit based on the values found numerically for finite lattices. To achieve this, we have the relation
+\[
+T_C(L) - T_C(L=\infty) = aL^{-1/\nu}\label{tcltcinf}
+\]
+where \(a\) is some unknown constant and \(\nu=1\) can be calculated analytically. To find an expression for \(a\), note that if we subtract the above equations for two values of \(L\) for which \(T_C\) has been calculated numerically, \(T_C(L=\infty)\) cancels and we get
+\[
+T_C(L_i) - T_C(L_j) = a\qty(L_i^{-1/\nu} - L_j^{-1/\nu}) \implies a = \frac{T_C(L_i)-T_C(L_j)}{L_i^{-1/\nu}-L_j^{-1/\nu}}
+\]
+The thermodynamic limit can then be calculated using \ref{tcltcinf}:
+\[
+T_C(L=\infty)=T_C(L_i)-aL_i^{-1/\nu} = T_C(L_i)- \frac{T_C(L_i)-T_C(L_j)}{L_i^{-1/\nu}-L_j^{-1/\nu}}\cdot L_i^{-1/\nu}
+\]
+for some \(L_i\). Using many, e.g. 4, values \(L_i\) and \(L_j\), we should get a good approximation of the thermodynamic limit. This is calculated in \program{findcritical}, where the mean value is calculated.
+
 
 
 %                                  _        _   _                   _
@@ -260,7 +289,7 @@ where \(s_j\) again is the spin \emph{before} the flip. Alternatively, the spin 
 % |_|_| |_| |_| .__/|_|\___|_| |_| |_|\___|_| |_|\__\__,_|\__|_|\___/|_| |_|
 %             |_|
 \section{Implementation}
-The Metropolis algorithm discussed above has been implemented fairly straightforwardly in \program{ising.cpp}. \program{phases.cpp} is a utility to run simulations as in \ref{phases}, to which the number of simulations, number of temperatures, etc. can be given as command line arguments.
+The Metropolis algorithm discussed above has been implemented fairly straightforwardly in \program{ising.cpp}. \program{phases.cpp} is a utility to run simulations as in \ref{phases}, to which the number of simulations, number of temperatures, etc. can be given as command line arguments. \program{critical.py} can then be used to analyse the resulting data file and find the critical temperatures.
 
 To save runtime, certain parts of the programs are run in parallel. The Metropolis algorithm, like most Monte Carlo methods, are generally well suited for parallel programming, as many threads can work on different parts of the problem at the same time, without communicating.
 
@@ -451,6 +480,7 @@ From the figure, we see that the heat capacity magnetic susceptibility peak at a
 
 The above graph of the susceptibility gives the following maxima for the magnetic susceptibility, ideally corresponding to the critical temperatures:
 \input{40atcondor.dat}
+This was calculated by \program{findcritical.py}.
 
 
 %                       _           _
