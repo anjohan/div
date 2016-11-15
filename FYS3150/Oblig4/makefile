@@ -2,8 +2,8 @@ NAVN = Johansson_Anders_FYS3150_Oblig4
 FLAGG = -Wall -std=c++11 -O3 -pthread
 all: pdf
 pdf: ${NAVN}.pdf
-figs: 2by2.plt randomanalysis.plt accepted.plt probdist.plt 20atifi.plt
-${NAVN}.pdf: ${NAVN}.tex kilder.bib figs
+figs: 2by2.plt randomanalysis.plt accepted.plt probdist.plt 40atcondor.plt
+${NAVN}.pdf: ${NAVN}.tex kilder.bib figs 40atcondor.dat
 	latexmk -quiet -pdf ${NAVN}.tex
 2by2.plt: multiplot.gpi cold2by2.dat
 	gnuplot -e "outfile='2by2.plt'; infile='2by2.dat'; N=100000" multiplot.gpi
@@ -31,8 +31,10 @@ phases.o: phases.cpp
 	g++ ${FLAGG} -c phases.cpp
 phases.x: phases.o ising.o
 	g++ ${FLAGG} -o phases.x phases.o ising.o
-20atifi.plt: plotphases.gpi
-	gnuplot -e "infile='20Tsfrom2.2to2.4.imp'; outfile='20atifi.plt'" plotphases.gpi
+40atcondor.plt: plotphases.gpi
+	gnuplot -e "infile='40Tsfrom2.2to2.4.imp'; outfile='40atcondor.plt'" plotphases.gpi
+40atcondor.dat: findcritical.py
+	python findcritical.py 40Tsfrom2.2to2.4.imp 40atcondor.dat
 read: ${NAVN}.pdf
 	evince ${NAVN}.pdf &
 edit:

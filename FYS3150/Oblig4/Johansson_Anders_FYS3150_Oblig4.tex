@@ -439,8 +439,13 @@ When the temperature is higher, it is expected that the mean energy is higher, a
 
 \begin{figure}[H]
 \centering
-\input{20atifi.plt}
+\input{40atcondor.plt}
+\caption{Simulation for 40 different temperatures with \(\num{100000}\) Monte Carlo cycles (after skipping \(\num{20000}\)). Run by \program{condorquick.cmd} on the HTCondor system.}
 \end{figure}
+From the figure, we see that the heat capacity magnetic susceptibility peak at a temperature around \(\num{2.3}\). Unfortunately, it is clear that more data is required in order to get reasonable results.
+
+The above graph of the susceptibility gives the following maxima for the magnetic susceptibility, ideally corresponding to the critical temperature:
+\input{40atcondor.dat}
 
 
 
