@@ -103,8 +103,7 @@ void ising(FILE* file, const char* startmode, int L, int N, int dN, double T, in
     }
     expected_energy=0, expected_energy2=0, expected_magnetic_moment=0, expected_magnetic_moment2=0, expected_magnetic_moment_abs=0;
     number_of_accepted_flips = 0;
-    int endindex = N - startindex;
-    for(i=0; i<endindex; i++){
+    for(i=0; i<N; i++){
         expected_energy += energy;
         expected_energy2 += energy*energy;
         expected_magnetic_moment += magnetic_moment;
@@ -115,14 +114,14 @@ void ising(FILE* file, const char* startmode, int L, int N, int dN, double T, in
         }
         monte_carlo_cycle(spins, probabilities, L, L2, energy, magnetic_moment, number_of_accepted_flips, ran, dom);
     }
-    output(file,endindex,L,T,expected_energy,expected_energy2,expected_magnetic_moment,expected_magnetic_moment2,expected_magnetic_moment_abs,energy,number_of_accepted_flips);
+    output(file,N,L,T,expected_energy,expected_energy2,expected_magnetic_moment,expected_magnetic_moment2,expected_magnetic_moment_abs,energy,number_of_accepted_flips);
     for(i=0; i<L; i++){
         delete [] spins[i];
     }
     delete [] spins;
     delete [] probabilities;
-    returnvalues[0] = expected_energy/(endindex*L2);
-    returnvalues[1] = (expected_energy2/endindex - (expected_energy/endindex)*(expected_energy/endindex))/L2;
-    returnvalues[2] = expected_magnetic_moment_abs/(endindex*L2);
-    returnvalues[3] = (expected_magnetic_moment2/endindex - (expected_magnetic_moment/endindex)*(expected_magnetic_moment/endindex))/L2;
+    returnvalues[0] = expected_energy/(N*L2);
+    returnvalues[1] = (expected_energy2/N - (expected_energy/N)*(expected_energy/N))/L2;
+    returnvalues[2] = expected_magnetic_moment_abs/(N*L2);
+    returnvalues[3] = (expected_magnetic_moment2/N - (expected_magnetic_moment/N)*(expected_magnetic_moment/N))/L2;
 }

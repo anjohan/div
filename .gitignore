@@ -1,5 +1,4 @@
 *.o
-*.x
 *.dat
 ## Core latex/pdflatex auxiliary files:
 *.aux
