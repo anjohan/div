@@ -1,5 +1,5 @@
 # Bruk din egen epost-adresse for notify_user, f.eks:
-notify_user    = anjohan@uio.no
+notify_user    = anders.johansson@hotmail.no
 # I hvilke tilfeller nsker du epost fra Condor (Always, Complete, Error, Never)
 # Unngå Never.
 notification   = Always
@@ -8,8 +8,8 @@ universe       = vanilla
 output         = condorquickprint.txt
 input          = /dev/null
 
-arguments      = "condorquick.dat 100000 40 2"
+arguments      = "condorquick_new.imp 100000 41 1"
 
 executable     = phases.x
-log            = condorquick.log
+log            = condorquick_new.log
 queue
