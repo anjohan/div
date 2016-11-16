@@ -1,3 +1,8 @@
+#POST-DELIVERY UPDATE#
+I found the bug which caused the errors in the large datasets for phase transitions. It turns out I had forgotten to change abs to fabs when I changed all the quantities from ints to doubles, causing an overflow in the energy and magnetic moment when the grid is large.
+
+The new results will be added to the report as an appendix once the long runs are finished.
+
 #FYS3150 Project 4#
 
 ##The report##
