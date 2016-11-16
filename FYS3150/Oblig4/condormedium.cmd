@@ -8,8 +8,8 @@ universe       = vanilla
 output         = condormediumprint.txt
 input          = /dev/null
 
-arguments      = "condormedium_new.imp 500000 41 1"
+arguments      = "condormedium_new_new.imp 500000 41 1"
 
 executable     = phases.x
-log            = condormedium_new.log
+log            = condormedium_new_new.log
 queue
