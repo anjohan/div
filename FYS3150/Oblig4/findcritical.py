@@ -23,10 +23,23 @@ for line in lines[1:]:
     for i in range(4):
         chis[i].append(float(words[4+i*4]))
 
+T_Cs = []
+
 with open(outfilename,"w") as outfile:
     outfile.write(r"\[\begin{array}{cc}\toprule L & \chi ")
     for i in range(4):
         L = Ls[i]
         T_C = Ts[chis[i].index(max(chis[i]))]
+        T_Cs.append(T_C)
         outfile.write(r"\\ \midrule \num{%d} & \num{%g} " % (L,T_C))
-    outfile.write(r"\\ \bottomrule\end{array}\]")
+    outfile.write(r"\\ \bottomrule\end{array}\]" + "\n")
+
+    # Find approximation to T_C(L=inf):
+    nu = 1.0
+    T_C_inf = 0
+    for i in range(4):
+        for j in range(4):
+            if not i == j:
+                T_C_inf += (1.0/12) * (T_Cs[i] - (T_Cs[i] - T_Cs[j])/(Ls[i]**(-1/nu) - Ls[j]**(-1/nu)) *Ls[i]**(-1/nu))
+
+    outfile.write(r"Approximation to the thermodynamic limit: \[T_C(L=\infty) = \num{%g}\]" % T_C_inf)
