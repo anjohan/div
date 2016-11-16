@@ -19,19 +19,21 @@ int main(){
     double *res3 = new double[4];
     double *res4 = new double[4];
 
-    clock_t start1 = clock();
+    time_t start = time(NULL);
     ising(file1,"random",L,N,dN,T,startindex,res1);
     ising(file2,"random",L,N,dN,T,startindex,res2);
-    clock_t end1 = clock();
-    seqtime = ((double) (end1-start1))/CLOCKS_PER_SEC;
+    time_t end = time(NULL);
+    seqtime = difftime(end,start);
 
-    clock_t start2 = clock();
+    start = time(NULL);
     thread thread1(ising,file3,"random",L,N,dN,T,startindex,res3);
     thread thread2(ising,file4,"random",L,N,dN,T,startindex,res4);
     thread1.join();
     thread2.join();
-    clock_t end2 = clock();
-    partime = ((double) (end2-start2))/CLOCKS_PER_SEC;
+    end = time(NULL);
+    partime = difftime(end,start);
 
-    printf("Sequential time: %10g\nParallel time:    %10g\n",seqtime,partime);
+    FILE* file = fopen("time.dat","w");
+    fprintf(file,R"(\[\text{Sequential time: }\SI{%g}{\second}\qquad\text{Parallel time: }\SI{%g}{\second}\])",seqtime,partime);
+    fclose(file);
 }

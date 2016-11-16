@@ -2,8 +2,8 @@ NAVN = Johansson_Anders_FYS3150_Oblig4
 FLAGG = -Wall -std=c++11 -O3 -pthread
 all: pdf
 pdf: ${NAVN}.pdf
-figs: 2by2.plt randomanalysis.plt accepted.plt probdist.plt 40atcondor.plt
-${NAVN}.pdf: ${NAVN}.tex kilder.bib figs 40atcondor.dat
+figs: 2by2.plt randomanalysis.plt accepted.plt probdist.plt 40atcondor.plt 40atcondorlong.plt 40with2E6.plt
+${NAVN}.pdf: ${NAVN}.tex kilder.bib figs 40atcondor.dat 40atcondorlong.dat time.dat 40with2E6.dat
 	latexmk -quiet -pdf ${NAVN}.tex
 2by2.plt: multiplot.gpi cold2by2.dat
 	gnuplot -e "outfile='2by2.plt'; infile='2by2.dat'; N=100000" multiplot.gpi
@@ -31,16 +31,26 @@ phases.o: phases.cpp
 	g++ ${FLAGG} -c phases.cpp
 phases.x: phases.o ising.o
 	g++ ${FLAGG} -o phases.x phases.o ising.o
-timetest.o: timetest.cpp
-	g++ ${FLAGG} -c timetest.cpp
-timetest.x: timetest.o ising.o
-	g++ ${FLAGG} -o timetest.x timetest.o ising.o
 40atcondor.plt: plotphases.gpi
 	gnuplot -e "infile='40Tsfrom2.2to2.4.imp'; outfile='40atcondor.plt'" plotphases.gpi
 40atcondor.dat: findcritical.py
 	python findcritical.py 40Tsfrom2.2to2.4.imp 40atcondor.dat
+40atcondorlong.plt: plotphases.gpi
+	gnuplot -e "infile='condormedium.imp'; outfile='40atcondorlong.plt'" plotphases.gpi
+40atcondorlong.dat: findcritical.py
+	python findcritical.py condormedium.imp 40atcondorlong.dat
+40with2E6.plt: plotphases.gpi
+	gnuplot -e "infile='40with2E6.imp'; outfile='40with2E6.plt'" plotphases.gpi
+40with2E6.dat: findcritical.py
+	python findcritical.py 40with2E6.imp 40with2E6.dat
 read: ${NAVN}.pdf
 	evince ${NAVN}.pdf &
+time.dat: figs timetest.x
+	./timetest.x
+timetest.o: timetest.cpp
+	g++ ${FLAGG} -c timetest.cpp
+timetest.x: timetest.o ising.o
+	g++ ${FLAGG} -o timetest.x timetest.o ising.o
 edit:
 	vim Johansson_Anders_FYS3150_Oblig4.tex makefile *.bib *.cpp *.h *.gpi *.py
 clean:
