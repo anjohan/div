@@ -108,7 +108,7 @@ void ising(FILE* file, const char* startmode, int L, int N, int dN, double T, in
         expected_energy2 += energy*energy;
         expected_magnetic_moment += magnetic_moment;
         expected_magnetic_moment2 += magnetic_moment*magnetic_moment;
-        expected_magnetic_moment_abs += abs(magnetic_moment);
+        expected_magnetic_moment_abs += fabs(magnetic_moment);
         if(i % dN == 0){
             output(file,i+1,L,T,expected_energy,expected_energy2,expected_magnetic_moment,expected_magnetic_moment2,expected_magnetic_moment_abs,energy,number_of_accepted_flips);
         }
