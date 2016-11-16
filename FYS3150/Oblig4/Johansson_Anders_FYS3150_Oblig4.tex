@@ -131,7 +131,7 @@ breaklines=true,
 \tableofcontents
 
 \begin{abstract}
-In this project, the Ising model for a two-dimensional ferromagnetic is studied numerically using Monte Carlo simulations with the Metropolis algorithm. A \(2\times2\) system is also solved analytically for comparison, and the numerical results fit well. A phase transition is confirmed at the same temperature as analytically predicted by Lars Onsager.
+In this project, the Ising model for a two-dimensional ferromagnetic is studied numerically using Monte Carlo simulations with the Metropolis algorithm. A \(2\times2\) system is also solved analytically for comparison, and the numerical results fit well. The stability and convergence rate of the Metropolis algorithm are also tested for a \(20\times20\) system. Heavy simulations confirm a phase transition at approximately \(T_C=\num{2.272}\), which is close to the temperature analytically predicted by Lars Onsager.
 \end{abstract}
 \clearpage
 
@@ -231,7 +231,7 @@ The thermodynamic limit can then be calculated using \ref{tcltcinf}:
 \[
 T_C(L=\infty)=T_C(L_i)-aL_i^{-1/\nu} = T_C(L_i)- \frac{T_C(L_i)-T_C(L_j)}{L_i^{-1/\nu}-L_j^{-1/\nu}}\cdot L_i^{-1/\nu}
 \]
-for some \(L_i\). Using many, e.g. 4, values \(L_i\) and \(L_j\), we should get a good approximation of the thermodynamic limit. This is calculated in \program{findcritical}, where the mean value is calculated.
+for some \(L_i\). Using many, e.g. 4, values \(L_i\) and \(L_j\), we should get a good approximation of the thermodynamic limit. This is calculated in \program{findcritical.py}, where the mean value is calculated.
 
 
 
@@ -246,6 +246,7 @@ for some \(L_i\). Using many, e.g. 4, values \(L_i\) and \(L_j\), we should get 
 % | |_| | | |  __/ (_) | |  | |_| |
 %  \__|_| |_|\___|\___/|_|   \__, |
 %                            |___/
+\clearpage
 \section{Computational theory}
 In this project, the famous Metropolis algorithm is used to do a Monte Carlo simulation of the Ising model. General Monte Carlo methods are based on probabilities and randomness, combined with the law of large numbers, which states that the mean value of a series of experiments will converge towards the expectation value. The Metropolis algorithm is no exception.
 
@@ -288,16 +289,17 @@ where \(s_j\) again is the spin \emph{before} the flip. Alternatively, the spin 
 % | | | | | | | |_) | |  __/ | | | | |  __/ | | | || (_| | |_| | (_) | | | |
 % |_|_| |_| |_| .__/|_|\___|_| |_| |_|\___|_| |_|\__\__,_|\__|_|\___/|_| |_|
 %             |_|
+\clearpage
 \section{Implementation}
-The Metropolis algorithm discussed above has been implemented fairly straightforwardly in \program{ising.cpp}. \program{phases.cpp} is a utility to run simulations as in \ref{phases}, to which the number of simulations, number of temperatures, etc. can be given as command line arguments. \program{critical.py} can then be used to analyse the resulting data file and find the critical temperatures.
+The Metropolis algorithm discussed above has been implemented fairly straightforwardly in \program{ising.cpp}. \program{phases.cpp} is a utility to run simulations as in \ref{phases}, to which the number of simulations, number of temperatures, etc. can be given as command line arguments. \program{findcritical.py} can then be used to analyse the resulting data file and find the critical temperatures.
 
 To save runtime, certain parts of the programs are run in parallel. The Metropolis algorithm, like most Monte Carlo methods, are generally well suited for parallel programming, as many threads can work on different parts of the problem at the same time, without communicating.
 
-In order to simply do separate parts of the project in parallel, \program{2by2.cpp} and \program{analysis.cpp} use the \texttt{<thread>} library from the \texttt{C++11} standard. The basic syntax is to create a \texttt{thread} object, where the function to be called and the arguments to the function are given, followed by a call to the thread's \texttt{join} method when one wishes to wait for the execution to finish. A simple example from \program{analysis.cpp} is
+In order to simply do separate parts of the project in parallel, all C++ programs use the \texttt{<thread>} library from the \texttt{C++11} standard. The basic syntax is to create a \texttt{thread} object, where the function to be called and the arguments to the function are given to the constructor, followed by a call to the thread's \texttt{join} method when one wishes to wait for the execution to finish. A simple example from \program{analysis.cpp} is
 \lstinputlisting[language=C++,linerange={threadstart-threadend},caption={Example of parallel programming using \texttt{<thread>}.}]{analysis.cpp}
 In this snippet, four different Monte Carlo simulations are started as separate threads. Then, the program waits for two of them to finish before starting two other threads which analyse the results from these two. Finally, the program waits for all threads to finish.
 
-I was originally planning to use the \texttt{OpenMPI} library for parallelisation of the phase transition study, but time constraints forced me to stick with \texttt{<thread>}. As it has not been necessary to split the computations over separate machines, this has not been a problem.
+I was originally planning to use the \texttt{OpenMPI} library for parallelisation of the phase transition study, but time constraints have forced me to stick with \texttt{<thread>}. As it has not been necessary to split the computations over separate machines, this has not been a problem. It would, however, have enabled the programs to run on several of the computers connected to the HTCondor service at once, which would have been an advantage for the heavy simulations.
 
 The servers at the Department of Informatics as well as their HTCondor service have been used to run the longer simulations in \ref{phases}.
 
@@ -306,8 +308,9 @@ The servers at the Department of Informatics as well as their HTCondor service h
 % | '__/ _ \/ __| | | | | __/ __|
 % | | |  __/\__ \ |_| | | |_\__ \
 % |_|  \___||___/\__,_|_|\__|___/
+\clearpage
 \section{Results}
-All numerical values are given in terms of \(J\) and \(k\).
+All numerical values are given in units of \(J\) and \(k\).
 
 \subsection{Test of parallelisation}
 In \program{timetest.cpp}, two Monte Carlo simulations are first run sequentially and then in parallel. If the parallelisation has been successful, the parallel run should take only about half the time of the sequential run, as the two threads can work completely separate of each other.
@@ -430,9 +433,9 @@ Running \(\num{100000}\) Monte Carlo cycles with the same parameters gives \vref
 \input{2by2.plt}\caption{Numerical results from \num{100000} Monte Carlo cycles. Generated by \program{2by2.cpp}.}\label{2by2}
 \end{figure}
 
-These results fit fairly well with the numbers calculated above, but we see from the graphs that the values for the heat capacity and magnetic susceptibility have yet to settle down completely. Running with \(\num{10000000}\) Monte Carlo cycles yields
+These results fit fairly well with the numbers calculated above, but we see from the graphs that the values for the heat capacity and magnetic susceptibility have yet to settle down completely. Running \(\num{10000000}\) Monte Carlo cycles yields
 \input{2by2res.dat}
-The results fit very well with the analytical results.
+These results fit very well with the analytical results.
 
 
 %                    _           _
@@ -458,7 +461,7 @@ Comparing \ref{2020random} and \ref{2020ordered}, we see that the initial state
 \input{accepted.plt}
 \caption{The number of accepted flips as a function of the number of Monte Carlo cycles, on a logarithmic scale. Generated by \program{analysis.cpp} and \program{accepted.gpi}.}\label{fig:accepted}
 \end{figure}
-As the number of accepted flips should grow linearly as a function of the number of Monte Carlo cycles when the system is in equilibrium, we see that \(\num{10000}\) cycles seems sufficient to reach a steady state.
+As the number of accepted flips should grow linearly as a function of the number of Monte Carlo cycles when the system is in equilibrium, we see that \(\num{10000}\) cycles seems sufficient to reach a steady state, as the graphs are approximately linear with a derivative of 1 from this point.
 
 \subsubsection{Numerical probability distribution}
 \begin{figure}[H]
@@ -491,7 +494,7 @@ This was calculated by \program{findcritical.py}.
 \begin{figure}[H]
 \centering
 \input{40atcondorlong.plt}
-\caption{Simulation for 40 different temperatures with \(\num{500000}\) Monte Carlo cycles (after skipping \(\num{20000}\)). Run by \program{condormedium.cmd} on the HTCondor system and generated by \program{phases.cpp}. The runtime was approximately 4 hours.}
+\caption{Simulation for 40 different temperatures with \(\num{500000}\) Monte Carlo cycles (after skipping \(\num{20000}\)). Run by \program{condormedium.cmd} on the HTCondor system and generated by \program{phases.cpp}. The runtime was approximately 4 hours.}\label{5e5}
 \end{figure}
 With five times as many Monte Carlo cycles, the data look a bit better and have a lot less noise, while still not super.
 
@@ -499,14 +502,17 @@ The above graph of the susceptibility gives the following maxima for the heat ca
 \input{40atcondorlong.dat}
 This was calculated by \program{findcritical.py}. This is very close to Lars Onsager's analytical result of \(T_C(L=\infty)=\num{2.269}\). With 40 temperatures in the interval from \(\num{2.2}\) to \(\num{2.4}\), this is nearing the maximum precision possible.
 
+
 \begin{figure}[H]
 \centering
 \input{40with2E6.plt}
-\caption{Simulation for 40 different temperatures with \(\num{2E6}\) Monte Carlo cycles (after skipping \(\num{20000}\)). Run on a UiO server (with 64 cores) and generated by \program{phases.cpp}. The runtime was approximately 15.5 hours.}
+\caption{Simulation for 40 different temperatures with \(\num{2E6}\) Monte Carlo cycles (after skipping \(\num{20000}\)). Run on a UiO server (with 64 cores) and generated by \program{phases.cpp}. The runtime was approximately 15.5 hours.}\label{2e6}
 \end{figure}
 With this many Monte Carlo cycles and a ginormous runtime, I was hoping for the graph of the magnetic susceptibility to look considerably better. The heat capacity, on the other hand, has improved, and this is the quantity used to calculate the critical temperature.
 \input{40with2E6.dat}
 This was calculated by \program{findcritical.py}. While the graphs don't look particularly pretty, the approximation to the thermodynamic limit is even closer to Lars Onsager's analytical result of \(T_C(L=\infty)=\num{2.269}\), and the distance is approximately equal to the best achievable accuracy with this choice of temperatures.
+
+Unfortunately, the values for the expectations values for the energy and magnetisation in \ref{5e5} and \ref{2e6} are quite clearly wrong, which probably stems from these runs not being done with the latest versions of the programs due to the runtime (the simulation generating the data in \ref{2e6} finished just two hours before the deadline). The critical temperatures are, however, not affected by this. I believe the error was caused by how the "skip the first steps" ability was implemented, as the implementation was changed without certain lines being updated, leading to a division by the wrong amount of Monte Carlo cycles. I may eventually redo these runs and upload the updated report on GitHub.
 
 
 %                       _           _
@@ -514,6 +520,7 @@ This was calculated by \program{findcritical.py}. While the graphs don't look pa
 %  / __/ _ \| '_ \ / __| | | | / __| |/ _ \| '_ \
 % | (_| (_) | | | | (__| | |_| \__ \ | (_) | | | |
 %  \___\___/|_| |_|\___|_|\__,_|___/_|\___/|_| |_|
+\clearpage
 \section{Conclusion}
 In this project, the magnetic properties of a ferromagnetic material has been studied through the Ising model. We started off with the comparison of numerical and analytical results for a \(2\times2\) lattice, where it was shown that the results from the numerical simulations are indeed satisfactory. Then, the behaviour of the system over the course of the simulation was studied for two different temperatures, including the path towards a steady state. Finally, the various thermodynamic quantities were studied as functions of temperature using data from heavy simulations, and a critical temperature was found - both for the finite systems studied numerically and for the thermodynamic limit of an infite lattice. The results agree with the analytical result \(T_C=\num{2.269}\) found by Lars Onsager.
 

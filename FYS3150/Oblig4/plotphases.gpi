@@ -21,6 +21,7 @@ set ylabel "$\\langle E\\rangle/L^2$"
 set title "\\textbf{Energy}"
 plot for [i=2:17:4] infile using 1:i with lines ls i-1
 
+set key top right
 set ylabel "$C_V/L^2$"
 set title "\\textbf{Heat capacity}"
 plot for [i=3:17:4] infile using 1:i with lines ls i-2
