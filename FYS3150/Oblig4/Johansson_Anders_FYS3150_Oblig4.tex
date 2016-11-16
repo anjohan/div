@@ -131,7 +131,7 @@ breaklines=true,
 \tableofcontents
 
 \begin{abstract}
-In this project, the Ising model for a two-dimensional ferromagnetic i studied numerically using Monte Carlo simulations with the Metropolis algorithm. A \(2\times2\) system is also solved analytically for comparison, and the numerical results fit well. A phase transition is confirmed at the same temperature as analytically predicted by Lars Onsager.
+In this project, the Ising model for a two-dimensional ferromagnetic is studied numerically using Monte Carlo simulations with the Metropolis algorithm. A \(2\times2\) system is also solved analytically for comparison, and the numerical results fit well. A phase transition is confirmed at the same temperature as analytically predicted by Lars Onsager.
 \end{abstract}
 \clearpage
 
@@ -142,7 +142,7 @@ In this project, the Ising model for a two-dimensional ferromagnetic i studied n
 % | | | | | |_| | | (_) | (_| | |_| | (__| |_| | (_) | | | |
 % |_|_| |_|\__|_|  \___/ \__,_|\__,_|\___|\__|_|\___/|_| |_|
 \section{Introduction}
-The Ising model was developed by the famous physicist Wilhelm Lenz and given to Ernst Ising as a problem for his thesis, in which he found the analytical solution for the one-dimensional situation. Ising's model is based describes a coupled system in which there is only an interaction between the nearest neighbours. Aside from describing ferro- and antiferromagnetic materials as in this project, the model has also been used successfully to describe other coupled systems, for instance the development of birdsong dialects\autocite{birdsong}.
+The Ising model was developed by the famous physicist Wilhelm Lenz and given to Ernst Ising as a problem for his thesis, in which he found the analytical solution for the one-dimensional situation. Ising's model describes a coupled system in which only the nearest neighbours interact. Aside from describing ferro- and antiferromagnetic materials as in this project, the model has also been used successfully to describe other coupled systems, for instance the development of birdsong dialects\autocite{birdsong}.
 
 In this project, the Ising model is used to describe a two-dimensional ferromagnetic, chrystalline material, modelled as a grid of spins where each spin can have the values \(\pm1\). For an infinite grid, the analytical solution was found by Lars Onsager, while a \(2\times2\) grid is solved analytically in this project.
 
@@ -175,7 +175,7 @@ E = -J\sum_{\langle ij\rangle}s_is_j\eqtag{energy}
 where the sum is over the nearest neighbours. From this expression, we see that if \(J\) is positive, the energy is minimised when all spins are aligned in parallel, which is the behaviour of a ferromagnetic material. If, on the other hand, \(J\) is negative, a state where all spins are antiparallel to each other has the lowest energy, corresponding to an antiferromagnetic material.
 
 \subsubsection{Borders}
-The treatment of the borders of the lattice is a technicality which shows up when the lattice is not infinite. In the so-called thermodynamic limit, where the lattice is infinite, all spins are surrounded by equally many other spins. With a finite lattice, however, this is not the case, which causes finite size effects.
+The treatment of the borders of the lattice is a technicality which shows up when the lattice is not infinite. In the so-called thermodynamic limit, where the lattice is infinite, all spins are surrounded the same amount of other spins. With a finite lattice, however, this is not the case, which causes finite size effects.
 
 One possible workaround is to ignore this problem completely, while a smarter alternative is to use what is commonly referred to as periodic boundary conditions. The idea behind this is to simulate an infinite lattice by assuming e.g. that the spins to the right of the right edge of the grid would be equal to the spins on the left edge. This approach has been implemented in \program{ising.cpp}.
 
@@ -211,17 +211,17 @@ C_V &= \frac{1}{kT^2}\qty(\langle E^2\rangle - \langle E\rangle^2)\\
 % | .__/|_| |_|\__,_|___/\___|  \__|_|  \__,_|_| |_|___/_|\__|_|\___/|_| |_|___/
 % |_|
 \subsection{Phase transitions}
-One of the great achievements of the two-dimensional Ising model is its ability to predict a phase transition in ferromagnetic materials, and ability which the one-dimensional version lacks. When a ferromagnetic material is heated, a temperature is reached where the materials suddenly start behaving paramagnetic, i.e. where the magnetic moment drops to zero.
+One of the great achievements of the two-dimensional Ising model is its ability to predict a phase transition in ferromagnetic materials, an ability which the one-dimensional version lacks. When a ferromagnetic material is heated, a temperature is reached where the materials suddenly start behaving paramagnetic, i.e. where the magnetic moment drops to zero.
 
-A more dramatic change, which is easier to analyse numerically, is that both the heat capacity and the diverge when the temperature approaches the critical temperature. As such, the critical temperature can be found numerically as the point where the magnetic susceptibility has its largest value. One can derive the following expression for the magnetic susceptibility as a function of temperature, which shows the divergence:
+An equally dramatic change, which is easier to analyse numerically, is that both the heat capacity and the magnetic susceptibility diverge when the temperature approaches the critical temperature. As such, the critical temperature can be found numerically as the point where the heat capacity and magnetic susceptibility have their largest value. I have chosen to use the heat capacity, as this settles down more quickly, yielding a smoother function of temperature. One can derive the following expression for the magnetic susceptibility as a function of temperature, which shows the divergence:
 \[
 \chi(T) \propto \abs{T_C-T}^{-\alpha}
 \]
-where \(\alpha\) is a positive constant, so \(T=T_C\) leads to a division by zero.
+where \(\alpha\) is a positive constant, so \(T=T_C\) leads to a division by zero. The heat capacity has a similar expression.
 
 As the analytical expression for the two dimensional Ising model is known for the thermodynamic limit, it is interesting to attempt an approximation of the critical temperature in the thermodynamic limit based on the values found numerically for finite lattices. To achieve this, we have the relation
 \[
-T_C(L) - T_C(L=\infty) = aL^{-1/\nu}\label{tcltcinf}
+T_C(L) - T_C(L=\infty) = aL^{-1/\nu}\eqtag{tcltcinf}
 \]
 where \(a\) is some unknown constant and \(\nu=1\) can be calculated analytically. To find an expression for \(a\), note that if we subtract the above equations for two values of \(L\) for which \(T_C\) has been calculated numerically, \(T_C(L=\infty)\) cancels and we get
 \[
@@ -312,7 +312,7 @@ All numerical values are given in terms of \(J\) and \(k\).
 \subsection{Test of parallelisation}
 In \program{timetest.cpp}, two Monte Carlo simulations are first run sequentially and then in parallel. If the parallelisation has been successful, the parallel run should take only about half the time of the sequential run, as the two threads can work completely separate of each other.
 
-One technical issue of checking parallelisation is that the normal \texttt{clock} method does not work - this counts CPU cycles, which is the same for the sequential an parallel runs. As the main interest in this test is to get a rough estimate rather than exact runtime, I have chosen to simply use the \texttt{time} and \texttt{difftime} functions, which gives an integer amount of second. The results are
+One technical issue of checking parallelisation is that the normal \texttt{clock} method does not work - this counts CPU cycles, which is the same for the sequential and parallel runs. As the main interest in this test is to get a rough estimate rather than exact runtime, I have chosen to simply use the \texttt{time} and \texttt{difftime} functions, which gives an integer amount of second. The results are
 \input{time.dat}
 confirming the expected speedup factor of \(2\).
 
@@ -484,7 +484,7 @@ When the temperature is higher, it is expected that the mean energy is higher, a
 \end{figure}
 From the figure, we see that the heat capacity magnetic susceptibility peak at a temperature around \(\num{2.3}\). Unfortunately, it is clear that more data is required in order to get reasonable results.
 
-The above graph of the susceptibility gives the following maxima for the magnetic susceptibility, ideally corresponding to the critical temperatures:
+The above graph of the susceptibility gives the following maxima for the heat capacity, ideally corresponding to the critical temperatures:
 \input{40atcondor.dat}
 This was calculated by \program{findcritical.py}.
 
@@ -495,20 +495,18 @@ This was calculated by \program{findcritical.py}.
 \end{figure}
 With five times as many Monte Carlo cycles, the data look a bit better and have a lot less noise, while still not super.
 
-The above graph of the susceptibility gives the following maxima for the magnetic susceptibility, ideally corresponding to the critical temperatures:
+The above graph of the susceptibility gives the following maxima for the heat capacity, ideally corresponding to the critical temperatures:
 \input{40atcondorlong.dat}
 This was calculated by \program{findcritical.py}. This is very close to Lars Onsager's analytical result of \(T_C(L=\infty)=\num{2.269}\). With 40 temperatures in the interval from \(\num{2.2}\) to \(\num{2.4}\), this is nearing the maximum precision possible.
 
 \begin{figure}[H]
 \centering
 \input{40with2E6.plt}
-\caption{Simulation for 40 different temperatures with \(\num{500000}\) Monte Carlo cycles (after skipping \(\num{20000}\)). Run by \program{condormedium.cmd} on the HTCondor system and generated by \program{phases.cpp}. The runtime was approximately 4 hours.}
+\caption{Simulation for 40 different temperatures with \(\num{2E6}\) Monte Carlo cycles (after skipping \(\num{20000}\)). Run on a UiO server (with 64 cores) and generated by \program{phases.cpp}. The runtime was approximately 15.5 hours.}
 \end{figure}
-With five times as many Monte Carlo cycles, the data look a bit better and have a lot less noise, while still not super.
-
-The above graph of the susceptibility gives the following maxima for the magnetic susceptibility, ideally corresponding to the critical temperatures:
+With this many Monte Carlo cycles and a ginormous runtime, I was hoping for the graph of the magnetic susceptibility to look considerably better. The heat capacity, on the other hand, has improved, and this is the quantity used to calculate the critical temperature.
 \input{40with2E6.dat}
-This was calculated by \program{findcritical.py}. This is very close to Lars Onsager's analytical result of \(T_C(L=\infty)=\num{2.269}\). With 40 temperatures in the interval from \(\num{2.2}\) to \(\num{2.4}\), this is nearing the maximum precision possible.
+This was calculated by \program{findcritical.py}. While the graphs don't look particularly pretty, the approximation to the thermodynamic limit is even closer to Lars Onsager's analytical result of \(T_C(L=\infty)=\num{2.269}\), and the distance is approximately equal to the best achievable accuracy with this choice of temperatures.
 
 
 %                       _           _

@@ -12,8 +12,10 @@ for word in lines[0].split(" ")[1:17:4]:
 
 
 chis = []
+C_Vs = []
 for i in range(4):
     chis.append([])
+    C_Vs.append([])
 
 Ts = []
 
@@ -22,14 +24,16 @@ for line in lines[1:]:
     Ts.append(float(words[0]))
     for i in range(4):
         chis[i].append(float(words[4+i*4]))
+        C_Vs[i].append(float(words[2+i*4]))
 
 T_Cs = []
 
 with open(outfilename,"w") as outfile:
-    outfile.write(r"\[\begin{array}{cc}\toprule L & \chi ")
+    outfile.write(r"\[\begin{array}{cc}\toprule L & T_C ")
     for i in range(4):
         L = Ls[i]
-        T_C = Ts[chis[i].index(max(chis[i]))]
+        #T_C = Ts[chis[i].index(max(chis[i]))]
+        T_C = Ts[C_Vs[i].index(max(C_Vs[i]))]
         T_Cs.append(T_C)
         outfile.write(r"\\ \midrule \num{%d} & \num{%g} " % (L,T_C))
     outfile.write(r"\\ \bottomrule\end{array}\]" + "\n")
