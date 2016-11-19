@@ -32,17 +32,17 @@ phases.o: phases.cpp
 phases.x: phases.o ising.o
 	g++ ${FLAGG} -o phases.x phases.o ising.o
 40atcondor.plt: plotphases.gpi time.dat
-	gnuplot -e "infile='40Tsfrom2.2to2.4.imp'; outfile='40atcondor.plt'" plotphases.gpi
+	gnuplot -e "infile='impdata/40Tsfrom2.2to2.4.imp'; outfile='40atcondor.plt'" plotphases.gpi
 40atcondor.dat: findcritical.py time.dat
-	python findcritical.py 40Tsfrom2.2to2.4.imp 40atcondor.dat
+	python findcritical.py impdata/40Tsfrom2.2to2.4.imp 40atcondor.dat
 40atcondorlong.plt: plotphases.gpi time.dat
-	gnuplot -e "infile='condormedium.imp'; outfile='40atcondorlong.plt'" plotphases.gpi
+	gnuplot -e "infile='impdata/condormedium.imp'; outfile='40atcondorlong.plt'" plotphases.gpi
 40atcondorlong.dat: findcritical.py time.dat
-	python findcritical.py condormedium.imp 40atcondorlong.dat
+	python findcritical.py impdata/condormedium.imp 40atcondorlong.dat
 40with2E6.plt: plotphases.gpi time.dat
-	gnuplot -e "infile='40with2E6.imp'; outfile='40with2E6.plt'" plotphases.gpi
+	gnuplot -e "infile='impdata/40with2E6.imp'; outfile='40with2E6.plt'" plotphases.gpi
 40with2E6.dat: findcritical.py time.dat
-	python findcritical.py 40with2E6.imp 40with2E6.dat
+	python findcritical.py impdata/40with2E6.imp 40with2E6.dat
 time.dat: timetest.x
 	./timetest.x
 timetest.o: timetest.cpp

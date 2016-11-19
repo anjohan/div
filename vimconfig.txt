@@ -10,4 +10,18 @@ set mouse=a
 let g:tex_flavor='latex'
 autocmd BufWritePre * :%s/\s\+$//e
 map <T-F1> :! make <Return>
+map <F1> :! make <Return>
 map <F2> :! python %
+
+let mapleader = "'"
+inoremap <leader>f \frac{.}{.}<Esc>?frac<CR>/\.<CR>s
+inoremap <leader>F \begin{figure}[H]<CR>\input{.}<CR>\caption{.}<CR>\end{figure}<CR><Esc>?input<CR>/\.<CR>s
+nnoremap <leader>f i\begin{figure}[H]<CR>\input{.}<CR>\caption{.}<CR>\end{figure}<CR><Esc>?input<CR>/\.<CR>s
+inoremap <leader>A \begin{alignat*}{2}<CR>.<CR>\end{alignat*}<Esc>?\.<CR>s
+nnoremap <leader>a i\begin{alignat*}{2}<CR>.<CR>\end{alignat*}<Esc>?\.<CR>s
+inoremap <leader>a \alpha
+inoremap <leader>b \beta
+inoremap <leader>p \pi
+inoremap <leader>g \gamma
+inoremap <leader>d \delta
+inoremap <leader>D \Delta
