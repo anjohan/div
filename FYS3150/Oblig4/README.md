@@ -1,3 +1,6 @@
+#POST-DELIVERY UPDATE 2#
+It turns out that I had only found one bug - after a new 60-hour run on HTCondor, the results are still weird (the expectation value of the absolute value of M is still negative). This is extremely depressing. As the results are correct for smaller values of L and N, the cause is probably still an overflow somewhere. Unfortunately, I do not currently have time to fix this issue.
+
 #POST-DELIVERY UPDATE#
 I found the bug which caused the errors in the large datasets for phase transitions. It turns out I had forgotten to change abs to fabs when I changed all the quantities from ints to doubles, causing an overflow in the energy and magnetic moment when the grid is large.
 
