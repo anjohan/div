@@ -1,0 +1,51 @@
+000 (035.000.000) 11/16 13:16:06 Job submitted from host: <129.240.69.152:37288?addrs=129.240.69.152-37288>
+...
+001 (035.000.000) 11/16 13:17:15 Job executing on host: <129.240.71.22:53686?addrs=129.240.71.22-53686>
+...
+006 (035.000.000) 11/16 13:17:24 Image size of job updated: 27
+	2  -  MemoryUsage of job (MB)
+	1772  -  ResidentSetSize of job (KB)
+...
+006 (035.000.000) 11/16 13:22:25 Image size of job updated: 4486252
+	3  -  MemoryUsage of job (MB)
+	2464  -  ResidentSetSize of job (KB)
+...
+006 (035.000.000) 11/16 13:27:25 Image size of job updated: 4488876
+	3  -  MemoryUsage of job (MB)
+	2464  -  ResidentSetSize of job (KB)
+...
+006 (035.000.000) 11/16 13:32:26 Image size of job updated: 4491500
+	3  -  MemoryUsage of job (MB)
+	2464  -  ResidentSetSize of job (KB)
+...
+006 (035.000.000) 11/16 13:42:27 Image size of job updated: 4491500
+	4  -  MemoryUsage of job (MB)
+	3292  -  ResidentSetSize of job (KB)
+...
+006 (035.000.000) 11/16 14:02:28 Image size of job updated: 4491500
+	4  -  MemoryUsage of job (MB)
+	3704  -  ResidentSetSize of job (KB)
+...
+006 (035.000.000) 11/16 14:07:29 Image size of job updated: 4491500
+	8  -  MemoryUsage of job (MB)
+	7548  -  ResidentSetSize of job (KB)
+...
+006 (035.000.000) 11/16 14:47:33 Image size of job updated: 4491500
+	8  -  MemoryUsage of job (MB)
+	7752  -  ResidentSetSize of job (KB)
+...
+005 (035.000.000) 11/16 15:23:44 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 16:42:08, Sys 0 00:00:03  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 16:42:08, Sys 0 00:00:03  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :       27       27   2518516
+	   Memory (MB)          :        8        1      4686
+...

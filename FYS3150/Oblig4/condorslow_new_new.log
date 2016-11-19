@@ -1,0 +1,117 @@
+000 (039.000.000) 11/16 16:08:40 Job submitted from host: <129.240.69.152:37288?addrs=129.240.69.152-37288>
+...
+001 (039.000.000) 11/16 16:08:58 Job executing on host: <129.240.68.64:55284?addrs=129.240.68.64-55284>
+...
+006 (039.000.000) 11/16 16:09:07 Image size of job updated: 27
+	2  -  MemoryUsage of job (MB)
+	1776  -  ResidentSetSize of job (KB)
+...
+006 (039.000.000) 11/16 16:14:08 Image size of job updated: 4820728
+	4  -  MemoryUsage of job (MB)
+	4044  -  ResidentSetSize of job (KB)
+...
+006 (039.000.000) 11/16 16:24:09 Image size of job updated: 4825912
+	4  -  MemoryUsage of job (MB)
+	4044  -  ResidentSetSize of job (KB)
+...
+006 (039.000.000) 11/16 16:34:10 Image size of job updated: 4831096
+	4  -  MemoryUsage of job (MB)
+	4044  -  ResidentSetSize of job (KB)
+...
+006 (039.000.000) 11/16 17:29:16 Image size of job updated: 4831096
+	10  -  MemoryUsage of job (MB)
+	9844  -  ResidentSetSize of job (KB)
+...
+006 (039.000.000) 11/16 17:34:17 Image size of job updated: 4831096
+	12  -  MemoryUsage of job (MB)
+	11764  -  ResidentSetSize of job (KB)
+...
+006 (039.000.000) 11/16 23:34:54 Image size of job updated: 4831096
+	13  -  MemoryUsage of job (MB)
+	12568  -  ResidentSetSize of job (KB)
+...
+006 (039.000.000) 11/16 23:39:54 Image size of job updated: 4831096
+	13  -  MemoryUsage of job (MB)
+	12696  -  ResidentSetSize of job (KB)
+...
+006 (039.000.000) 11/17 01:25:05 Image size of job updated: 4831096
+	18  -  MemoryUsage of job (MB)
+	18372  -  ResidentSetSize of job (KB)
+...
+006 (039.000.000) 11/17 06:30:36 Image size of job updated: 4831096
+	18  -  MemoryUsage of job (MB)
+	18400  -  ResidentSetSize of job (KB)
+...
+022 (039.000.000) 11/17 12:02:11 Job disconnected, attempting to reconnect
+    Socket between submit and execute hosts closed unexpectedly
+    Trying to reconnect to merhonour.ifi.uio.no <129.240.68.64:55284?addrs=129.240.68.64-55284>
+...
+024 (039.000.000) 11/17 12:42:11 Job reconnection failed
+    Job disconnected too long: JobLeaseDuration (2400 seconds) expired
+    Can not reconnect to merhonour.ifi.uio.no, rescheduling job
+...
+001 (039.000.000) 11/17 12:43:31 Job executing on host: <129.240.69.27:58469?addrs=129.240.69.27-58469>
+...
+006 (039.000.000) 11/17 20:04:26 Image size of job updated: 5000000
+	20  -  MemoryUsage of job (MB)
+	20036  -  ResidentSetSize of job (KB)
+...
+006 (039.000.000) 11/17 20:09:26 Image size of job updated: 5000000
+	20  -  MemoryUsage of job (MB)
+	20296  -  ResidentSetSize of job (KB)
+...
+010 (039.000.000) 11/18 13:40:46 Job was suspended.
+	Number of processes actually suspended: 1
+...
+011 (039.000.000) 11/18 13:45:50 Job was unsuspended.
+...
+010 (039.000.000) 11/18 16:10:27 Job was suspended.
+	Number of processes actually suspended: 1
+...
+011 (039.000.000) 11/18 16:15:28 Job was unsuspended.
+...
+010 (039.000.000) 11/18 17:00:17 Job was suspended.
+	Number of processes actually suspended: 1
+...
+011 (039.000.000) 11/18 17:05:17 Job was unsuspended.
+...
+010 (039.000.000) 11/18 17:14:39 Job was suspended.
+	Number of processes actually suspended: 1
+...
+011 (039.000.000) 11/18 17:19:49 Job was unsuspended.
+...
+010 (039.000.000) 11/18 17:28:20 Job was suspended.
+	Number of processes actually suspended: 1
+...
+011 (039.000.000) 11/18 17:33:25 Job was unsuspended.
+...
+010 (039.000.000) 11/18 17:56:08 Job was suspended.
+	Number of processes actually suspended: 1
+...
+011 (039.000.000) 11/18 18:01:13 Job was unsuspended.
+...
+010 (039.000.000) 11/18 18:36:26 Job was suspended.
+	Number of processes actually suspended: 1
+...
+011 (039.000.000) 11/18 18:41:36 Job was unsuspended.
+...
+010 (039.000.000) 11/18 19:04:44 Job was suspended.
+	Number of processes actually suspended: 1
+...
+011 (039.000.000) 11/18 19:05:09 Job was unsuspended.
+...
+005 (039.000.000) 11/19 05:38:56 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 13 13:18:57, Sys 0 00:01:14  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 13 13:18:57, Sys 0 00:01:14  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated
+	   Cpus                 :                 1         1
+	   Disk (KB)            :       27       27   2560244
+	   Memory (MB)          :       20       20      4686
+...
