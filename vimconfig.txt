@@ -1,4 +1,5 @@
 syntax on
+set nohlsearch
 set number
 set tabstop=4
 set shiftwidth=4
@@ -10,6 +11,7 @@ set mouse=a
 let g:tex_flavor='latex'
 autocmd BufWritePre * :%s/\s\+$//e
 map <T-F1> :! make <Return>
+map \| :! make <Return>
 map <F1> :! make <Return>
 map <F2> :! python %
 
@@ -25,3 +27,6 @@ inoremap <leader>p \pi
 inoremap <leader>g \gamma
 inoremap <leader>d \delta
 inoremap <leader>D \Delta
+inoremap <leader>e \varepsilon
+inoremap <leader>E <Esc>?begin<CR>/{<CR>lyi{o\end{<Esc>pA}<Esc>O
+nnoremap <leader>e ?begin<CR>/{<CR>lyi{o\end{<Esc>pA}<Esc>O
