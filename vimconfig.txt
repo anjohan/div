@@ -12,8 +12,7 @@ let g:tex_flavor='latex'
 autocmd BufWritePre * :%s/\s\+$//e
 map <T-F1> :! make <Return>
 map \| :! make <Return>
-map <F1> :! make <Return>
-map <F2> :! python %
+map <F1> :! python %
 
 let mapleader = "'"
 inoremap <leader>f \frac{.}{.}<Esc>?frac<CR>/\.<CR>s
