@@ -7,7 +7,6 @@ set expandtab
 set smarttab
 set smartindent
 set autochdir
-set mouse=a
 let g:tex_flavor='latex'
 autocmd BufWritePre * :%s/\s\+$//e
 map <T-F1> :! make <Return>
