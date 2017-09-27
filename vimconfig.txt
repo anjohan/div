@@ -30,3 +30,25 @@ inoremap <leader>E <Esc>?begin<CR>/{<CR>lyi{o\end{<Esc>pA}<Esc>O
 nnoremap <leader>e ?begin<CR>/{<CR>lyi{o\end{<Esc>pA}<Esc>O
 nnoremap <leader>2 :! python % <CR>
 nnoremap <leader>3 :! python3 % <CR>
+
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/syntastic'
+call vundle#end()            " required
+filetype plugin indent on    " required
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_tex_checkers=['chktex']
+let g:syntastic_tex_chktex_args="-n 9 -n 10 -n 17"
+let g:ycm_show_diagnostics_ui = 0
