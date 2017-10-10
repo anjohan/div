@@ -12,24 +12,22 @@ autocmd BufWritePre * :%s/\s\+$//e
 map <T-F1> :! make <Return>
 map \| :! make -j <Return>
 map <F1> :! python %
+imap <C-Up> \uparrow
+imap <C-Down> \downarrow
+imap <C-Right> \implies
+imap ħ \hbar
+imap π \pi
 
-let mapleader = "'"
-inoremap <leader>f \frac{.}{.}<Esc>?frac<CR>/\.<CR>s
-inoremap <leader>F \begin{figure}[H]<CR>\input{.}<CR>\caption{.}<CR>\end{figure}<CR><Esc>?input<CR>/\.<CR>s
-nnoremap <leader>f i\begin{figure}[H]<CR>\input{.}<CR>\caption{.}<CR>\end{figure}<CR><Esc>?input<CR>/\.<CR>s
-inoremap <leader>A \begin{alignat*}{2}<CR>.<CR>\end{alignat*}<Esc>?\.<CR>s
-nnoremap <leader>a i\begin{alignat*}{2}<CR>.<CR>\end{alignat*}<Esc>?\.<CR>s
-inoremap <leader>a \alpha
-inoremap <leader>b \beta
-inoremap <leader>p \pi
-inoremap <leader>g \gamma
-inoremap <leader>d \delta
-inoremap <leader>D \Delta
-inoremap <leader>e \varepsilon
-inoremap <leader>E <Esc>?begin<CR>/{<CR>lyi{o\end{<Esc>pA}<Esc>O
-nnoremap <leader>e ?begin<CR>/{<CR>lyi{o\end{<Esc>pA}<Esc>O
-nnoremap <leader>2 :! python % <CR>
-nnoremap <leader>3 :! python3 % <CR>
+inoremap frac \frac{.}{.}<Esc>?frac<CR>/\.<CR>s
+inoremap \figure \begin{figure}[H]<CR>\input{.}<CR>\caption{.}<CR>\end{figure}<CR><Esc>?input<CR>/\.<CR>s
+inoremap \align \begin{alignat*}{2}<CR>.<CR>\end{alignat*}<Esc>?\.<CR>s
+inoremap ª \alpha
+inoremap ” \beta
+inoremap ŋ \gamma
+inoremap ð \delta
+inoremap Ð \Delta
+inoremap € \varepsilon
+inoremap \end <Esc>me?begin<CR>/{<CR>ya{`ei\end<Esc>p
 
 set nocompatible
 filetype off
@@ -50,5 +48,6 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_tex_checkers=['chktex']
-let g:syntastic_tex_chktex_args="-n 9 -n 10 -n 17"
+let g:syntastic_tex_chktex_args="-n 3 -n 25-n 9 -n 10 -n 17 -n 8 -n 12"
 let g:ycm_show_diagnostics_ui = 0
+let g:ycm_filetype_specific_completion_to_disable = {'python' : 1}
