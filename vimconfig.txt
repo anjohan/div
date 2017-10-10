@@ -19,8 +19,8 @@ imap ħ \hbar
 imap π \pi
 
 inoremap frac \frac{.}{.}<Esc>?frac<CR>/\.<CR>s
-inoremap \figure \begin{figure}[H]<CR>\input{.}<CR>\caption{.}<CR>\end{figure}<CR><Esc>?input<CR>/\.<CR>s
-inoremap \align \begin{alignat*}{2}<CR>.<CR>\end{alignat*}<Esc>?\.<CR>s
+inoremap \figure \begin{figure}[H]<CR><tab>\input{.}<CR>\caption{.}<CR><BS>\end{figure}<CR><Esc>?input<CR>/\.<CR>s
+inoremap \align \begin{alignat*}{2}<CR>\end{alignat*}<Esc>O<tab>
 inoremap ª \alpha
 inoremap ” \beta
 inoremap ŋ \gamma
