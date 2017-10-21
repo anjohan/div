@@ -26,19 +26,12 @@ inoremap ŋ \gamma
 inoremap ð \delta
 inoremap Ð \Delta
 inoremap € \varepsilon
+inoremap ł \lambda
+inoremap đ \phi
 inoremap \end <Esc>me?begin<CR>/{<CR>ya{`ei\end<Esc>p
 
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/syntastic'
-Plugin 'majutsushi/tagbar'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'vim-airline/vim-airline'
-call vundle#end()            " required
 filetype plugin indent on    " required
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 set statusline+=%#warningmsg#
