@@ -1,9 +1,12 @@
 set -e -x
 cd ~
-sudo apt-get install libclang
-wget https://github.com/Valloric/ycmd/blob/master/cpp/ycm/.ycm_extra_conf.py
+wget https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py -O ~/.ycm_extra_conf.py
 
-cd .vim
+
+sudo pacman -Syu clang
+
+mkdir ~/.vim
+cd ~/.vim
 mkdir pack
 cd pack
 mkdir my-plugins
@@ -13,7 +16,7 @@ cd start
 git clone https://github.com/Valloric/YouCompleteMe.git
 cd YouCompleteMe
 git submodule update --init --recursive
-./install.py --clang-completer
+./install.py --clang-completer --system-libclang
 cd ..
 git clone https://github.com/scrooloose/syntastic.git
 git clone https://github.com/majutsushi/tagbar.git
