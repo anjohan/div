@@ -28,6 +28,7 @@ inoremap Ð \Delta
 inoremap € \varepsilon
 inoremap ł \lambda
 inoremap đ \phi
+inoremap ® \rho
 inoremap \end <Esc>me?begin<CR>/{<CR>ya{`ei\end<Esc>p
 
 set nocompatible
@@ -38,6 +39,8 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+map ]l :lnext <Return>
+map [l :lprev <Return>
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -45,4 +48,5 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_tex_checkers=['chktex']
 let g:syntastic_tex_chktex_args="-n 3 -n 25-n 9 -n 10 -n 17 -n 8 -n 12"
 let g:ycm_show_diagnostics_ui = 0
-let g:ycm_filetype_specific_completion_to_disable = {'python' : 1}
+autocmd CompleteDone * pclose
+"let g:ycm_filetype_specific_completion_to_disable = {'python' : 1}
