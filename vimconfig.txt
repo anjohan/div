@@ -47,4 +47,4 @@ let g:syntastic_tex_checkers=['chktex']
 let g:syntastic_tex_chktex_args="-n 3 -n 25-n 9 -n 10 -n 17 -n 8 -n 12"
 let g:ycm_show_diagnostics_ui = 0
 "let g:ycm_filetype_specific_completion_to_disable = {'python' : 1}
-let g:syntastic_python_checkers=['python2']
+"let g:syntastic_python_checkers=['python2']
