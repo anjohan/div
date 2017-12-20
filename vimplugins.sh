@@ -18,7 +18,7 @@ cd YouCompleteMe
 git submodule update --init --recursive
 ./install.py --clang-completer --system-libclang
 cd ..
-git clone https://github.com/scrooloose/syntastic.git
+git clone https://github.com/w0rp/ale.git
 git clone https://github.com/majutsushi/tagbar.git
 git clone https://github.com/airblade/vim-gitgutter.git
 git clone https://github.com/vim-airline/vim-airline.git

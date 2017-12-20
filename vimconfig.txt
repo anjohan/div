@@ -6,7 +6,7 @@ set shiftwidth=4
 set expandtab
 set smarttab
 set smartindent
-set autochdir
+" set autochdir
 let g:tex_flavor='latex'
 autocmd BufWritePre * :%s/\s\+$//e
 map <T-F1> :! make <Return>
@@ -17,6 +17,8 @@ imap <C-Down> \downarrow
 imap <C-Right> \implies
 imap ħ \hbar
 imap π \pi
+
+autocmd BufNewFile,BufRead /tmp/msg* set filetype=mail
 
 inoremap \figure \begin{figure}[H]<CR><tab>\input{.}<CR>\caption{.}<CR><BS>\end{figure}<CR><Esc>?input<CR>/\.<CR>s
 inoremap \align \begin{alignat*}{2}<CR>\end{alignat*}<Esc>O<tab>
@@ -41,13 +43,10 @@ set statusline+=%*
 
 map ]l :lnext <Return>
 map [l :lprev <Return>
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_tex_checkers=['chktex']
-let g:syntastic_tex_chktex_args="-n 3 -n 25-n 9 -n 10 -n 17 -n 8 -n 12"
+let g:ale_lint_on_text_changed = 'never'
 let g:ycm_show_diagnostics_ui = 0
 autocmd CompleteDone * pclose
 "let g:ycm_filetype_specific_completion_to_disable = {'python' : 1}
 "let g:syntastic_python_checkers=['python2']
+
+"autocmd FileType netrw setl buftype:" "
