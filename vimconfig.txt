@@ -20,6 +20,7 @@ imap <C-Right> \implies
 imap ħ \hbar
 imap π \pi
 
+
 autocmd BufNewFile,BufRead /tmp/msg* set filetype=mail
 
 inoremap \figure \begin{figure}[H]<CR><tab>\input{.}<CR>\caption{.}<CR><BS>\end{figure}<CR><Esc>?input<CR>/\.<CR>s
@@ -50,4 +51,18 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_fixers = {'python': ['autopep8']}
 let g:ale_fix_on_save = 1
 "let g:ycm_filetype_specific_completion_to_disable = {'python' : 1}
+let g:ale_writegood_options = "--no-passive"
 
+if expand("%:t") == "master.tex"
+    set spell spelllang=en_gb
+    ab msd mean squared displacement
+    ab vacf velocity autocorrelation function
+    ab \[ \begin{equation}
+    set so=1000
+endif
+
+if hostname() == "del"
+    set mouse=a
+endif
+
+map <F8> :TagbarOpen <Return>
