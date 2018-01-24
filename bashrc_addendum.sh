@@ -1,10 +1,3 @@
-#
-# ~/.bashrc
-#
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
 alias o='rifle'
 vann='abel:/work/users/anderhaf/anjohan/ccse2017/vannlag'
 nano='abel:/work/users/anderhaf/anjohan/nanopillarer'
@@ -33,10 +26,11 @@ function ap {
 }
 export -f ap
 
-
-alias ls='ls --color=auto'
-PS1='[\u@\h \W]\$ '
-# >>> BEGIN ADDED BY CNCHI INSTALLER
-BROWSER=/usr/bin/firefox
-EDITOR=/usr/bin/vim
-# <<< END ADDED BY CNCHI INSTALLER
+function skrivut {
+    fil=$1
+    filnavn=$(basename $fil)
+    shift
+    scp $fil ifi:utskrift/
+    ssh ifi pushprint $@ -A utskrift/.smb utskrift/$filnavn
+}
+export -f skrivut
