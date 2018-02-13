@@ -36,6 +36,22 @@ function ap {
 export -f ap
 
 function skrivut {
+    # Krever:
+    # - Kunne logge inn på ifi med 'ssh ifi' uten passord.
+    #   - Legg til i .ssh/config:
+    #       Host ifi
+    #           HostName login.ifi.uio.no
+    #           User brukernavn
+    #   - Generer ssh-nøkkel: ssh-keygen (trykk enter mange ganger).
+    #   - ssh-copy-id ifi
+    # - Mappe ~/utskrift på ifi.
+    # - Fil ~/utskrift.smb på ifi med innhold
+    #       username=brukernavn
+    #       password=passord
+    # Bruk:
+    #       skrivut FILNAVN [ARGUMENTER, se 'man pushprint' på ifi]
+    # Eksempel (skrive ut ~/repo/report.pdf på CompPhys-printeren):
+    #       skrivut ~/repo/report.pdf -P fys4
     fil=$1
     filnavn=$(basename $fil)
     shift
