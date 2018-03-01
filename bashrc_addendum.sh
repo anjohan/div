@@ -11,8 +11,10 @@ function t {
 export -f t
 
 PATH=$PATH:~/Downloads/ovito-3.0.0-dev60-x86_64/bin
-PATH=$PATH:~/Downloads/packmol
+PATH=$PATH:~/Downloads/packmol:~/Downloads/lammps/src
 PYTHONPATH=$PYTHONPATH:~/Downloads/ovito-3.0.0-dev60-x86_64/lib/ovito/plugins/python
+PYTHONPATH=$PYTHONPATH:~/fys4460-1
+export PYTHONPATH
 
 function ap {
     for fil in $(ls *.py)
