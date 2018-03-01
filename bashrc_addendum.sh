@@ -12,7 +12,7 @@ function t {
 export -f t
 
 PATH=$PATH:/home/anjohan/Downloads/ovito-3.0.0-dev60-x86_64/bin
-PATH=$PATH:~/Downloads/packmol
+PATH=$PATH:~/Downloads/packmol:~/google
 PATH=$PATH:/home/anjohan/Downloads/lammps/src
 export PATH
 
