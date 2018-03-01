@@ -1,5 +1,6 @@
 set ttimeoutlen=100
 
+let mysyntaxfile = "~/.vim/mysyntax.vim"
 syntax on
 set nohlsearch
 set number
@@ -48,7 +49,7 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 map ]l :lnext <Return>
 map [l :lprev <Return>
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_fixers = {'python': ['autopep8']}
+let g:ale_fixers = {'python': ['autopep8','yapf']}
 let g:ale_fix_on_save = 1
 "let g:ycm_filetype_specific_completion_to_disable = {'python' : 1}
 let g:ale_writegood_options = "--no-passive"
