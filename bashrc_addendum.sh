@@ -13,14 +13,14 @@ export -f t
 
 PATH=$PATH:~/Downloads/ovito-3.0.0-dev60-x86_64/bin
 PATH=$PATH:~/Downloads/packmol:~/google
-PATH=$PATH:~/Downloads/lammps/src
+PATH=$PATH:~/Downloads/lammps/src:~/mdtools
 export PATH
 
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/Downloads/lammps/src
 export LD_LIBRARY_PATH
 
 PYTHONPATH=$PYTHONPATH:~/Downloads/lammps/tools/python/pizza:~/Downloads/ovito-3.0.0-dev60-x86_64/lib/ovito/plugins/python
-PYTHONPATH=$PYTHONPATH:~/Downloads/lammps/python:~/fys4460-1
+PYTHONPATH=$PYTHONPATH:~/Downloads/lammps/python:~/fys4460-1:~/mdtools
 export PYTHONPATH
 
 function ap {
