@@ -21,6 +21,8 @@ imap <C-Right> \implies
 imap ħ \hbar
 imap π \pi
 
+let fortran_free_source=1
+let fortran_more_precise=1
 
 autocmd BufNewFile,BufRead /tmp/msg* set filetype=mail
 
