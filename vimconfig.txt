@@ -68,4 +68,4 @@ if hostname() == "del"
     set mouse=a
 endif
 
-map <F8> :TagbarOpen <Return>
+map <F8> :TagbarToggle <Return>

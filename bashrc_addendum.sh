@@ -13,7 +13,7 @@ export -f t
 
 PATH=$PATH:~/Downloads/ovito-3.0.0-dev60-x86_64/bin
 PATH=$PATH:~/Downloads/packmol:~/google
-PATH=$PATH:~/Downloads/lammps/src:~/mdtools
+PATH=$PATH:~/Downloads/lammps/build:~/mdtools
 export PATH
 
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/Downloads/lammps/src
