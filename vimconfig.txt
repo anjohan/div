@@ -13,7 +13,7 @@ set smartindent
 let g:tex_flavor='latex'
 autocmd BufWritePre * :%s/\s\+$//e
 map <T-F1> :! make <Return>
-map \| :! make -j <Return>
+map \| :! make <Return>
 map <F1> :! python %
 imap <C-Up> \uparrow
 imap <C-Down> \downarrow
@@ -21,11 +21,17 @@ imap <C-Right> \implies
 imap ħ \hbar
 imap π \pi
 
+let fortran_free_source=1
+let fortran_more_precise=1
+
 
 autocmd BufNewFile,BufRead /tmp/msg* set filetype=mail
 
+map \e :ALENext <Return>
+map \E :ALEPrevious <Return>
 inoremap \figure \begin{figure}[H]<CR><tab>\input{.}<CR>\caption{.}<CR><BS>\end{figure}<CR><Esc>?input<CR>/\.<CR>s
-inoremap \align \begin{alignat*}{2}<CR>\end{alignat*}<Esc>O<tab>
+inoremap \align \begin{alignat*}{2}<CR>\end{alignat*}<Esc>O
+inoremap \eq \begin{equation}<CR><Esc>0i\end{equation}<Esc>O
 inoremap ª \alpha
 inoremap ” \beta
 inoremap ŋ \gamma
@@ -66,4 +72,4 @@ if hostname() == "del"
     set mouse=a
 endif
 
-map <F8> :TagbarOpen <Return>
+map <F8> :TagbarToggle <Return>
