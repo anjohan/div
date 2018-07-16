@@ -17,6 +17,7 @@ PATH=$PATH:~/Downloads/lammps/build:~/mdtools
 export PATH
 
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/Downloads/lammps/src
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/intel64_lin/
 export LD_LIBRARY_PATH
 
 PYTHONPATH=$PYTHONPATH:~/Downloads/lammps/tools/python/pizza:~/Downloads/ovito-3.0.0-dev60-x86_64/lib/ovito/plugins/python
@@ -34,6 +35,11 @@ function ap {
     read
 }
 export -f ap
+
+function fo {
+    rifle $(find -name "$1" 2> /dev/null)
+}
+export -f fo
 
 function skrivut {
     # Krever:
