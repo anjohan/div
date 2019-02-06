@@ -62,15 +62,15 @@ let g:ale_fix_on_save = 1
 let g:ale_writegood_options = "--no-passive"
 
 if expand("%:t") == "master.tex"
-    set spell spelllang=en_gb
+    set linebreak
     ab msd mean squared displacement
     ab vacf velocity autocorrelation function
     set so=1000
+    ab \[ \begin{equation}
 endif
 
-ab \[ \begin{equation}
 
-if hostname() == "del"
+if hostname() == "v310"
     set mouse=a
 endif
 

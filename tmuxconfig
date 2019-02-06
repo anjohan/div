@@ -1,6 +1,6 @@
 set -g mouse on
 set -g status off
-set-option -g default-terminal "xterm-256color"
+set-option -g default-terminal "screen-256color"
 set -s escape-time 0
 
 unbind C-b
@@ -27,10 +27,16 @@ bind -n M-l select-pane -R
 bind -n M-k select-pane -U
 bind -n M-j select-pane -D
 
-bind -n M-S-h resize-pane -L
-bind -n M-S-l resize-pane -R
-bind -n M-S-k resize-pane -U
-bind -n M-S-j resize-pane -D
+bind -n M-S-H resize-pane -L
+bind -n M-S-L resize-pane -R
+bind -n M-S-K resize-pane -U
+bind -n M-S-J resize-pane -D
+
+set-option -s set-clipboard off
+# For vi copy mode bindings
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -i"
+# For emacs copy mode bindings
+bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -i"
 
 #      _         _ _
 #  ___| |_ _   _| (_)_ __   __ _

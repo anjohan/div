@@ -46,7 +46,8 @@ font pango:DejaVu Sans Mono 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec  "tilix"
+bindsym $mod+Return exec  "xfce4-terminal --hide-menubar --hide-scrollbar --hide-toolbar -e tmux"
+bindsym $mod+Shift+Return exec  "xfce4-terminal --hide-menubar --hide-scrollbar --hide-toolbar"
 bindsym $mod+Shift+f exec "tilix -e ranger"
 
 # kill focused window
