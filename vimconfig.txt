@@ -48,7 +48,7 @@ filetype plugin indent on    " required
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-let g:completor_python_binary = '/usr/bin/python'
+let g:completor_python_binary = '/home/anders/miniconda3/python'
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 
 map ]l :lnext <Return>
@@ -56,7 +56,6 @@ map [l :lprev <Return>
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fixers = {'python': ['autopep8','yapf']}
 let g:ale_fix_on_save = 1
-"let g:ycm_filetype_specific_completion_to_disable = {'python' : 1}
 let g:ale_writegood_options = "--no-passive"
 
 if expand("%:t") == "master.tex"

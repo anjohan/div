@@ -48,6 +48,7 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec  "tilix"
 bindsym $mod+Shift+f exec "tilix -e ranger"
+bindsym $mod+Shift+b exec "google-chrome-stable --force-device-scale-factor=0.8"
 
 # kill focused window
 bindsym $mod+Shift+q kill
