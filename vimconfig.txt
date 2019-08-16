@@ -42,6 +42,9 @@ inoremap đ \phi
 inoremap ® \rho
 inoremap \end <Esc>me?begin<CR>/{<CR>ya{`ei\end<Esc>p
 
+set t_Co=8
+autocmd FileType tex set t_Co=256
+
 set nocompatible
 filetype off
 filetype plugin indent on    " required
@@ -49,14 +52,14 @@ let g:airline#extensions#ale#enabled = 1
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
-let g:completor_python_binary = '/usr/bin/python'
+let g:completor_python_binary = '/home/anders/miniconda3/bin/python'
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 
 map ]l :lnext <Return>
 map [l :lprev <Return>
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fixers = {'python': ["black"]}
-let g:ale_linters = {'python': ["black", "pylint"]}
+let g:ale_linters = {'python': ["black", "flake8"]}
 let g:ale_fix_on_save = 1
 "let g:ycm_filetype_specific_completion_to_disable = {'python' : 1}
 let g:ale_writegood_options = "--no-passive"
@@ -65,13 +68,13 @@ if expand("%:t") == "master.tex"
     set linebreak
     ab msd mean squared displacement
     ab vacf velocity autocorrelation function
-    set so=1000
+    set so=10
     ab \[ \begin{equation}
 endif
 
-
-if hostname() == "v310"
+if hostname() == "barrier"
     set mouse=a
 endif
+
 
 map <F8> :TagbarToggle <Return>

@@ -2,7 +2,8 @@ set -e -x
 cd ~
 
 
-sudo pacman -Syu clang
+sudo apt install -y clang
+# sudo pacman -Syu clang
 
 mkdir ~/.vim
 cd ~/.vim
