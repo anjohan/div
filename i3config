@@ -49,6 +49,7 @@ floating_modifier $mod
 bindsym $mod+Return exec  "tilix"
 bindsym $mod+Shift+Return exec  "xfce4-terminal --hide-menubar --hide-scrollbar --hide-toolbar"
 bindsym $mod+Shift+f exec "tilix -e ranger"
+bindsym $mod+Shift+b exec "google-chrome-stable --force-device-scale-factor=0.8"
 
 # kill focused window
 bindsym $mod+Shift+q kill
