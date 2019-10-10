@@ -42,7 +42,7 @@ inoremap đ \phi
 inoremap ® \rho
 inoremap \end <Esc>me?begin<CR>/{<CR>ya{`ei\end<Esc>p
 
-set t_Co=8
+set t_Co=256
 autocmd FileType tex set t_Co=256
 
 set nocompatible
@@ -58,7 +58,7 @@ map ]l :lnext <Return>
 map [l :lprev <Return>
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fixers = {'python': ["black"]}
-let g:ale_linters = {'python': ["black", "flake8"]}
+let g:ale_linters = {'python': ["black"]}
 let g:ale_fix_on_save = 1
 let g:ale_writegood_options = "--no-passive"
 

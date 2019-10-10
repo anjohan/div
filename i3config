@@ -46,8 +46,8 @@ font pango:DejaVu Sans Mono 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec  "tilix"
-bindsym $mod+Shift+Return exec  "xfce4-terminal --hide-menubar --hide-scrollbar --hide-toolbar"
+bindsym $mod+Return exec  "termite -e tmux"
+bindsym $mod+Shift+Return exec  "termite"
 bindsym $mod+Shift+f exec "tilix -e ranger"
 bindsym $mod+Shift+b exec "google-chrome-stable --force-device-scale-factor=0.8"
 
