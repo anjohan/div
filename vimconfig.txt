@@ -41,6 +41,12 @@ inoremap ł \lambda
 inoremap đ \phi
 inoremap ® \rho
 inoremap \end <Esc>me?begin<CR>/{<CR>ya{`ei\end<Esc>p
+inoremap <C-E> \varepsilon
+imap <C-P> \pi
+inoremap <C-D> \delta
+imap <C-R> \rho
+imap <C-B> \beta
+imap <C-T> \theta
 
 set t_Co=256
 autocmd FileType tex set t_Co=256
