@@ -11,7 +11,7 @@ function t {
 }
 export -f t
 
-PATH=$PATH:~/Downloads/ovito-3.0.0-dev601-x86_64/bin
+PATH=$PATH:~/Downloads/ovito-3.0.0-dev606-x86_64/bin
 PATH=$PATH:~/Downloads/packmol:~/google
 PATH=$PATH:~/Downloads/lammps/build:~/mdtools
 export PATH
@@ -19,8 +19,8 @@ export PATH
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/Downloads/lammps/src
 export LD_LIBRARY_PATH
 
-PYTHONPATH=$PYTHONPATH:~/Downloads/lammps/tools/python/pizza:~/Downloads/ovito-3.0.0-dev60-x86_64/lib/ovito/plugins/python
-PYTHONPATH=$PYTHONPATH:~/Downloads/lammps/python:~/mdtools
+PYTHONPATH=$PYTHONPATH:~/Downloads/lammps/tools/python/pizza:~/Downloads/ovito-3.0.0-dev606-x86_64/lib/ovito/plugins/python
+PYTHONPATH=$PYTHONPATH:~/Downloads/lammps/python:~/Downloads/mdtools
 export PYTHONPATH
 
 function ap {
@@ -64,3 +64,11 @@ function skrivut {
     ssh ifi pushprint $@ -A utskrift/.smb utskrift/$filnavn
 }
 export -f skrivut
+
+function _update_ps1() {
+	PS1="$($HOME/Downloads/powerline-go-linux-amd64 -mode compatible -modules 'cwd,perms,git,jobs,exit,root' -error $?)"
+}
+
+if [ "$TERM" != "linux" ] && [ -f "$HOME/Downloads/powerline-go-linux-amd64" ]; then
+	PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi

@@ -9,6 +9,7 @@ set shiftwidth=4
 set expandtab
 set smarttab
 set smartindent
+autocmd Filetype cpp setlocal expandtab tabstop=2 shiftwidth=2
 " set autochdir
 let g:tex_flavor='latex'
 autocmd BufWritePre * :%s/\s\+$//e
@@ -63,10 +64,11 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 map ]l :lnext <Return>
 map [l :lprev <Return>
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_fixers = {'python': ["black"]}
+let g:ale_fixers = {'python': ["black"], 'cpp': ["clang-format"]}
 let g:ale_linters = {'python': ["black"]}
 let g:ale_fix_on_save = 1
 let g:ale_writegood_options = "--no-passive"
+let g:ale_echo_cursor = 0
 
 if expand("%:t") == "master.tex"
     set linebreak

@@ -10,7 +10,8 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 exec nm-applet
-exec pa-applet
+exec pasystray
+exec xfce4-power-manager
 
 set $mod Mod4
 new_window pixel 1
@@ -46,7 +47,7 @@ font pango:DejaVu Sans Mono 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec  "gnome-terminal -e tmux"
+bindsym $mod+Return exec  "tilix"
 bindsym $mod+Shift+Return exec  "gnome-terminal"
 bindsym $mod+Shift+f exec "gnome-terminal -e ranger"
 bindsym $mod+Shift+b exec "google-chrome-stable --force-device-scale-factor=0.8"
@@ -172,5 +173,4 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
-        tray_output primary
 }
