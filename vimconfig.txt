@@ -1,3 +1,6 @@
+let g:ale_c_build_dir = "./ompbuild"
+let g:ale_c_parse_makefile = 1
+set clipboard=unnamedplus
 set ttimeoutlen=100
 
 let mysyntaxfile = "~/.vim/mysyntax.vim"
@@ -64,11 +67,12 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 map ]l :lnext <Return>
 map [l :lprev <Return>
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_fixers = {'python': ["black"], 'cpp': ["clang-format"]}
+"let g:ale_fixers = {'python': ["black"], 'cpp': ["clang-format"]}
+let g:ale_fixers = {'python': ["black"]}
 let g:ale_linters = {'python': ["black"]}
 let g:ale_fix_on_save = 1
 let g:ale_writegood_options = "--no-passive"
-let g:ale_echo_cursor = 0
+"let g:ale_echo_cursor = 0
 
 if expand("%:t") == "master.tex"
     set linebreak

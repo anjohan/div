@@ -48,7 +48,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec  "tilix"
-bindsym $mod+Shift+Return exec  "gnome-terminal"
+bindsym $mod+Shift+Return exec  "xfce4-terminal"
 bindsym $mod+Shift+f exec "gnome-terminal -e ranger"
 bindsym $mod+Shift+b exec "google-chrome-stable --force-device-scale-factor=0.8"
 

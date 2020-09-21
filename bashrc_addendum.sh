@@ -11,12 +11,14 @@ function t {
 }
 export -f t
 
-PATH=$PATH:~/Downloads/ovito-3.0.0-dev606-x86_64/bin
+PATH=$PATH:$HOME/Downloads/ovito-basic-3.2.0-x86_64/bin:/home/anders/Downloads/ovito-pro-3.0.0-dev750-x86_64/bin
 PATH=$PATH:~/Downloads/packmol:~/google
-PATH=$PATH:~/Downloads/lammps/build:~/mdtools
+PATH=$PATH:~/Downloads/lammps/build:~/Downloads/mdtools
+PATH=$PATH:~/.local/bin
 export PATH
 
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/Downloads/lammps/src
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/.local/lib
 export LD_LIBRARY_PATH
 
 PYTHONPATH=$PYTHONPATH:~/Downloads/lammps/tools/python/pizza:~/Downloads/ovito-3.0.0-dev606-x86_64/lib/ovito/plugins/python
@@ -66,7 +68,9 @@ function skrivut {
 export -f skrivut
 
 function _update_ps1() {
-	PS1="$($HOME/Downloads/powerline-go-linux-amd64 -mode compatible -modules 'cwd,perms,git,jobs,exit,root' -error $?)"
+    PS1="$($HOME/Downloads/powerline-go-linux-amd64 -modules 'cwd,perms,git,jobs,exit,root' -error $?)"
+    # VTE_PWD_THING="$(__vte_osc7)"
+    # PS1="$PS1$VTE_PWD_THING"
 }
 
 if [ "$TERM" != "linux" ] && [ -f "$HOME/Downloads/powerline-go-linux-amd64" ]; then
