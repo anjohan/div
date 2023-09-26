@@ -1,5 +1,3 @@
-let g:ale_c_build_dir = "./ompbuild"
-let g:ale_c_parse_makefile = 1
 set clipboard=unnamedplus
 set ttimeoutlen=100
 
@@ -32,6 +30,8 @@ autocmd BufNewFile,BufRead /tmp/msg* set filetype=mail
 
 map \e :ALENext <Return>
 map \E :ALEPrevious <Return>
+map \h :ALEHover <Return>
+map \d :ALEGoToDefinition <Return>
 inoremap \figure \begin{figure}[H]<CR><tab>\input{.}<CR>\caption{.}<CR><BS>\end{figure}<CR><Esc>?input<CR>/\.<CR>s
 inoremap \align \begin{alignat*}{2}<CR>\end{alignat*}<Esc>O
 inoremap \eq \begin{equation}<CR><Esc>0i\end{equation}<Esc>O
@@ -62,6 +62,7 @@ let g:airline#extensions#ale#enabled = 1
 set statusline+=%#warningmsg#
 set statusline+=%*
 let g:completor_python_binary = '/home/anders/miniconda3/bin/python'
+"let g:completor_clang_binary = '/usr/bin/clang'
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 
 map ]l :lnext <Return>
@@ -69,9 +70,12 @@ map [l :lprev <Return>
 let g:ale_lint_on_text_changed = 'never'
 "let g:ale_fixers = {'python': ["black"], 'cpp': ["clang-format"]}
 let g:ale_fixers = {'python': ["black"]}
-let g:ale_linters = {'python': ["black"]}
+"let g:ale_linters = {'python': ["black"], 'cpp': ["clangtidy", "clangcheck", "clang"]}
 let g:ale_fix_on_save = 1
 let g:ale_writegood_options = "--no-passive"
+let g:ale_c_parse_makefile = 1
+let g:ale_cpp_parse_makefile = 1
+let g:ale_completion_enabled = 1
 "let g:ale_echo_cursor = 0
 
 if expand("%:t") == "master.tex"
@@ -82,9 +86,9 @@ if expand("%:t") == "master.tex"
     ab \[ \begin{equation}
 endif
 
-if hostname() == "barrier"
-    set mouse=a
-endif
+set mouse=a
 
 
 map <F8> :TagbarToggle <Return>
+set exrc
+set secure
