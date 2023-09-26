@@ -5,24 +5,33 @@ usc='usc:/staging/pv/ankitmis/Anders/nanopillarer'
 fram='fram:/cluster/work/users/anderhaf/anjohan/nanopillarer'
 alias atomify='/home/anders/atomify/build/src/atomify'
 alias i3lock='i3lock -c 000000'
+alias scrot='scrot -o -s -q 100 --freeze -z'
+
+function scs {
+    rm -rf /tmp/screenshot.*
+    scrot -o -s -q 100 --freeze -z /tmp/screenshot.png
+    xclip -selection clipboard -t image/png -i /tmp/screenshot.png
+    convert /tmp/screenshot.png -quality 80 /tmp/screenshot.jpg
+}
+
 
 function t {
     nohup xfce4-terminal --hide-toolbar --hide-menubar --hide-scrollbar &> /dev/null & disown
 }
 export -f t
 
-PATH=$PATH:$HOME/Downloads/ovito-basic-3.2.0-x86_64/bin:/home/anders/Downloads/ovito-pro-3.0.0-dev750-x86_64/bin
+PATH=$PATH:$HOME/Downloads/ovito-basic-3.4.4-x86_64/bin:/home/anders/Downloads/ovito-pro-3.0.0-dev750-x86_64/bin
 PATH=$PATH:~/Downloads/packmol:~/google
 PATH=$PATH:~/Downloads/lammps/build:~/Downloads/mdtools
-PATH=$PATH:~/.local/bin
+PATH=~/.local/bin:$PATH
 export PATH
 
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/Downloads/lammps/src
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/.local/lib
-export LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/Downloads/lammps/src
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/miniconda3/lib # messes with ovito
+export LD_LIBRARY_PATH=~/.local/lib:$LD_LIBRARY_PATH
 
 PYTHONPATH=$PYTHONPATH:~/Downloads/lammps/tools/python/pizza:~/Downloads/ovito-3.0.0-dev606-x86_64/lib/ovito/plugins/python
-PYTHONPATH=$PYTHONPATH:~/Downloads/lammps/python:~/Downloads/mdtools
+PYTHONPATH=$PYTHONPATH:~/Downloads/mdtools
 export PYTHONPATH
 
 function ap {
@@ -76,3 +85,10 @@ function _update_ps1() {
 if [ "$TERM" != "linux" ] && [ -f "$HOME/Downloads/powerline-go-linux-amd64" ]; then
 	PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
+
+function brightness {
+	max=$(sudo cat /sys/class/backlight/intel_backlight/max_brightness)
+	frac=$1
+	new=$(python -c "print(int($max*$frac))")
+	sudo echo $new > /sys/class/backlight/intel_backlight/brightness
+}
