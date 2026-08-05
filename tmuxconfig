@@ -33,9 +33,12 @@ bind -n M-S-K resize-pane -U
 bind -n M-S-J resize-pane -D
 
 # clipboard: forward copy-mode copies and app OSC 52 (claude code) out to the
-# terminal; the Ms override is needed because xterm-256color terminfo lacks it
+# terminal; the Ms override is needed because xterm-256color terminfo lacks it.
+# match any outer TERM so it also works nested (outer TERM = screen-256color)
 set-option -s set-clipboard on
-set -as terminal-overrides ',xterm-256color:Ms=\E]52;%p1%s;%p2%s\007'
+# the literal 'c' forces the CLIPBOARD target: tmux sends empty flags for
+# copy-mode copies, which xterm would otherwise route to PRIMARY (s0)
+set -as terminal-overrides ',*:Ms=\E]52;c%p1%s;%p2%s\007'
 
 # vi copy mode: prefix-[ then v to select, y to copy (lands on local clipboard)
 setw -g mode-keys vi
