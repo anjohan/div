@@ -6,6 +6,7 @@ fram='fram:/cluster/work/users/anderhaf/anjohan/nanopillarer'
 alias atomify='/home/anders/atomify/build/src/atomify'
 alias i3lock='i3lock -c 000000'
 alias scrot='scrot -o -s -q 100 --freeze -z'
+alias cal='cal -m'
 
 function scs {
     rm -rf /tmp/screenshot.*
@@ -90,5 +91,5 @@ function brightness {
 	max=$(sudo cat /sys/class/backlight/intel_backlight/max_brightness)
 	frac=$1
 	new=$(python -c "print(int($max*$frac))")
-	sudo echo $new > /sys/class/backlight/intel_backlight/brightness
+	echo $new > /sys/class/backlight/intel_backlight/brightness
 }

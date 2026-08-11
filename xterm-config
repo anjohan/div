@@ -1,0 +1,62 @@
+! Apply changes with: xrdb -merge ~/.Xresources   (lightdm loads this at login)
+
+! --- basics ---
+XTerm*termName: xterm-256color
+XTerm*locale: true
+XTerm*metaSendsEscape: true
+XTerm*backarrowKey: false
+XTerm*ttyModes: erase ^?
+XTerm*saveLines: 50000
+XTerm*scrollBar: false
+XTerm*internalBorder: 6
+XTerm*bellIsUrgent: false
+
+! --- font ---
+! "Inconsolata Fixed" (~/.local/share/fonts) also remains available: it is the
+! Tilix font with its 7 extra-wide ligature glyphs clamped to one cell, which
+! stock Inconsolata needs because xterm sizes cells from the widest glyph
+XTerm*renderFont: true
+XTerm*faceName: Fira Code
+XTerm*faceSize: 11
+
+! --- colors: copied from Tilix profile (Monokai) ---
+XTerm*background: #272822
+XTerm*foreground: #F8F8F2
+XTerm*cursorColor: #F8F8F2
+XTerm*color0: #272822
+XTerm*color1: #F92672
+XTerm*color2: #A6E22E
+XTerm*color3: #F4BF75
+XTerm*color4: #66D9EF
+XTerm*color5: #AE81FF
+XTerm*color6: #A1EFE4
+XTerm*color7: #F8F8F2
+XTerm*color8: #75715E
+XTerm*color9: #F92672
+XTerm*color10: #A6E22E
+XTerm*color11: #F4BF75
+XTerm*color12: #66D9EF
+XTerm*color13: #AE81FF
+XTerm*color14: #A1EFE4
+XTerm*color15: #F9F8F5
+
+! --- Alt+Enter must not toggle fullscreen ---
+XTerm*fullscreen: never
+
+! --- copy/paste like Tilix: select -> PRIMARY (middle click),
+!     Ctrl+Shift+C / Ctrl+Shift+V -> CLIPBOARD; Ctrl +/- zooms ---
+XTerm*vt100.translations: #override \n\
+    Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
+    Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\
+    Ctrl <Key>plus: larger-vt-font() \n\
+    Ctrl <Key>minus: smaller-vt-font() \n\
+    Ctrl <Key>0: set-vt-font(d)
+
+! double-click selects URLs/paths as one word
+XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+! --- OSC 52: allow remote apps (claude code inside tmux over ssh) to SET the
+!     clipboard. GetSelection stays disallowed so nothing remote can READ it.
+!     (default disallowed list minus SetSelection)
+XTerm*allowWindowOps: true
+XTerm*disallowedWindowOps: GetChecksum,GetIconTitle,GetSelection,GetWinTitle,SetXprop

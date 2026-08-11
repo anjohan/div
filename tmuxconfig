@@ -32,11 +32,23 @@ bind -n M-S-L resize-pane -R
 bind -n M-S-K resize-pane -U
 bind -n M-S-J resize-pane -D
 
-set-option -s set-clipboard off
-# For vi copy mode bindings
-bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -i"
-# For emacs copy mode bindings
-bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -i"
+# clipboard: forward copy-mode copies and app OSC 52 (claude code) out to the
+# terminal; the Ms override is needed because xterm-256color terminfo lacks it.
+# match any outer TERM so it also works nested (outer TERM = screen-256color)
+set-option -s set-clipboard on
+# the literal 'c' forces the CLIPBOARD target: tmux sends empty flags for
+# copy-mode copies, which xterm would otherwise route to PRIMARY (s0)
+set -as terminal-overrides ',*:Ms=\E]52;c%p1%s;%p2%s\007'
+
+# vi copy mode: prefix-[ then v to select, y to copy (lands on local clipboard)
+setw -g mode-keys vi
+bind -T copy-mode-vi v send -X begin-selection
+bind -T copy-mode-vi y send -X copy-selection-and-cancel
+
+# mouse drag copy: xclip where it exists (local X11), otherwise swallow the
+# pipe; set-clipboard still pushes the copy out via OSC 52 either way
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "command -v xclip >/dev/null && xclip -selection clipboard -i || cat >/dev/null"
+bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "command -v xclip >/dev/null && xclip -selection clipboard -i || cat >/dev/null"
 
 #      _         _ _
 #  ___| |_ _   _| (_)_ __   __ _
@@ -72,3 +84,13 @@ bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip
 #
 # # bell
 # set-window-option -g window-status-bell-style fg=colour235,bg=colour160 #base02, red
+
+# claude
+# extended keys (shift+enter etc.) need tmux >= 3.2; guard so old cluster tmux
+# doesn't choke on unknown options
+if-shell 'tmux -V | grep -qE "tmux (3\.[2-9]|3\.[1-9][0-9]|[4-9]\.)"' \
+  'set -s extended-keys on ; set -as terminal-features "xterm*:extkeys"'
+# allow-passthrough (notifications/progress) exists only in >= 3.3; the
+# behavior was unconditionally on in older tmux, so nothing is lost below 3.3
+if-shell 'tmux -V | grep -qE "tmux (3\.[3-9]|3\.[1-9][0-9]|[4-9]\.)"' \
+  'set -g allow-passthrough on'

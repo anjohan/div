@@ -70,7 +70,7 @@ map [l :lprev <Return>
 let g:ale_lint_on_text_changed = 'never'
 "let g:ale_fixers = {'python': ["black"], 'cpp': ["clang-format"]}
 let g:ale_fixers = {'python': ["black"]}
-"let g:ale_linters = {'python': ["black"], 'cpp': ["clangtidy", "clangcheck", "clang"]}
+let g:ale_linters = {'python': ["black"], 'cpp': ["clangtidy", "clangcheck", "clang"]}
 let g:ale_fix_on_save = 1
 let g:ale_writegood_options = "--no-passive"
 let g:ale_c_parse_makefile = 1
@@ -78,12 +78,17 @@ let g:ale_cpp_parse_makefile = 1
 let g:ale_completion_enabled = 1
 "let g:ale_echo_cursor = 0
 
-if expand("%:t") == "master.tex"
+if expand("%:t") == "dissertation.tex"
     set linebreak
     ab msd mean squared displacement
     ab vacf velocity autocorrelation function
     set so=10
     ab \[ \begin{equation}
+    ab md molecular dynamics
+    ab mds molecular dynamics simulation
+    ab mdss molecular dynamics simulations
+    ab mlp ML potential
+    ab mlps ML potentials
 endif
 
 set mouse=a
